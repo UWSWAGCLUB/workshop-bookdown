@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Sampling-Resampling Methods | SWAG Workshops Repository</title>
+  <meta name="description" content="Chapter 2 Sampling-Resampling Methods | SWAG Workshops Repository" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Sampling-Resampling Methods | SWAG Workshops Repository" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Sampling-Resampling Methods | SWAG Workshops Repository" />
+  
+  
+  
+
+<meta name="author" content="UW Statistical Workshops and Applications Group" />
+
+
+<meta name="date" content="2022-09-26" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="references.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">SWAG Workshops Repository</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="sampling-resampling-methods.html"><a href="sampling-resampling-methods.html"><i class="fa fa-check"></i><b>2</b> Sampling-Resampling Methods</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="sampling-resampling-methods.html"><a href="sampling-resampling-methods.html#introduction-1"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="sampling-resampling-methods.html"><a href="sampling-resampling-methods.html#rejection-sampling"><i class="fa fa-check"></i><b>2.2</b> Rejection Sampling</a></li>
+<li class="chapter" data-level="2.3" data-path="sampling-resampling-methods.html"><a href="sampling-resampling-methods.html#sampling-resampling-methods-1"><i class="fa fa-check"></i><b>2.3</b> Sampling-Resampling Methods</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="sampling-resampling-methods.html"><a href="sampling-resampling-methods.html#overview-of-the-sampling-importance-resampling-algorithm"><i class="fa fa-check"></i><b>2.3.1</b> Overview of the Sampling-Importance-Resampling Algorithm</a></li>
+<li class="chapter" data-level="2.3.2" data-path="sampling-resampling-methods.html"><a href="sampling-resampling-methods.html#computational-considerations"><i class="fa fa-check"></i><b>2.3.2</b> Computational Considerations</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="sampling-resampling-methods.html"><a href="sampling-resampling-methods.html#implementation-of-sampling-resampling-methods"><i class="fa fa-check"></i><b>2.4</b> Implementation of Sampling-Resampling Methods</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="sampling-resampling-methods.html"><a href="sampling-resampling-methods.html#illustrative-example-with-binary-data"><i class="fa fa-check"></i><b>2.4.1</b> Illustrative Example with Binary Data</a></li>
+<li class="chapter" data-level="2.4.2" data-path="sampling-resampling-methods.html"><a href="sampling-resampling-methods.html#practical-considerations-for-choosing-proposal-distributions"><i class="fa fa-check"></i><b>2.4.2</b> Practical Considerations for Choosing Proposal Distributions</a></li>
+<li class="chapter" data-level="2.4.3" data-path="sampling-resampling-methods.html"><a href="sampling-resampling-methods.html#comparing-proposal-distributions"><i class="fa fa-check"></i><b>2.4.3</b> Comparing Proposal Distributions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="sampling-resampling-methods.html"><a href="sampling-resampling-methods.html#sampling-resampling-in-multiple-dimensions"><i class="fa fa-check"></i><b>2.5</b> Sampling-Resampling in Multiple Dimensions</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="sampling-resampling-methods.html"><a href="sampling-resampling-methods.html#exercise-with-illustrative-example"><i class="fa fa-check"></i><b>2.5.1</b> Exercise with Illustrative Example</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>3</b> References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">SWAG Workshops Repository</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="sampling-resampling-methods" class="section level1" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Sampling-Resampling Methods</h1>
+<p><em>Luke Hagar</em></p>
+<p>October 3, 2022</p>
+<div id="introduction-1" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Introduction</h2>
+<p>Welcome to the first workshop for the Statistical Workshops and Applications Group (SWAG)! This workshop discusses sampling-resampling methods, mainly in the context of Bayesian inference.</p>
+</div>
+<div id="rejection-sampling" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Rejection Sampling</h2>
+<p>Before introducing sampling-resampling methods, we briefly discuss rejection sampling <span class="citation">(Ripley 2009)</span> along with its strengths and shortcomings. In what follows, we discuss the set up for our sampling scenario.</p>
+<ul>
+<li>Let’s suppose we can easily generate a sample from a continuous density function <span class="math inline">\(g(\boldsymbol{\theta})\)</span>. We call this the proposal distribution.</li>
+<li>However, we want a sample from a density <span class="math inline">\(h(\boldsymbol{\theta})\)</span> such that <span class="math inline">\(g(\boldsymbol{\theta}) = 0\)</span> implies <span class="math inline">\(h(\boldsymbol{\theta}) = 0\)</span> for all <span class="math inline">\(\boldsymbol{\theta} \in \boldsymbol{\Theta}\)</span>.</li>
+<li>We have a positive function <span class="math inline">\(f(\boldsymbol{\theta})\)</span> that is proportional to <span class="math inline">\(h(\boldsymbol{\theta})\)</span>. That is, <span class="math inline">\(h(\boldsymbol{\theta}) = f(\boldsymbol{\theta})/\int f(\boldsymbol{\theta})d\boldsymbol{\theta}\)</span>.</li>
+<li>For rejection sampling, we further suppose that there exists an identifiable constant <span class="math inline">\(M &gt; 0\)</span> such that <span class="math inline">\(f(\boldsymbol{\theta})/g(\boldsymbol{\theta}) \le M\)</span> for all <span class="math inline">\(\boldsymbol{\theta} \in \boldsymbol{\Theta}\)</span>.</li>
+</ul>
+<p>Let’s reinforce this terminology with an example. In this example, we want to sample from <span class="math inline">\(h(\theta) = 12\theta^2(1-\theta)\)</span> for <span class="math inline">\(0 &lt; \theta &lt; 1\)</span>. This is actually a <span class="math inline">\(\text{BETA}(3,2)\)</span> distribution. For this example, we let <span class="math inline">\(f(\theta) = h(\theta)\)</span>. We have that <span class="math inline">\(f(\theta) \le 16/9\)</span> for all <span class="math inline">\(0 &lt; \theta &lt; 1\)</span>. We can easily sample over the unit interval using the uniform density <span class="math inline">\(U(0,1)\)</span>. This corresponds to choosing <span class="math inline">\(g(\theta) = 1\)</span> for <span class="math inline">\(0 &lt; \theta &lt; 1\)</span>. It follows that <span class="math inline">\(f(\boldsymbol{\theta})/g(\boldsymbol{\theta}) \le 16/9 = M\)</span> for all <span class="math inline">\(0 &lt; \theta &lt; 1\)</span>. This scenario is visualized in Figure <a href="sampling-resampling-methods.html#fig:rej1">2.1</a>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="sampling-resampling-methods.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## compute f and g across the range of theta for plotting purposes</span></span>
+<span id="cb1-2"><a href="sampling-resampling-methods.html#cb1-2" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.005</span>)</span>
+<span id="cb1-3"><a href="sampling-resampling-methods.html#cb1-3" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="dv">12</span> <span class="sc">*</span> theta<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> theta)</span>
+<span id="cb1-4"><a href="sampling-resampling-methods.html#cb1-4" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">length</span>(theta))</span>
+<span id="cb1-5"><a href="sampling-resampling-methods.html#cb1-5" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> <span class="dv">16</span><span class="sc">/</span><span class="dv">9</span></span>
+<span id="cb1-6"><a href="sampling-resampling-methods.html#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="sampling-resampling-methods.html#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">## generate the plot and corresponding legend</span></span>
+<span id="cb1-8"><a href="sampling-resampling-methods.html#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(theta, f, <span class="at">col =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Density&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, </span>
+<span id="cb1-9"><a href="sampling-resampling-methods.html#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="fl">2.25</span>), <span class="at">xlab =</span> <span class="fu">expression</span>(theta))</span>
+<span id="cb1-10"><a href="sampling-resampling-methods.html#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(theta, M <span class="sc">*</span> g, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb1-11"><a href="sampling-resampling-methods.html#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;f&quot;</span>, <span class="st">&quot;M*g&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;steelblue&quot;</span>, <span class="st">&quot;black&quot;</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, </span>
+<span id="cb1-12"><a href="sampling-resampling-methods.html#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="dv">2</span>), <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:rej1"></span>
+<img src="bookdownproj_files/figure-html/rej1-1.png" alt="Visualization of rejection sampling functions" width="672" />
+<p class="caption">
+Figure 2.1: Visualization of rejection sampling functions
+</p>
+</div>
+<p>We now introduce rejection sampling. This process is detailed in Algorithm 1. A sample of <span class="math inline">\(\boldsymbol{\theta}\)</span> values accepted via Algorithm 1 is a sample from the density of interest <span class="math inline">\(h(\boldsymbol{\theta})\)</span> <span class="citation">(Ripley 2009)</span>.</p>
+<p><strong>Algorithm 1</strong></p>
+<ol style="list-style-type: decimal">
+<li>Generate <span class="math inline">\(\boldsymbol{\theta}\)</span> from <span class="math inline">\(g(\boldsymbol{\theta})\)</span>.</li>
+<li>Generate <span class="math inline">\(u \sim U(0,1)\)</span>.</li>
+<li>If <span class="math inline">\(u \le f(\boldsymbol{\theta})/(Mg(\boldsymbol{\theta}))\)</span>, return <span class="math inline">\(\boldsymbol{\theta}\)</span>; otherwise return to Step 1.</li>
+</ol>
+<p>We now illustrate how to implement rejection sampling to generate 10000 observations from <span class="math inline">\(h(\boldsymbol{\theta})\)</span> for this simple example. The results are visualized in Figure <a href="sampling-resampling-methods.html#fig:rej2">2.2</a>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="sampling-resampling-methods.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">## initialize matrices for accepted and rejected theta values</span></span>
+<span id="cb2-2"><a href="sampling-resampling-methods.html#cb2-2" aria-hidden="true" tabindex="-1"></a>accept_mat <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb2-3"><a href="sampling-resampling-methods.html#cb2-3" aria-hidden="true" tabindex="-1"></a>reject_mat <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb2-4"><a href="sampling-resampling-methods.html#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="sampling-resampling-methods.html#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="do">## set seed for reproducibility</span></span>
+<span id="cb2-6"><a href="sampling-resampling-methods.html#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb2-7"><a href="sampling-resampling-methods.html#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="sampling-resampling-methods.html#cb2-8" aria-hidden="true" tabindex="-1"></a>stop <span class="ot">&lt;-</span> <span class="cn">FALSE</span></span>
+<span id="cb2-9"><a href="sampling-resampling-methods.html#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="do">## continue until 10000 points are accepted</span></span>
+<span id="cb2-10"><a href="sampling-resampling-methods.html#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (stop <span class="sc">==</span> <span class="cn">FALSE</span>) {</span>
+<span id="cb2-11"><a href="sampling-resampling-methods.html#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="do">## generate a value from g: U(0,1)</span></span>
+<span id="cb2-12"><a href="sampling-resampling-methods.html#cb2-12" aria-hidden="true" tabindex="-1"></a>    theta_temp <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>)</span>
+<span id="cb2-13"><a href="sampling-resampling-methods.html#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="sampling-resampling-methods.html#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="do">## generate u to decide whether to accept/reject</span></span>
+<span id="cb2-15"><a href="sampling-resampling-methods.html#cb2-15" aria-hidden="true" tabindex="-1"></a>    u <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>)</span>
+<span id="cb2-16"><a href="sampling-resampling-methods.html#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="sampling-resampling-methods.html#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="do">## compute the values for f and g at this theta value</span></span>
+<span id="cb2-18"><a href="sampling-resampling-methods.html#cb2-18" aria-hidden="true" tabindex="-1"></a>    f_temp <span class="ot">&lt;-</span> <span class="dv">12</span> <span class="sc">*</span> theta_temp<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> theta_temp)</span>
+<span id="cb2-19"><a href="sampling-resampling-methods.html#cb2-19" aria-hidden="true" tabindex="-1"></a>    g_temp <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb2-20"><a href="sampling-resampling-methods.html#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="sampling-resampling-methods.html#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="do">## decide whether or not to accept point; we save the rejected</span></span>
+<span id="cb2-22"><a href="sampling-resampling-methods.html#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="do">## points and &#39;u&#39; realizations for the plot</span></span>
+<span id="cb2-23"><a href="sampling-resampling-methods.html#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (u <span class="sc">&lt;=</span> f_temp<span class="sc">/</span>(M <span class="sc">*</span> g_temp)) {</span>
+<span id="cb2-24"><a href="sampling-resampling-methods.html#cb2-24" aria-hidden="true" tabindex="-1"></a>        accept_mat <span class="ot">&lt;-</span> <span class="fu">rbind</span>(accept_mat, <span class="fu">c</span>(theta_temp, u))</span>
+<span id="cb2-25"><a href="sampling-resampling-methods.html#cb2-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">nrow</span>(accept_mat) <span class="sc">&gt;=</span> <span class="dv">10000</span>) {</span>
+<span id="cb2-26"><a href="sampling-resampling-methods.html#cb2-26" aria-hidden="true" tabindex="-1"></a>            stop <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb2-27"><a href="sampling-resampling-methods.html#cb2-27" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb2-28"><a href="sampling-resampling-methods.html#cb2-28" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb2-29"><a href="sampling-resampling-methods.html#cb2-29" aria-hidden="true" tabindex="-1"></a>        reject_mat <span class="ot">&lt;-</span> <span class="fu">rbind</span>(reject_mat, <span class="fu">c</span>(theta_temp, u))</span>
+<span id="cb2-30"><a href="sampling-resampling-methods.html#cb2-30" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-31"><a href="sampling-resampling-methods.html#cb2-31" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-32"><a href="sampling-resampling-methods.html#cb2-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-33"><a href="sampling-resampling-methods.html#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="do">## generate the plot and corresponding legend green points represent</span></span>
+<span id="cb2-34"><a href="sampling-resampling-methods.html#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="do">## accepted (theta, u) combinations red points represent rejected</span></span>
+<span id="cb2-35"><a href="sampling-resampling-methods.html#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="do">## (theta, u) combinations</span></span>
+<span id="cb2-36"><a href="sampling-resampling-methods.html#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(theta, f, <span class="at">col =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;M*u&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, </span>
+<span id="cb2-37"><a href="sampling-resampling-methods.html#cb2-37" aria-hidden="true" tabindex="-1"></a>    <span class="fl">2.25</span>), <span class="at">xlab =</span> <span class="fu">expression</span>(theta), <span class="at">lwd =</span> <span class="fl">1.5</span>)</span>
+<span id="cb2-38"><a href="sampling-resampling-methods.html#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(theta, M <span class="sc">*</span> g, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="fl">1.5</span>)</span>
+<span id="cb2-39"><a href="sampling-resampling-methods.html#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;f&quot;</span>, <span class="st">&quot;M*g&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;steelblue&quot;</span>, <span class="st">&quot;black&quot;</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, </span>
+<span id="cb2-40"><a href="sampling-resampling-methods.html#cb2-40" aria-hidden="true" tabindex="-1"></a>    <span class="dv">2</span>), <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>)</span>
+<span id="cb2-41"><a href="sampling-resampling-methods.html#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(accept_mat[, <span class="dv">1</span>], M <span class="sc">*</span> accept_mat[, <span class="dv">2</span>], <span class="at">col =</span> <span class="fu">adjustcolor</span>(<span class="st">&quot;seagreen&quot;</span>, </span>
+<span id="cb2-42"><a href="sampling-resampling-methods.html#cb2-42" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.05</span>), <span class="at">pch =</span> <span class="dv">19</span>)</span>
+<span id="cb2-43"><a href="sampling-resampling-methods.html#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(reject_mat[, <span class="dv">1</span>], M <span class="sc">*</span> reject_mat[, <span class="dv">2</span>], <span class="at">col =</span> <span class="fu">adjustcolor</span>(<span class="st">&quot;firebrick&quot;</span>, </span>
+<span id="cb2-44"><a href="sampling-resampling-methods.html#cb2-44" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.05</span>), <span class="at">pch =</span> <span class="dv">19</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:rej2"></span>
+<img src="bookdownproj_files/figure-html/rej2-1.png" alt="Visualization of rejection sampling with accepted points (green) and rejected points (red)" width="672" />
+<p class="caption">
+Figure 2.2: Visualization of rejection sampling with accepted points (green) and rejected points (red)
+</p>
+</div>
+<p>The points in Figure <a href="sampling-resampling-methods.html#fig:rej2">2.2</a> depict which <span class="math inline">\(\theta\)</span> values were accepted (green) and rejected (red) by rejection sampling. The resulting sample appears to come from the <span class="math inline">\(\text{BETA}(3,2)\)</span> distribution. We make two final remarks about rejection sampling that bear relevance to sampling-resampling methods.</p>
+<ol style="list-style-type: decimal">
+<li>To implement rejection sampling, we <em>must</em> identify a constant <span class="math inline">\(M &gt; 0\)</span> such that <span class="math inline">\(f(\boldsymbol{\theta})/g(\boldsymbol{\theta}) \le M\)</span> for all <span class="math inline">\(\boldsymbol{\theta} \in \boldsymbol{\Theta}\)</span>. This choice for <span class="math inline">\(M\)</span> is important.
+<ul>
+<li>For this example, we could have chosen <span class="math inline">\(M &gt; 16/9\)</span>, but the sampling procedure would have been less efficient.</li>
+<li>Choosing <span class="math inline">\(M &lt; 16/9\)</span> would have returned a sample that is not from the <span class="math inline">\(\text{BETA}(3,2)\)</span> distribution.</li>
+</ul></li>
+<li>We need to carefully consider the support of <span class="math inline">\(h(\boldsymbol{\theta})\)</span> and <span class="math inline">\(g(\boldsymbol{\theta})\)</span>.
+<ul>
+<li>Choosing <span class="math inline">\(g(\boldsymbol{\theta})\)</span> to be <span class="math inline">\(U(0.25, 0.75)\)</span> would not have been appropriate for this example.</li>
+<li>Choosing <span class="math inline">\(g(\boldsymbol{\theta})\)</span> to be <span class="math inline">\(U(-1, 1)\)</span> would be fine but less efficient.</li>
+</ul></li>
+</ol>
+<p>When using sampling-resampling methods, remark 1 is often not of concern.</p>
+</div>
+<div id="sampling-resampling-methods-1" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Sampling-Resampling Methods</h2>
+<div id="overview-of-the-sampling-importance-resampling-algorithm" class="section level3" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Overview of the Sampling-Importance-Resampling Algorithm</h3>
+<p>We now discuss how to obtain an approximate sample from the density <span class="math inline">\(h(\boldsymbol{\theta})\)</span> using a particular weighted sampling-resampling method, which is a variant of the bootstrap procedure <span class="citation">(Efron 1982)</span>. This method was first formally proposed in <span class="citation">Rubin (1987)</span> and <span class="citation">Rubin (1988)</span> as the sampling-importance-resampling (SIR) algorithm. We introduce this procedure via Algorithm 2, which uses notation from <span class="citation">Smith and Gelfand (1992)</span>.</p>
+<p><strong>Algorithm 2</strong></p>
+<ol style="list-style-type: decimal">
+<li>Generate <span class="math inline">\(\boldsymbol{\theta}_i, ~ i = 1,...,n\)</span> from <span class="math inline">\(g(\boldsymbol{\theta})\)</span>.</li>
+<li>For each <span class="math inline">\(\boldsymbol{\theta}_i\)</span>, compute <span class="math inline">\(\omega_i = f(\boldsymbol{\theta})/g(\boldsymbol{\theta})\)</span>.</li>
+<li>Let <span class="math inline">\(q_i = \omega_i/\sum_{j=1}^n\omega_j\)</span> for <span class="math inline">\(i = 1,...,n\)</span>.</li>
+<li>Draw <span class="math inline">\(\{\boldsymbol{\theta}^*_1,..., \boldsymbol{\theta}^*_m\}\)</span> from the discrete distribution over <span class="math inline">\(\{\boldsymbol{\theta}_1, ..., \boldsymbol{\theta}_n \}\)</span> with replacement, where mass <span class="math inline">\(q_i\)</span> is placed on <span class="math inline">\(\boldsymbol{\theta}_i\)</span>.</li>
+</ol>
+<p>Under several conditions, <span class="math inline">\(\boldsymbol{\theta}^*\)</span> is approximately distributed according to <span class="math inline">\(h(\boldsymbol{\theta})\)</span>. Algorithm 2 returns approximate samples from <span class="math inline">\(h(\boldsymbol{\theta})\)</span> when <span class="math inline">\(n\)</span> is sufficiently large and <span class="math inline">\(supp(h) \subseteq supp(g)\)</span>, where <span class="math inline">\(supp()\)</span> refers to the support of a probability distribution. How large <span class="math inline">\(n\)</span> must be depends on the extent to which <span class="math inline">\(h(\boldsymbol{\theta})\)</span> resembles <span class="math inline">\(g(\boldsymbol{\theta})\)</span>. Moreover, <span class="math inline">\(m\)</span> is typically smaller than <span class="math inline">\(n\)</span>; <span class="citation">Rubin (1987)</span> stated that specifying <span class="math inline">\(m\)</span> and <span class="math inline">\(n\)</span> such that their ratio <span class="math inline">\(n/m\)</span> is at least 20 should be sufficient in most scenarios.</p>
+<p>When implementing this sampling-resampling procedure, we must still be mindful of the supports of <span class="math inline">\(h(\boldsymbol{\theta})\)</span> and <span class="math inline">\(g(\boldsymbol{\theta})\)</span>. However, we do not need to identify a constant <span class="math inline">\(M &gt; 0\)</span> such that <span class="math inline">\(f(\boldsymbol{\theta})/g(\boldsymbol{\theta}) \le M\)</span> for all <span class="math inline">\(\boldsymbol{\theta} \in \boldsymbol{\Theta}\)</span>. We only require a function <span class="math inline">\(g(\boldsymbol{\theta})\)</span> that we can readily sample from and a function <span class="math inline">\(f(\boldsymbol{\theta})\)</span> that is proportional to our density of interest <span class="math inline">\(h(\boldsymbol{\theta})\)</span>.</p>
+<p>For Bayesian inference, we often want to sample from a posterior distribution of interest <span class="math inline">\(\pi(\boldsymbol{\theta}| \boldsymbol{x})\)</span> for <span class="math inline">\(\boldsymbol{\theta}\)</span> given observed data <span class="math inline">\(\boldsymbol{x}\)</span>. Let <span class="math inline">\(L()\)</span> be the likelihood function and <span class="math inline">\(p()\)</span> be the prior for <span class="math inline">\(\boldsymbol{\theta}\)</span>. The posterior distribution communicates which values <span class="math inline">\(\boldsymbol{\theta}\)</span> are plausible given the observed data and our prior beliefs. By Bayes’ Theorem, we have that
+<span class="math display">\[\pi(\boldsymbol{\theta}| \boldsymbol{x}) = \frac{L(\boldsymbol{\theta}; \boldsymbol{x})p(\boldsymbol{\theta})}{\int L(\boldsymbol{\theta}; \boldsymbol{x})p(\boldsymbol{\theta})d\boldsymbol{\theta}} \propto L(\boldsymbol{\theta}; \boldsymbol{x})p(\boldsymbol{\theta}).\]</span></p>
+<p>Thus, we have <span class="math inline">\(h(\boldsymbol{\theta}) = \pi(\boldsymbol{\theta}| \boldsymbol{x})\)</span> and <span class="math inline">\(f(\boldsymbol{\theta}) = L(\boldsymbol{\theta}; \boldsymbol{x})p(\boldsymbol{\theta})\)</span> using the notation from earlier. For a given <span class="math inline">\(\boldsymbol{\theta}\)</span> value, it is straightforward to compute <span class="math inline">\(f(\boldsymbol{\theta})\)</span>; however, we are often not able to compute <span class="math inline">\(h(\boldsymbol{\theta})\)</span> directly. As such, the SIR algorithm goes well with the framework for Bayesian inference. It can be used to generate an approximate sample from the posterior distribution of interest <span class="math inline">\(h(\boldsymbol{\theta}) = \pi(\boldsymbol{\theta}| \boldsymbol{x})\)</span> and serves as an alternative to more standard Markov chain Monte Carlo (MCMC) methods in many scenarios. The SIR algorithm can be used with non-Bayesian methods, but the remainder of this workshop focuses on implementing the SIR algorithm to conduct approximate posterior sampling.</p>
+</div>
+<div id="computational-considerations" class="section level3" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> Computational Considerations</h3>
+<p>The SIR algorithm often produces more stable results when <span class="math inline">\(\omega_i, i = 1,...,n\)</span> are computed on the logarithmic scale. This is consistent with other methods for Bayesian inference that do not involve sampling-resampling. Particularly when <span class="math inline">\(\boldsymbol{\theta}\)</span> is multivariate, <span class="math inline">\(f(\boldsymbol{\theta})\)</span> and <span class="math inline">\(g(\boldsymbol{\theta})\)</span> can take small positive values that are extremely close to 0. Computing <span class="math inline">\(\text{log}(\omega_i)\)</span> helps make underflow errors less common, as we will see shortly. We have that
+<span class="math display">\[\text{log}(\omega_i) = \text{log}(f(\boldsymbol{\theta}_i)) - \text{log}(g(\boldsymbol{\theta}_i)).\]</span>
+In the context of Bayesian inference, <span class="math inline">\(f(\boldsymbol{\theta}) = L(\boldsymbol{\theta}; \boldsymbol{x})p(\boldsymbol{\theta})\)</span> is generally the product of several terms, so <span class="math inline">\(\text{log}(f(\boldsymbol{\theta}_i))\)</span> is often easier to manipulate than <span class="math inline">\(f(\boldsymbol{\theta}_i)\)</span>. When <span class="math inline">\(g(\boldsymbol{\theta})\)</span> is a well known probability distribution, we can often compute <span class="math inline">\(\text{log}(g(\boldsymbol{\theta}_i))\)</span> using built-in R functions. For instance, if <span class="math inline">\(g(\boldsymbol{\theta})\)</span> is the standard normal distribution, we can compute <span class="math inline">\(\text{log}(g(\boldsymbol{\theta}_i))\)</span> as <span class="math inline">\(\texttt{dnorm(}\boldsymbol{\theta}_i\texttt{, log = TRUE)}\)</span>.</p>
+<p>We must then exponentiate the <span class="math inline">\(\text{log}(\omega_i)\)</span> values to compute the normalized weights <span class="math inline">\(q_i, ~ i = 1, ..., n\)</span>. In certain situations, we proceed with caution to avoid more underflow errors. Let’s consider the following example with only three <span class="math inline">\(\text{log}(\omega_i)\)</span> values: <span class="math inline">\(\text{log}(\omega_1) = 0\)</span>, <span class="math inline">\(\text{log}(\omega_2) = 1\)</span>, and <span class="math inline">\(\text{log}(\omega_3) = 2\)</span>. For this example, we can exponentiate and standardize these weights without issues using the following R code.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="sampling-resampling-methods.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## define log weights</span></span>
+<span id="cb3-2"><a href="sampling-resampling-methods.html#cb3-2" aria-hidden="true" tabindex="-1"></a>log_omega <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb3-3"><a href="sampling-resampling-methods.html#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="sampling-resampling-methods.html#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="do">## exponentiate the weights</span></span>
+<span id="cb3-5"><a href="sampling-resampling-methods.html#cb3-5" aria-hidden="true" tabindex="-1"></a>omega <span class="ot">&lt;-</span> <span class="fu">exp</span>(log_omega)</span>
+<span id="cb3-6"><a href="sampling-resampling-methods.html#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="sampling-resampling-methods.html#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="do">## standardize the weights and print results by enclosing assignment</span></span>
+<span id="cb3-8"><a href="sampling-resampling-methods.html#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="do">## command with ()</span></span>
+<span id="cb3-9"><a href="sampling-resampling-methods.html#cb3-9" aria-hidden="true" tabindex="-1"></a>(q <span class="ot">&lt;-</span> omega<span class="sc">/</span><span class="fu">sum</span>(omega))</span></code></pre></div>
+<pre><code>## [1] 0.09003057 0.24472847 0.66524096</code></pre>
+<p>Here, we standardize the weights after exponentiation. That being the case, we can apply a translation to the weights on the logarithmic scale without impacting the final standardized weights. For this example, the maximum <span class="math inline">\(\text{log}(\omega_i)\)</span> is <span class="math inline">\(\text{log}(\omega_3) = 2\)</span>. Let’s subtract 2 from each original <span class="math inline">\(\text{log}(\omega_i)\)</span> value before exponentiation and output the results.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="sampling-resampling-methods.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## define log weights</span></span>
+<span id="cb5-2"><a href="sampling-resampling-methods.html#cb5-2" aria-hidden="true" tabindex="-1"></a>log_omega <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb5-3"><a href="sampling-resampling-methods.html#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="sampling-resampling-methods.html#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="do">## subtract 2 from each log_omega value and exponentiate the weights</span></span>
+<span id="cb5-5"><a href="sampling-resampling-methods.html#cb5-5" aria-hidden="true" tabindex="-1"></a>omega <span class="ot">&lt;-</span> <span class="fu">exp</span>(log_omega <span class="sc">-</span> <span class="fu">max</span>(log_omega))</span>
+<span id="cb5-6"><a href="sampling-resampling-methods.html#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="sampling-resampling-methods.html#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="do">## standardize the weights</span></span>
+<span id="cb5-8"><a href="sampling-resampling-methods.html#cb5-8" aria-hidden="true" tabindex="-1"></a>(q <span class="ot">&lt;-</span> omega<span class="sc">/</span><span class="fu">sum</span>(omega))</span></code></pre></div>
+<pre><code>## [1] 0.09003057 0.24472847 0.66524096</code></pre>
+<p>The final standardized weights are the same! This trick is useful when the <span class="math inline">\(\text{log}(\omega_i)\)</span> values are very small (or very large). Let’s now imagine that <span class="math inline">\(\text{log}(\omega_1) = -800\)</span>, <span class="math inline">\(\text{log}(\omega_2) = -799\)</span>, and <span class="math inline">\(\text{log}(\omega_3) = -798\)</span>. Let’s see what occurs if we try to exponentiate these values.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="sampling-resampling-methods.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">## define log weights</span></span>
+<span id="cb7-2"><a href="sampling-resampling-methods.html#cb7-2" aria-hidden="true" tabindex="-1"></a>log_omega <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">800</span>, <span class="sc">-</span><span class="dv">799</span>, <span class="sc">-</span><span class="dv">798</span>)</span>
+<span id="cb7-3"><a href="sampling-resampling-methods.html#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="sampling-resampling-methods.html#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="do">## exponentiate the weights</span></span>
+<span id="cb7-5"><a href="sampling-resampling-methods.html#cb7-5" aria-hidden="true" tabindex="-1"></a>(omega <span class="ot">&lt;-</span> <span class="fu">exp</span>(log_omega))</span></code></pre></div>
+<pre><code>## [1] 0 0 0</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="sampling-resampling-methods.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">## standardize the weights</span></span>
+<span id="cb9-2"><a href="sampling-resampling-methods.html#cb9-2" aria-hidden="true" tabindex="-1"></a>(q <span class="ot">&lt;-</span> omega<span class="sc">/</span><span class="fu">sum</span>(omega))</span></code></pre></div>
+<pre><code>## [1] NaN NaN NaN</code></pre>
+<p>This produces an underflow error. The values for <span class="math inline">\(\omega_i, ~ i = 1, 2, 3\)</span> are so small that they are rounded down to 0. But, we can apply a translation to the <span class="math inline">\(\text{log}(\omega_i)\)</span> values by subtracting <span class="math inline">\(\text{max}_{i = 1, 2, 3}~\text{log}(\omega_i) = -798\)</span> from each value. This produces the same final standardized weights as for the earlier example – which makes sense because this example simply subtracted 800 from each of the earlier <span class="math inline">\(\text{log}(\omega_i)\)</span> values.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="sampling-resampling-methods.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="do">## define log weights</span></span>
+<span id="cb11-2"><a href="sampling-resampling-methods.html#cb11-2" aria-hidden="true" tabindex="-1"></a>log_omega <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">800</span>, <span class="sc">-</span><span class="dv">799</span>, <span class="sc">-</span><span class="dv">798</span>)</span>
+<span id="cb11-3"><a href="sampling-resampling-methods.html#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="sampling-resampling-methods.html#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="do">## subtract max(log_omega) from each log_omega value and exponentiate</span></span>
+<span id="cb11-5"><a href="sampling-resampling-methods.html#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="do">## the weights</span></span>
+<span id="cb11-6"><a href="sampling-resampling-methods.html#cb11-6" aria-hidden="true" tabindex="-1"></a>omega <span class="ot">&lt;-</span> <span class="fu">exp</span>(log_omega <span class="sc">-</span> <span class="fu">max</span>(log_omega))</span>
+<span id="cb11-7"><a href="sampling-resampling-methods.html#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="sampling-resampling-methods.html#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="do">## standardize the weights</span></span>
+<span id="cb11-9"><a href="sampling-resampling-methods.html#cb11-9" aria-hidden="true" tabindex="-1"></a>(q <span class="ot">&lt;-</span> omega<span class="sc">/</span><span class="fu">sum</span>(omega))</span></code></pre></div>
+<pre><code>## [1] 0.09003057 0.24472847 0.66524096</code></pre>
+</div>
+</div>
+<div id="implementation-of-sampling-resampling-methods" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> Implementation of Sampling-Resampling Methods</h2>
+<div id="illustrative-example-with-binary-data" class="section level3" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> Illustrative Example with Binary Data</h3>
+<p>Here, we demonstrate how to implement the SIR algorithm to faciliate posterior sampling for a simple example. In this example, we assume that we observe binary data <span class="math inline">\(x_1, ..., x_N\)</span> such that <span class="math inline">\(x_j \sim \text{BIN}(1, \theta)\)</span>. We assume that the prior for <span class="math inline">\(\theta\)</span> is an uninformative <span class="math inline">\(\text{BETA}(1,1)\)</span> prior, which implies that <span class="math inline">\(p(\theta) = 1\)</span> for <span class="math inline">\(0 &lt; \theta &lt; 1\)</span>. In this case, the posterior <span class="math inline">\(h(\theta) = \pi(\theta| \boldsymbol{x})\)</span> is such that
+<span class="math display">\[h(\boldsymbol{\theta}) \propto L(\theta; \boldsymbol{x}) = \prod_{j=1}^N\theta^{x_j}(1 - \theta)^{1-x_j} = \theta^{\sum_{j=1}^Nx_j}(1-\theta)^{N-\sum_{j=1}^Nx_j} = f(\theta).\]</span></p>
+<p>Let’s assume that we have <span class="math inline">\(N = 20\)</span> observations and that 15 of these Bernoulli trials were successful (<span class="math inline">\(\sum_{j=1}^N x_j = 15\)</span>). It follows that <span class="math inline">\(f(\theta) = \theta^{15}(1-\theta)^5\)</span> for <span class="math inline">\(0 &lt; \theta &lt; 1\)</span>. For this example, <span class="math inline">\(h(\theta)\)</span> is actually known: it is a <span class="math inline">\(\text{BETA}(16, 6)\)</span> distribution. Therefore, we do not need to use sampling-resampling methods to sample from <span class="math inline">\(h(\boldsymbol{\theta})\)</span>. However, because <span class="math inline">\(h(\theta)\)</span> is known, we can use this example to explore the performance of the SIR algorithm for different proposal distributions <span class="math inline">\(g(\boldsymbol{\theta})\)</span>. The first proposal distribution that we consider is <span class="math inline">\(g(\theta) = 1\)</span> for <span class="math inline">\(0 &lt; \theta &lt; 1\)</span> (i.e., the <span class="math inline">\(U(0,1)\)</span> distribution). We plot <span class="math inline">\(h(\theta)\)</span> and <span class="math inline">\(g(\theta)\)</span> in Figure <a href="sampling-resampling-methods.html#fig:unif1">2.3</a>.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="sampling-resampling-methods.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="do">## compute h and g across the range of theta for plotting purposes</span></span>
+<span id="cb13-2"><a href="sampling-resampling-methods.html#cb13-2" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.005</span>)</span>
+<span id="cb13-3"><a href="sampling-resampling-methods.html#cb13-3" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="fu">dbeta</span>(theta, <span class="dv">16</span>, <span class="dv">6</span>)</span>
+<span id="cb13-4"><a href="sampling-resampling-methods.html#cb13-4" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">length</span>(theta))</span>
+<span id="cb13-5"><a href="sampling-resampling-methods.html#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="sampling-resampling-methods.html#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="do">## generate the plot and corresponding legend</span></span>
+<span id="cb13-7"><a href="sampling-resampling-methods.html#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(theta, h, <span class="at">col =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Density&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, </span>
+<span id="cb13-8"><a href="sampling-resampling-methods.html#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="fl">4.5</span>), <span class="at">xlab =</span> <span class="fu">expression</span>(theta))</span>
+<span id="cb13-9"><a href="sampling-resampling-methods.html#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(theta, g, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb13-10"><a href="sampling-resampling-methods.html#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;h&quot;</span>, <span class="st">&quot;g&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;steelblue&quot;</span>, <span class="st">&quot;black&quot;</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, </span>
+<span id="cb13-11"><a href="sampling-resampling-methods.html#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="dv">2</span>), <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unif1"></span>
+<img src="bookdownproj_files/figure-html/unif1-1.png" alt="Visualization of posterior and uniform sampling function" width="672" />
+<p class="caption">
+Figure 2.3: Visualization of posterior and uniform sampling function
+</p>
+</div>
+<p>While <span class="math inline">\(h(\theta)\)</span> and <span class="math inline">\(g(\theta)\)</span> have the same support, it does not appear that <span class="math inline">\(U(0,1)\)</span> will be a very efficient proposal distribution for this example. Values of <span class="math inline">\(\theta_i\)</span> close to 0 that are generated via <span class="math inline">\(g(\theta)\)</span> will be assigned standardized weights of <span class="math inline">\(q_i \approx 0\)</span>. We now show how to implement the entire SIR algorithm for this example with the uniform sampling function. We use the settings <span class="math inline">\(n\)</span> = 1 million and <span class="math inline">\(m = 50000\)</span>. The results are visualized in Figure <a href="sampling-resampling-methods.html#fig:unif2">2.4</a>.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="sampling-resampling-methods.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="do">## input the sample of 20 observations into R</span></span>
+<span id="cb14-2"><a href="sampling-resampling-methods.html#cb14-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">15</span>), <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">5</span>))</span>
+<span id="cb14-3"><a href="sampling-resampling-methods.html#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="sampling-resampling-methods.html#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="do">## extract the number of observations (N) and successes</span></span>
+<span id="cb14-5"><a href="sampling-resampling-methods.html#cb14-5" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">length</span>(x)</span>
+<span id="cb14-6"><a href="sampling-resampling-methods.html#cb14-6" aria-hidden="true" tabindex="-1"></a>sum_x <span class="ot">&lt;-</span> <span class="fu">sum</span>(x)</span>
+<span id="cb14-7"><a href="sampling-resampling-methods.html#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="sampling-resampling-methods.html#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="do">## define SIR algorithm settings</span></span>
+<span id="cb14-9"><a href="sampling-resampling-methods.html#cb14-9" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fl">1e+06</span></span>
+<span id="cb14-10"><a href="sampling-resampling-methods.html#cb14-10" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="dv">50000</span></span>
+<span id="cb14-11"><a href="sampling-resampling-methods.html#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="sampling-resampling-methods.html#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="do">## define a function that is proportional to the posterior (on the</span></span>
+<span id="cb14-13"><a href="sampling-resampling-methods.html#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="do">## logarithmic scale)</span></span>
+<span id="cb14-14"><a href="sampling-resampling-methods.html#cb14-14" aria-hidden="true" tabindex="-1"></a>propLog <span class="ot">&lt;-</span> <span class="cf">function</span>(theta, obs, sum_data) {</span>
+<span id="cb14-15"><a href="sampling-resampling-methods.html#cb14-15" aria-hidden="true" tabindex="-1"></a>    <span class="do">## return -Inf is theta is not between 0 and 1 (this will</span></span>
+<span id="cb14-16"><a href="sampling-resampling-methods.html#cb14-16" aria-hidden="true" tabindex="-1"></a>    <span class="do">## exponentiate to give q_i = 0)</span></span>
+<span id="cb14-17"><a href="sampling-resampling-methods.html#cb14-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">ifelse</span>(theta <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> theta <span class="sc">&lt;</span> <span class="dv">1</span>, sum_data <span class="sc">*</span> <span class="fu">log</span>(theta) <span class="sc">+</span> (obs <span class="sc">-</span> </span>
+<span id="cb14-18"><a href="sampling-resampling-methods.html#cb14-18" aria-hidden="true" tabindex="-1"></a>        sum_data) <span class="sc">*</span> <span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> theta), <span class="sc">-</span><span class="cn">Inf</span>))</span>
+<span id="cb14-19"><a href="sampling-resampling-methods.html#cb14-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-20"><a href="sampling-resampling-methods.html#cb14-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-21"><a href="sampling-resampling-methods.html#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2</span>)</span>
+<span id="cb14-22"><a href="sampling-resampling-methods.html#cb14-22" aria-hidden="true" tabindex="-1"></a><span class="do">## sample from proposal distribution</span></span>
+<span id="cb14-23"><a href="sampling-resampling-methods.html#cb14-23" aria-hidden="true" tabindex="-1"></a>samp <span class="ot">&lt;-</span> <span class="fu">runif</span>(n)</span>
+<span id="cb14-24"><a href="sampling-resampling-methods.html#cb14-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-25"><a href="sampling-resampling-methods.html#cb14-25" aria-hidden="true" tabindex="-1"></a><span class="do">## form importance sampling weights on log-scale; here, log(g(theta))</span></span>
+<span id="cb14-26"><a href="sampling-resampling-methods.html#cb14-26" aria-hidden="true" tabindex="-1"></a><span class="do">## = log(1) = 0 for all 0 &lt; theta &lt; 1</span></span>
+<span id="cb14-27"><a href="sampling-resampling-methods.html#cb14-27" aria-hidden="true" tabindex="-1"></a>w1 <span class="ot">&lt;-</span> <span class="fu">propLog</span>(samp, N, sum_x) <span class="sc">-</span> <span class="dv">0</span></span>
+<span id="cb14-28"><a href="sampling-resampling-methods.html#cb14-28" aria-hidden="true" tabindex="-1"></a>w1 <span class="ot">&lt;-</span> <span class="fu">exp</span>(w1 <span class="sc">-</span> <span class="fu">max</span>(w1))</span>
+<span id="cb14-29"><a href="sampling-resampling-methods.html#cb14-29" aria-hidden="true" tabindex="-1"></a>q1 <span class="ot">&lt;-</span> w1<span class="sc">/</span><span class="fu">sum</span>(w1)</span>
+<span id="cb14-30"><a href="sampling-resampling-methods.html#cb14-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-31"><a href="sampling-resampling-methods.html#cb14-31" aria-hidden="true" tabindex="-1"></a><span class="do">## resample to create approximate sample from posterior</span></span>
+<span id="cb14-32"><a href="sampling-resampling-methods.html#cb14-32" aria-hidden="true" tabindex="-1"></a>inds1 <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">seq</span>(<span class="dv">1</span>, n, <span class="at">by =</span> <span class="dv">1</span>), <span class="at">size =</span> m, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> q1)</span>
+<span id="cb14-33"><a href="sampling-resampling-methods.html#cb14-33" aria-hidden="true" tabindex="-1"></a>post1 <span class="ot">&lt;-</span> samp[inds1]</span>
+<span id="cb14-34"><a href="sampling-resampling-methods.html#cb14-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-35"><a href="sampling-resampling-methods.html#cb14-35" aria-hidden="true" tabindex="-1"></a><span class="do">## generate the plot and corresponding legend</span></span>
+<span id="cb14-36"><a href="sampling-resampling-methods.html#cb14-36" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(post1, <span class="at">col =</span> <span class="fu">adjustcolor</span>(<span class="st">&quot;grey50&quot;</span>, <span class="fl">0.15</span>), <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">freq =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb14-37"><a href="sampling-resampling-methods.html#cb14-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="dv">1</span>), <span class="at">xlab =</span> <span class="fu">expression</span>(theta), <span class="at">ylab =</span> <span class="st">&quot;Density&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, </span>
+<span id="cb14-38"><a href="sampling-resampling-methods.html#cb14-38" aria-hidden="true" tabindex="-1"></a>        <span class="fl">4.5</span>))</span>
+<span id="cb14-39"><a href="sampling-resampling-methods.html#cb14-39" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(theta, h, <span class="at">col =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span>
+<span id="cb14-40"><a href="sampling-resampling-methods.html#cb14-40" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(theta, g, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb14-41"><a href="sampling-resampling-methods.html#cb14-41" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;h&quot;</span>, <span class="st">&quot;g&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;steelblue&quot;</span>, <span class="st">&quot;black&quot;</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, </span>
+<span id="cb14-42"><a href="sampling-resampling-methods.html#cb14-42" aria-hidden="true" tabindex="-1"></a>    <span class="dv">2</span>), <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unif2"></span>
+<img src="bookdownproj_files/figure-html/unif2-1.png" alt="Histogram of posterior sample 1 obtained using SIR (with densities for $h$ and $g$)" width="672" />
+<p class="caption">
+Figure 2.4: Histogram of posterior sample 1 obtained using SIR (with densities for <span class="math inline">\(h\)</span> and <span class="math inline">\(g\)</span>)
+</p>
+</div>
+<p>The uniform proposal distribution appears to be serviceable for this example. The density curve for <span class="math inline">\(h(\theta)\)</span> – which is not known exactly in most situations – agrees well with histogram of the approximate posterior sample. However, the simulation results confirm that this distribution is not very efficient. The histogram of the standardized weights for this simulation is given in Figure <a href="sampling-resampling-methods.html#fig:unif3">2.5</a>.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="sampling-resampling-methods.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="do">## generate the plot and corresponding legend</span></span>
+<span id="cb15-2"><a href="sampling-resampling-methods.html#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(q1, <span class="at">col =</span> <span class="fu">adjustcolor</span>(<span class="st">&quot;grey50&quot;</span>, <span class="fl">0.15</span>), <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">xlab =</span> <span class="fu">expression</span>(q), </span>
+<span id="cb15-3"><a href="sampling-resampling-methods.html#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">&quot;Frequency&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unif3"></span>
+<img src="bookdownproj_files/figure-html/unif3-1.png" alt="Histogram of standardized weights from SIR algorithm (uniform proposal)" width="672" />
+<p class="caption">
+Figure 2.5: Histogram of standardized weights from SIR algorithm (uniform proposal)
+</p>
+</div>
+<p>If we were to use <span class="math inline">\(h(\theta)\)</span> as the proposal, all weights should be equal to <span class="math inline">\(n^{-1} = 1000000^{-1} = 1 \times 10^{-6}\)</span>. In Figure <a href="sampling-resampling-methods.html#fig:unif3">2.5</a>, we can see that many of the standarized weights are extremely close to 0, and these <span class="math inline">\(\theta\)</span> values are very unlikely to be selected during the weighted sampling process. In contrast, some of the weights are more than 4 times greater than <span class="math inline">\(1 \times 10^{-6}\)</span>. If we do not generate many points from <span class="math inline">\(g(\theta)\)</span> (<span class="math inline">\(n\)</span> is small), then our posterior sample may not have many unique points. This issue can be overcome by generating a very large sample of points from the proposal distribution. We now discuss other potential choices for the proposal distribution for this example.</p>
+</div>
+<div id="practical-considerations-for-choosing-proposal-distributions" class="section level3" number="2.4.2">
+<h3><span class="header-section-number">2.4.2</span> Practical Considerations for Choosing Proposal Distributions</h3>
+<p>Diffuse distributions that are easy to sample from are often popular choices for proposal distributions. In particular, the uniform and normal distributions are often parameterized appropriately to serve this purpose. There are adaptive extensions to the SIR algorithm, including those by <span class="citation">West (1993)</span> and <span class="citation">Givens and Raftery (1996)</span>. These methods typically specify a diffuse proposal distribution to obtain an initial sample from <span class="math inline">\(h(\boldsymbol{\theta})\)</span>. This initial sample from <span class="math inline">\(h(\boldsymbol{\theta})\)</span> then informs a better proposal distribution and the SIR algorithm is run again. This process is repeated as necessary. We do not discuss these methods further in this workshop; we focus on the case where an approximate sample is obtained by running the SIR algorithm one time with a given proposal distribution.</p>
+<p>We now show how to implement the SIR algorithm for this example with the normal proposal density <span class="math inline">\(N(0.75, 0.15)\)</span>, where <span class="math inline">\(0.15\)</span> is the standard deviation. We discuss why this is an appropriate proposal distribution shortly. The results are visualized in Figure <a href="sampling-resampling-methods.html#fig:norm1">2.6</a>.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="sampling-resampling-methods.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">3</span>)</span>
+<span id="cb16-2"><a href="sampling-resampling-methods.html#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="sampling-resampling-methods.html#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="do">## define parameters for proposal distribution</span></span>
+<span id="cb16-4"><a href="sampling-resampling-methods.html#cb16-4" aria-hidden="true" tabindex="-1"></a>mu_g <span class="ot">&lt;-</span> <span class="fl">0.75</span></span>
+<span id="cb16-5"><a href="sampling-resampling-methods.html#cb16-5" aria-hidden="true" tabindex="-1"></a>sigma_g <span class="ot">&lt;-</span> <span class="fl">0.15</span></span>
+<span id="cb16-6"><a href="sampling-resampling-methods.html#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="sampling-resampling-methods.html#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="do">## sample from proposal distribution</span></span>
+<span id="cb16-8"><a href="sampling-resampling-methods.html#cb16-8" aria-hidden="true" tabindex="-1"></a>samp <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, mu_g, sigma_g)</span>
+<span id="cb16-9"><a href="sampling-resampling-methods.html#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="sampling-resampling-methods.html#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="do">## form importance sampling weights on log-scale;</span></span>
+<span id="cb16-11"><a href="sampling-resampling-methods.html#cb16-11" aria-hidden="true" tabindex="-1"></a>w2 <span class="ot">&lt;-</span> <span class="fu">propLog</span>(samp, N, sum_x) <span class="sc">-</span> <span class="fu">dnorm</span>(samp, mu_g, sigma_g, <span class="at">log =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb16-12"><a href="sampling-resampling-methods.html#cb16-12" aria-hidden="true" tabindex="-1"></a>w2 <span class="ot">&lt;-</span> <span class="fu">exp</span>(w2 <span class="sc">-</span> <span class="fu">max</span>(w2))</span>
+<span id="cb16-13"><a href="sampling-resampling-methods.html#cb16-13" aria-hidden="true" tabindex="-1"></a>q2 <span class="ot">&lt;-</span> w2<span class="sc">/</span><span class="fu">sum</span>(w2)</span>
+<span id="cb16-14"><a href="sampling-resampling-methods.html#cb16-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-15"><a href="sampling-resampling-methods.html#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="do">## resample to create approximate sample from posterior</span></span>
+<span id="cb16-16"><a href="sampling-resampling-methods.html#cb16-16" aria-hidden="true" tabindex="-1"></a>inds2 <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">seq</span>(<span class="dv">1</span>, n, <span class="at">by =</span> <span class="dv">1</span>), <span class="at">size =</span> m, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> q2)</span>
+<span id="cb16-17"><a href="sampling-resampling-methods.html#cb16-17" aria-hidden="true" tabindex="-1"></a>post2 <span class="ot">&lt;-</span> samp[inds2]</span>
+<span id="cb16-18"><a href="sampling-resampling-methods.html#cb16-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-19"><a href="sampling-resampling-methods.html#cb16-19" aria-hidden="true" tabindex="-1"></a><span class="do">## generate the plot and corresponding legend</span></span>
+<span id="cb16-20"><a href="sampling-resampling-methods.html#cb16-20" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(post2, <span class="at">col =</span> <span class="fu">adjustcolor</span>(<span class="st">&quot;grey50&quot;</span>, <span class="fl">0.15</span>), <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">freq =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb16-21"><a href="sampling-resampling-methods.html#cb16-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="dv">1</span>), <span class="at">xlab =</span> <span class="fu">expression</span>(theta), <span class="at">ylab =</span> <span class="st">&quot;Density&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, </span>
+<span id="cb16-22"><a href="sampling-resampling-methods.html#cb16-22" aria-hidden="true" tabindex="-1"></a>        <span class="fl">4.5</span>))</span>
+<span id="cb16-23"><a href="sampling-resampling-methods.html#cb16-23" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(theta, h, <span class="at">col =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span>
+<span id="cb16-24"><a href="sampling-resampling-methods.html#cb16-24" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(theta, <span class="fu">dnorm</span>(theta, mu_g, sigma_g), <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb16-25"><a href="sampling-resampling-methods.html#cb16-25" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;h&quot;</span>, <span class="st">&quot;g&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;steelblue&quot;</span>, <span class="st">&quot;black&quot;</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, </span>
+<span id="cb16-26"><a href="sampling-resampling-methods.html#cb16-26" aria-hidden="true" tabindex="-1"></a>    <span class="dv">2</span>), <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:norm1"></span>
+<img src="bookdownproj_files/figure-html/norm1-1.png" alt="Histogram of posterior sample 2 obtained using SIR (with densities for $h$ and $g$)" width="672" />
+<p class="caption">
+Figure 2.6: Histogram of posterior sample 2 obtained using SIR (with densities for <span class="math inline">\(h\)</span> and <span class="math inline">\(g\)</span>)
+</p>
+</div>
+<p>We can see the <span class="math inline">\(N(0.75, 0.15)\)</span> proposal distribution performs well for this example. The density curve for <span class="math inline">\(h(\theta)\)</span> coincides with histogram of the approximate posterior sample. We can see that the density curve for this proposal distribution <span class="math inline">\(g(\theta)\)</span> resembles the posterior of interest <span class="math inline">\(h(\theta)\)</span> more than the uniform proposal distribution. In fact, the modes of <span class="math inline">\(h(\theta)\)</span> and <span class="math inline">\(g(\theta)\)</span> are the same: 0.75. We note that the support of the normal distribution is not restricted to the unit interval. However, this is not a problem. The <span class="math inline">\(\theta_i\)</span> values generated via <span class="math inline">\(g(\theta)\)</span> such that <span class="math inline">\(\theta_i \notin (0,1)\)</span> are assigned standardized sampling weights of <span class="math inline">\(q_i = 0\)</span>.</p>
+<p>The histogram of the standardized weights for this simulation, given in Figure <a href="sampling-resampling-methods.html#fig:norm2">2.7</a>, suggests that this proposal distribution is more efficient than the previous one: the standardized weights take values closer to <span class="math inline">\(1 \times 10^{-6}\)</span> than for the previous example. We discuss numerical methods to compare proposal distributions in the next subsection.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="sampling-resampling-methods.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="do">## generate the plot and corresponding legend</span></span>
+<span id="cb17-2"><a href="sampling-resampling-methods.html#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(q2, <span class="at">col =</span> <span class="fu">adjustcolor</span>(<span class="st">&quot;grey50&quot;</span>, <span class="fl">0.15</span>), <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">xlab =</span> <span class="fu">expression</span>(q), </span>
+<span id="cb17-3"><a href="sampling-resampling-methods.html#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">&quot;Frequency&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:norm2"></span>
+<img src="bookdownproj_files/figure-html/norm2-1.png" alt="Histogram of standardized weights from SIR algorithm (normal proposal 1)" width="672" />
+<p class="caption">
+Figure 2.7: Histogram of standardized weights from SIR algorithm (normal proposal 1)
+</p>
+</div>
+<p>We now explore what occurs when we implement the SIR algorithm for this example with an inappropriate proposal distribution. We choose the normal proposal density <span class="math inline">\(N(0.85, 0.05)\)</span>, where <span class="math inline">\(0.05\)</span> is the standard deviation. We discuss why this is not an appropriate proposal distribution shortly. The results are visualized in Figure <a href="sampling-resampling-methods.html#fig:norm3">2.8</a>.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="sampling-resampling-methods.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">5</span>)</span>
+<span id="cb18-2"><a href="sampling-resampling-methods.html#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="sampling-resampling-methods.html#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="do">## define parameters for proposal distribution</span></span>
+<span id="cb18-4"><a href="sampling-resampling-methods.html#cb18-4" aria-hidden="true" tabindex="-1"></a>mu_g <span class="ot">&lt;-</span> <span class="fl">0.85</span></span>
+<span id="cb18-5"><a href="sampling-resampling-methods.html#cb18-5" aria-hidden="true" tabindex="-1"></a>sigma_g <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb18-6"><a href="sampling-resampling-methods.html#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="sampling-resampling-methods.html#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="do">## sample from proposal distribution</span></span>
+<span id="cb18-8"><a href="sampling-resampling-methods.html#cb18-8" aria-hidden="true" tabindex="-1"></a>samp <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, mu_g, sigma_g)</span>
+<span id="cb18-9"><a href="sampling-resampling-methods.html#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="sampling-resampling-methods.html#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="do">## form importance sampling weights on log-scale;</span></span>
+<span id="cb18-11"><a href="sampling-resampling-methods.html#cb18-11" aria-hidden="true" tabindex="-1"></a>w3 <span class="ot">&lt;-</span> <span class="fu">propLog</span>(samp, N, sum_x) <span class="sc">-</span> <span class="fu">dnorm</span>(samp, mu_g, sigma_g, <span class="at">log =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb18-12"><a href="sampling-resampling-methods.html#cb18-12" aria-hidden="true" tabindex="-1"></a>w3 <span class="ot">&lt;-</span> <span class="fu">exp</span>(w3 <span class="sc">-</span> <span class="fu">max</span>(w3))</span>
+<span id="cb18-13"><a href="sampling-resampling-methods.html#cb18-13" aria-hidden="true" tabindex="-1"></a>q3 <span class="ot">&lt;-</span> w3<span class="sc">/</span><span class="fu">sum</span>(w3)</span>
+<span id="cb18-14"><a href="sampling-resampling-methods.html#cb18-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-15"><a href="sampling-resampling-methods.html#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="do">## resample to create approximate sample from posterior</span></span>
+<span id="cb18-16"><a href="sampling-resampling-methods.html#cb18-16" aria-hidden="true" tabindex="-1"></a>inds3 <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">seq</span>(<span class="dv">1</span>, n, <span class="at">by =</span> <span class="dv">1</span>), <span class="at">size =</span> m, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> q3)</span>
+<span id="cb18-17"><a href="sampling-resampling-methods.html#cb18-17" aria-hidden="true" tabindex="-1"></a>post3 <span class="ot">&lt;-</span> samp[inds3]</span>
+<span id="cb18-18"><a href="sampling-resampling-methods.html#cb18-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-19"><a href="sampling-resampling-methods.html#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="do">## generate the plot and corresponding legend</span></span>
+<span id="cb18-20"><a href="sampling-resampling-methods.html#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(post3, <span class="at">col =</span> <span class="fu">adjustcolor</span>(<span class="st">&quot;grey50&quot;</span>, <span class="fl">0.15</span>), <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">freq =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb18-21"><a href="sampling-resampling-methods.html#cb18-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="dv">1</span>), <span class="at">xlab =</span> <span class="fu">expression</span>(theta), <span class="at">ylab =</span> <span class="st">&quot;Density&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, </span>
+<span id="cb18-22"><a href="sampling-resampling-methods.html#cb18-22" aria-hidden="true" tabindex="-1"></a>        <span class="dv">8</span>))</span>
+<span id="cb18-23"><a href="sampling-resampling-methods.html#cb18-23" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(theta, h, <span class="at">col =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span>
+<span id="cb18-24"><a href="sampling-resampling-methods.html#cb18-24" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(theta, <span class="fu">dnorm</span>(theta, mu_g, sigma_g), <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb18-25"><a href="sampling-resampling-methods.html#cb18-25" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;h&quot;</span>, <span class="st">&quot;g&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;steelblue&quot;</span>, <span class="st">&quot;black&quot;</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, </span>
+<span id="cb18-26"><a href="sampling-resampling-methods.html#cb18-26" aria-hidden="true" tabindex="-1"></a>    <span class="dv">2</span>), <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:norm3"></span>
+<img src="bookdownproj_files/figure-html/norm3-1.png" alt="Histogram of posterior sample 3 obtained using SIR (with densities for $h$ and $g$)" width="672" />
+<p class="caption">
+Figure 2.8: Histogram of posterior sample 3 obtained using SIR (with densities for <span class="math inline">\(h\)</span> and <span class="math inline">\(g\)</span>)
+</p>
+</div>
+<p>We can see the <span class="math inline">\(N(0.85, 0.05)\)</span> proposal distribution does not perform well for this example. The density curve for <span class="math inline">\(h(\theta)\)</span> deviates histogram of the approximate posterior sample. Although the support for <span class="math inline">\(g(\theta)\)</span> is <span class="math inline">\(\theta \in \mathbb{R}\)</span>, <span class="math inline">\(g(\theta)\)</span> is practically 0 for <span class="math inline">\(\theta &lt; 0.6\)</span>. It is extremely unlikely that we will sample <span class="math inline">\(\theta\)</span> values less than 0.6 for finite <span class="math inline">\(n\)</span>, and they will not appear in the final sample.</p>
+<p>In practice, we do not know <span class="math inline">\(h(\theta)\)</span>, so we cannot compare the distribution of the sample to the density of <span class="math inline">\(h(\theta)\)</span>. However, we can compare the distribution of the approximate posterior sample to the proposal <span class="math inline">\(g(\theta)\)</span>. We can see that many of the <span class="math inline">\(\theta\)</span> values in our sample correspond to extreme values of the proposal distribution <span class="math inline">\(g(\theta)\)</span>; this suggests that the proposal distribution may not be diffuse enough. If <span class="math inline">\(\boldsymbol{\theta}\)</span> is multivariate, then we could compare low dimensional projections of the sample distribution and <span class="math inline">\(g(\boldsymbol{\theta})\)</span>.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="sampling-resampling-methods.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="do">## return maximum standardized weight</span></span>
+<span id="cb19-2"><a href="sampling-resampling-methods.html#cb19-2" aria-hidden="true" tabindex="-1"></a>(<span class="fu">max</span>(q3))</span></code></pre></div>
+<pre><code>## [1] 0.01455077</code></pre>
+<p>The maximum standardized weight for this simulation is 0.01455. This is 14550 times larger than <span class="math inline">\(1 \times 10^{-6}\)</span>, which indicates that the proposal distribution does not resemble the density of interest <span class="math inline">\(h(\theta)\)</span> very much.</p>
+</div>
+<div id="comparing-proposal-distributions" class="section level3" number="2.4.3">
+<h3><span class="header-section-number">2.4.3</span> Comparing Proposal Distributions</h3>
+<p>Here, we consider two numerical metrics to evaluate the suitability of the proposal distribution that are presented in <span class="citation">Givens and Raftery (1996)</span>. If the typically unknown <span class="math inline">\(h(\boldsymbol{\theta})\)</span> were used as a proposal distribution, all standardized sampling weights would take a value of <span class="math inline">\(1 \times 10^{-6}\)</span>. When most sampling weights take values close to <span class="math inline">\(1 \times 10^{-6}\)</span>, our final approximate sample of size <span class="math inline">\(m\)</span> should contain many unique points. That is, our sample should not be comprised of several points that are each selected many times.</p>
+<p>We let <span class="math inline">\(Q\)</span> be the number of unique points in our final sample of <span class="math inline">\(m\)</span> values. When all sampling weights are constant (i.e., equal to <span class="math inline">\(1/n\)</span>), then <span class="math inline">\(\mathbb{E}(Q) \approx n(1- \text{exp}(-m/n))\)</span>. We then define
+<span class="math display">\[U = \frac{Q}{n(1- \text{exp}(-m/n))}.\]</span>
+<span class="math inline">\(U\)</span> generally takes values between 0 and 1. We note that <span class="math inline">\(U\)</span> can take values of greater than 1, particularly when the proposal density closely resembles <span class="math inline">\(h(\boldsymbol{\theta})\)</span>. However, this is not likely to be the case when <span class="math inline">\(g(\boldsymbol{\theta})\)</span> and <span class="math inline">\(h(\boldsymbol{\theta})\)</span> differ substantially. Generally, larger values of <span class="math inline">\(U\)</span> are preferred. We now compute the <span class="math inline">\(U\)</span> values for each of the three proposal densities considered for this illustrative example: <span class="math inline">\(U(0,1)\)</span>, <span class="math inline">\(N(0.75, 0.15)\)</span>, and <span class="math inline">\(N(0.85, 0.05)\)</span>.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="sampling-resampling-methods.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="do">## compute denominator for U (number of m = 50000 points expected to</span></span>
+<span id="cb21-2"><a href="sampling-resampling-methods.html#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="do">## be unique under proposal h)</span></span>
+<span id="cb21-3"><a href="sampling-resampling-methods.html#cb21-3" aria-hidden="true" tabindex="-1"></a>(denom <span class="ot">&lt;-</span> n <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fu">exp</span>(<span class="sc">-</span>m<span class="sc">/</span>n)))</span></code></pre></div>
+<pre><code>## [1] 48770.58</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="sampling-resampling-methods.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="do">## compute U for U(0,1)</span></span>
+<span id="cb23-2"><a href="sampling-resampling-methods.html#cb23-2" aria-hidden="true" tabindex="-1"></a>(u1 <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">length</span>(<span class="fu">unique</span>(inds1))<span class="sc">/</span>denom, <span class="dv">4</span>))</span></code></pre></div>
+<pre><code>## [1] 0.9511</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="sampling-resampling-methods.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="do">## compute U for N(0.75, 0.15)</span></span>
+<span id="cb25-2"><a href="sampling-resampling-methods.html#cb25-2" aria-hidden="true" tabindex="-1"></a>(u2 <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">length</span>(<span class="fu">unique</span>(inds2))<span class="sc">/</span>denom, <span class="dv">4</span>))</span></code></pre></div>
+<pre><code>## [1] 0.9943</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="sampling-resampling-methods.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="do">## compute U for N(0.85, 0.05)</span></span>
+<span id="cb27-2"><a href="sampling-resampling-methods.html#cb27-2" aria-hidden="true" tabindex="-1"></a>(u3 <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">length</span>(<span class="fu">unique</span>(inds3))<span class="sc">/</span>denom, <span class="dv">4</span>))</span></code></pre></div>
+<pre><code>## [1] 0.6875</code></pre>
+<p>The <span class="math inline">\(U\)</span> values are 0.9511 for <span class="math inline">\(U(0,1)\)</span>, 0.9943 for <span class="math inline">\(N(0.75, 0.15)\)</span>, and 0.6875 for <span class="math inline">\(N(0.85, 0.05)\)</span>. The <span class="math inline">\(N(0.75, 0.15)\)</span> proposal distribution has the largest <span class="math inline">\(U\)</span> value, which agrees with informal insights drawn from the histograms of the standardized sampling weights.</p>
+<p>Similarly, we could also consider the mean squared distance between <span class="math inline">\(n\)</span> times the standardized sampling weights and 1. To this end, we let
+<span class="math display">\[D = n^{-1}\sum_{i=1}^n(n\times q_i - 1)^2 = n\sum_{i=1}^n(q_i - n^{-1})^2,\]</span>
+where <span class="math inline">\(n\)</span> = 1 million for this example. This metric <span class="math inline">\(D\)</span> penalizes proposal densities that give rise to situations where a few small regions of its support yield extremely large standardized sampling weights. Generally, smaller values of <span class="math inline">\(D\)</span> are preferred. We now compute the <span class="math inline">\(D\)</span> values for each of the three proposal densities considered for this illustrative example.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="sampling-resampling-methods.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="do">## compute D for U(0,1)</span></span>
+<span id="cb29-2"><a href="sampling-resampling-methods.html#cb29-2" aria-hidden="true" tabindex="-1"></a>(d1 <span class="ot">&lt;-</span> <span class="fu">round</span>(n <span class="sc">*</span> <span class="fu">sum</span>((q1 <span class="sc">-</span> <span class="dv">1</span><span class="sc">/</span>n)<span class="sc">^</span><span class="dv">2</span>), <span class="dv">3</span>))</span></code></pre></div>
+<pre><code>## [1] 2.046</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="sampling-resampling-methods.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="do">## compute D for N(0.75, 0.15)</span></span>
+<span id="cb31-2"><a href="sampling-resampling-methods.html#cb31-2" aria-hidden="true" tabindex="-1"></a>(d2 <span class="ot">&lt;-</span> <span class="fu">round</span>(n <span class="sc">*</span> <span class="fu">sum</span>((q2 <span class="sc">-</span> <span class="dv">1</span><span class="sc">/</span>n)<span class="sc">^</span><span class="dv">2</span>), <span class="dv">3</span>))</span></code></pre></div>
+<pre><code>## [1] 0.291</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="sampling-resampling-methods.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="do">## compute D for N(0.85, 0.05)</span></span>
+<span id="cb33-2"><a href="sampling-resampling-methods.html#cb33-2" aria-hidden="true" tabindex="-1"></a>(d3 <span class="ot">&lt;-</span> <span class="fu">round</span>(n <span class="sc">*</span> <span class="fu">sum</span>((q3 <span class="sc">-</span> <span class="dv">1</span><span class="sc">/</span>n)<span class="sc">^</span><span class="dv">2</span>), <span class="dv">3</span>))</span></code></pre></div>
+<pre><code>## [1] 658.621</code></pre>
+<p>The <span class="math inline">\(D\)</span> values are 2.046 for <span class="math inline">\(U(0,1)\)</span>, 0.291 for <span class="math inline">\(N(0.75, 0.15)\)</span>, and 658.621 for <span class="math inline">\(N(0.85, 0.05)\)</span>. The <span class="math inline">\(N(0.75, 0.15)\)</span> proposal distribution has the smallest <span class="math inline">\(D\)</span> value. <span class="citation">Givens and Raftery (1996)</span> suggested comparing competing proposal distributions using the ratio of their D values. In this case, the <span class="math inline">\(N(0.75, 0.15)\)</span> proposal is about 7 times better than the <span class="math inline">\(U(0,1)\)</span> proposal.</p>
+</div>
+</div>
+<div id="sampling-resampling-in-multiple-dimensions" class="section level2" number="2.5">
+<h2><span class="header-section-number">2.5</span> Sampling-Resampling in Multiple Dimensions</h2>
+<div id="exercise-with-illustrative-example" class="section level3" number="2.5.1">
+<h3><span class="header-section-number">2.5.1</span> Exercise with Illustrative Example</h3>
+<p>We now briefly consider how to implement the SIR algorithm for a multivariate example. In this example, we assume that we observe data <span class="math inline">\(x_1, x_2 &gt;0\)</span>. Here, we assume that <span class="math inline">\(\boldsymbol{\theta} = (\alpha, \beta)^T\)</span> for <span class="math inline">\(0 &lt; \alpha &lt; 1\)</span> and <span class="math inline">\(0 &lt; \beta &lt; 1\)</span>. We independently assume a <span class="math inline">\(U(0,1)\)</span> prior for <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>, which implies that <span class="math inline">\(p(\alpha, \beta) = 1\)</span> for <span class="math inline">\(0 &lt; \alpha, \beta &lt; 1\)</span>. In this case, the posterior <span class="math inline">\(h(\alpha, \beta) = \pi(\alpha, \beta| \boldsymbol{x})\)</span> is proportional to the likelihood function that we define below:
+<span class="math display">\[h(\alpha, \beta) \propto L(\alpha, \beta; \boldsymbol{x}) = \alpha(1-\alpha)\beta(1-\beta)\text{exp}(-x_1\alpha -\beta^{x_2}) = f(\alpha,\beta).\]</span></p>
+<p>Let’s assume that we observe <span class="math inline">\(x_1 = 3\)</span> and <span class="math inline">\(x_2 = 5\)</span> We will use the prior <span class="math inline">\(p(\alpha, \beta) = 1\)</span> for <span class="math inline">\(0 &lt; \alpha, \beta &lt; 1\)</span> as the proposal density <span class="math inline">\(g(\alpha, \beta)\)</span>. You can complete the following code block to generate a contour plot of the posterior sample, depicted in Figure <a href="sampling-resampling-methods.html#fig:multi2">2.9</a>. A helper function is provided to compute <span class="math inline">\(\text{log}(f(\alpha, \beta))\)</span>. In general, it can be more difficult to chose proposal densities for multivariate posteriors of interest, especially when the support is unbounded. Adaptive sampling-resampling methods can be quite useful in these situations. Moreover, we generally require larger values for <span class="math inline">\(n\)</span> and <span class="math inline">\(m\)</span> used with the SIR algorithm when the domain over which we want to sample is multivariate.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="sampling-resampling-methods.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="do">## define SIR algorithm settings</span></span>
+<span id="cb35-2"><a href="sampling-resampling-methods.html#cb35-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">2500000</span></span>
+<span id="cb35-3"><a href="sampling-resampling-methods.html#cb35-3" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="dv">125000</span></span>
+<span id="cb35-4"><a href="sampling-resampling-methods.html#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="sampling-resampling-methods.html#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="do">## define a function that is proportional to the posterior (on the</span></span>
+<span id="cb35-6"><a href="sampling-resampling-methods.html#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="do">## logarithmic scale)</span></span>
+<span id="cb35-7"><a href="sampling-resampling-methods.html#cb35-7" aria-hidden="true" tabindex="-1"></a>propLog <span class="ot">&lt;-</span> <span class="cf">function</span>(alpha, beta) {</span>
+<span id="cb35-8"><a href="sampling-resampling-methods.html#cb35-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">log</span>(alpha) <span class="sc">+</span> <span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> alpha) <span class="sc">+</span> <span class="fu">log</span>(beta) <span class="sc">+</span> <span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> beta) <span class="sc">-</span> <span class="dv">3</span> <span class="sc">*</span> </span>
+<span id="cb35-9"><a href="sampling-resampling-methods.html#cb35-9" aria-hidden="true" tabindex="-1"></a>        alpha <span class="sc">-</span> beta<span class="sc">^</span><span class="dv">5</span>)</span>
+<span id="cb35-10"><a href="sampling-resampling-methods.html#cb35-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb35-11"><a href="sampling-resampling-methods.html#cb35-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-12"><a href="sampling-resampling-methods.html#cb35-12" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">6</span>)</span>
+<span id="cb35-13"><a href="sampling-resampling-methods.html#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="do">## sample from proposal distribution (for alpha and beta)</span></span>
+<span id="cb35-14"><a href="sampling-resampling-methods.html#cb35-14" aria-hidden="true" tabindex="-1"></a>samp_alpha <span class="ot">&lt;-</span> samp_beta <span class="ot">&lt;-</span>  samp_alpha <span class="ot">&lt;-</span> samp_beta <span class="ot">&lt;-</span></span>
+<span id="cb35-15"><a href="sampling-resampling-methods.html#cb35-15" aria-hidden="true" tabindex="-1"></a><span class="do">## form importance sampling weights on log-scale</span></span>
+<span id="cb35-16"><a href="sampling-resampling-methods.html#cb35-16" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="do">## exponentiate weights from log-scale w &lt;- ## exponentiate</span></span>
+<span id="cb35-17"><a href="sampling-resampling-methods.html#cb35-17" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="do">## exponentiate weights from log-scale weights from log-scale</span></span>
+<span id="cb35-18"><a href="sampling-resampling-methods.html#cb35-18" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="do">## standardize weights w &lt;- ## standardize weights</span></span>
+<span id="cb35-19"><a href="sampling-resampling-methods.html#cb35-19" aria-hidden="true" tabindex="-1"></a>q <span class="ot">&lt;-</span>  q <span class="ot">&lt;-</span></span>
+<span id="cb35-20"><a href="sampling-resampling-methods.html#cb35-20" aria-hidden="true" tabindex="-1"></a><span class="do">## get indices for resampling</span></span>
+<span id="cb35-21"><a href="sampling-resampling-methods.html#cb35-21" aria-hidden="true" tabindex="-1"></a>inds <span class="ot">&lt;-</span> <span class="do">## extract posterior sample from initial sample inds &lt;- ##</span></span>
+<span id="cb35-22"><a href="sampling-resampling-methods.html#cb35-22" aria-hidden="true" tabindex="-1"></a>inds <span class="ot">&lt;-</span> <span class="do">## extract posterior sample from initial sample extract</span></span>
+<span id="cb35-23"><a href="sampling-resampling-methods.html#cb35-23" aria-hidden="true" tabindex="-1"></a>inds <span class="ot">&lt;-</span> <span class="do">## extract posterior sample from initial sample posterior</span></span>
+<span id="cb35-24"><a href="sampling-resampling-methods.html#cb35-24" aria-hidden="true" tabindex="-1"></a>inds <span class="ot">&lt;-</span> <span class="do">## extract posterior sample from initial sample sample from</span></span>
+<span id="cb35-25"><a href="sampling-resampling-methods.html#cb35-25" aria-hidden="true" tabindex="-1"></a>inds <span class="ot">&lt;-</span> <span class="do">## extract posterior sample from initial sample initial</span></span>
+<span id="cb35-26"><a href="sampling-resampling-methods.html#cb35-26" aria-hidden="true" tabindex="-1"></a>inds <span class="ot">&lt;-</span> <span class="do">## extract posterior sample from initial sample sample</span></span>
+<span id="cb35-27"><a href="sampling-resampling-methods.html#cb35-27" aria-hidden="true" tabindex="-1"></a>post_alpha <span class="ot">&lt;-</span> post_beta <span class="ot">&lt;-</span>  post_alpha <span class="ot">&lt;-</span> post_beta <span class="ot">&lt;-</span></span>
+<span id="cb35-28"><a href="sampling-resampling-methods.html#cb35-28" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb35-29"><a href="sampling-resampling-methods.html#cb35-29" aria-hidden="true" tabindex="-1"></a><span class="do">## generate a contour plot for posterior</span></span>
+<span id="cb35-30"><a href="sampling-resampling-methods.html#cb35-30" aria-hidden="true" tabindex="-1"></a>den <span class="ot">&lt;-</span> <span class="fu">kde2d</span>(<span class="at">x =</span> post_alpha, <span class="at">y =</span> post_beta, <span class="at">n =</span> <span class="dv">100</span>)</span>
+<span id="cb35-31"><a href="sampling-resampling-methods.html#cb35-31" aria-hidden="true" tabindex="-1"></a>zlim <span class="ot">&lt;-</span> <span class="fu">range</span>(den<span class="sc">$</span>z)</span>
+<span id="cb35-32"><a href="sampling-resampling-methods.html#cb35-32" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(den<span class="sc">$</span>x, den<span class="sc">$</span>y, den<span class="sc">$</span>z, <span class="at">col =</span> <span class="st">&quot;grey10&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, </span>
+<span id="cb35-33"><a href="sampling-resampling-methods.html#cb35-33" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>), <span class="at">levels =</span> <span class="fu">pretty</span>(zlim, <span class="dv">10</span>), <span class="at">lwd =</span> <span class="dv">1</span>, <span class="at">xlab =</span> <span class="fu">expression</span>(alpha), <span class="at">ylab =</span> <span class="fu">expression</span>(beta))</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:multi2"></span>
+<img src="bookdownproj_files/figure-html/multi2-1.png" alt="Contour plot of posterior sample obtained using SIR for multivariate example" width="672" />
+<p class="caption">
+Figure 2.9: Contour plot of posterior sample obtained using SIR for multivariate example
+</p>
+</div>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/uwswagclub/workshop-bookdown/edit/master/02-sampling-resampling-methods.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/uwswagclub/workshop-bookdown/blob/master/02-sampling-resampling-methods.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

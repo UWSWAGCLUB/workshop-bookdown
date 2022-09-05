@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 6 Sampling-Resampling in Multiple Dimensions | 2 - Sampling-Resampling Methods</title>
+  <meta name="description" content="Chapter 6 Sampling-Resampling in Multiple Dimensions | 2 - Sampling-Resampling Methods" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 6 Sampling-Resampling in Multiple Dimensions | 2 - Sampling-Resampling Methods" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 Sampling-Resampling in Multiple Dimensions | 2 - Sampling-Resampling Methods" />
+  
+  
+  
+
+<meta name="author" content="Luke Hagar" />
+
+
+<meta name="date" content="2022-10-03" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="implementation-of-sampling-resampling-methods.html"/>
+<link rel="next" href="references.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">SWAG Workshops Repository</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="introduction-1.html"><a href="introduction-1.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
+<li class="chapter" data-level="3" data-path="rejection-sampling.html"><a href="rejection-sampling.html"><i class="fa fa-check"></i><b>3</b> Rejection Sampling</a></li>
+<li class="chapter" data-level="4" data-path="sampling-resampling-methods.html"><a href="sampling-resampling-methods.html"><i class="fa fa-check"></i><b>4</b> Sampling-Resampling Methods</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="sampling-resampling-methods.html"><a href="sampling-resampling-methods.html#overview-of-the-sampling-importance-resampling-algorithm"><i class="fa fa-check"></i><b>4.1</b> Overview of the Sampling-Importance-Resampling Algorithm</a></li>
+<li class="chapter" data-level="4.2" data-path="sampling-resampling-methods.html"><a href="sampling-resampling-methods.html#computational-considerations"><i class="fa fa-check"></i><b>4.2</b> Computational Considerations</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="implementation-of-sampling-resampling-methods.html"><a href="implementation-of-sampling-resampling-methods.html"><i class="fa fa-check"></i><b>5</b> Implementation of Sampling-Resampling Methods</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="implementation-of-sampling-resampling-methods.html"><a href="implementation-of-sampling-resampling-methods.html#illustrative-example-with-binary-data"><i class="fa fa-check"></i><b>5.1</b> Illustrative Example with Binary Data</a></li>
+<li class="chapter" data-level="5.2" data-path="implementation-of-sampling-resampling-methods.html"><a href="implementation-of-sampling-resampling-methods.html#practical-considerations-for-choosing-proposal-distributions"><i class="fa fa-check"></i><b>5.2</b> Practical Considerations for Choosing Proposal Distributions</a></li>
+<li class="chapter" data-level="5.3" data-path="implementation-of-sampling-resampling-methods.html"><a href="implementation-of-sampling-resampling-methods.html#comparing-proposal-distributions"><i class="fa fa-check"></i><b>5.3</b> Comparing Proposal Distributions</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="sampling-resampling-in-multiple-dimensions.html"><a href="sampling-resampling-in-multiple-dimensions.html"><i class="fa fa-check"></i><b>6</b> Sampling-Resampling in Multiple Dimensions</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="sampling-resampling-in-multiple-dimensions.html"><a href="sampling-resampling-in-multiple-dimensions.html#exercise-with-illustrative-example"><i class="fa fa-check"></i><b>6.1</b> Exercise with Illustrative Example</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>7</b> References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">2 - Sampling-Resampling Methods</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="sampling-resampling-in-multiple-dimensions" class="section level1" number="6">
+<h1><span class="header-section-number">Chapter 6</span> Sampling-Resampling in Multiple Dimensions</h1>
+<div id="exercise-with-illustrative-example" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> Exercise with Illustrative Example</h2>
+<p>We now briefly consider how to implement the SIR algorithm for a multivariate example. In this example, we assume that we observe data <span class="math inline">\(x_1, x_2 &gt;0\)</span>. Here, we assume that <span class="math inline">\(\boldsymbol{\theta} = (\alpha, \beta)^T\)</span> for <span class="math inline">\(0 &lt; \alpha &lt; 1\)</span> and <span class="math inline">\(0 &lt; \beta &lt; 1\)</span>. We independently assume a <span class="math inline">\(U(0,1)\)</span> prior for <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>, which implies that <span class="math inline">\(p(\alpha, \beta) = 1\)</span> for <span class="math inline">\(0 &lt; \alpha, \beta &lt; 1\)</span>. In this case, the posterior <span class="math inline">\(h(\alpha, \beta) = \pi(\alpha, \beta| \boldsymbol{x})\)</span> is proportional to the likelihood function that we define below:
+<span class="math display">\[h(\alpha, \beta) \propto L(\alpha, \beta; \boldsymbol{x}) = \alpha(1-\alpha)\beta(1-\beta)\text{exp}(-x_1\alpha -\beta^{x_2}) = f(\alpha,\beta).\]</span></p>
+<p>Let’s assume that we observe <span class="math inline">\(x_1 = 3\)</span> and <span class="math inline">\(x_2 = 5\)</span> We will use the prior <span class="math inline">\(p(\alpha, \beta) = 1\)</span> for <span class="math inline">\(0 &lt; \alpha, \beta &lt; 1\)</span> as the proposal density <span class="math inline">\(g(\alpha, \beta)\)</span>. You can complete the following code block to generate a contour plot of the posterior sample, depicted in Figure <a href="sampling-resampling-in-multiple-dimensions.html#fig:multi2">6.1</a>. A helper function is provided to compute <span class="math inline">\(\text{log}(f(\alpha, \beta))\)</span>. In general, it can be more difficult to chose proposal densities for multivariate posteriors of interest, especially when the support is unbounded. Adaptive sampling-resampling methods can be quite useful in these situations. Moreover, we generally require larger values for <span class="math inline">\(n\)</span> and <span class="math inline">\(m\)</span> used with the SIR algorithm when the domain over which we want to sample is multivariate.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="sampling-resampling-in-multiple-dimensions.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="do">## define SIR algorithm settings</span></span>
+<span id="cb35-2"><a href="sampling-resampling-in-multiple-dimensions.html#cb35-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">2500000</span></span>
+<span id="cb35-3"><a href="sampling-resampling-in-multiple-dimensions.html#cb35-3" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="dv">125000</span></span>
+<span id="cb35-4"><a href="sampling-resampling-in-multiple-dimensions.html#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="sampling-resampling-in-multiple-dimensions.html#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="do">## define a function that is proportional to the posterior (on the</span></span>
+<span id="cb35-6"><a href="sampling-resampling-in-multiple-dimensions.html#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="do">## logarithmic scale)</span></span>
+<span id="cb35-7"><a href="sampling-resampling-in-multiple-dimensions.html#cb35-7" aria-hidden="true" tabindex="-1"></a>propLog <span class="ot">&lt;-</span> <span class="cf">function</span>(alpha, beta) {</span>
+<span id="cb35-8"><a href="sampling-resampling-in-multiple-dimensions.html#cb35-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">log</span>(alpha) <span class="sc">+</span> <span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> alpha) <span class="sc">+</span> <span class="fu">log</span>(beta) <span class="sc">+</span> <span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> beta) <span class="sc">-</span> <span class="dv">3</span> <span class="sc">*</span> </span>
+<span id="cb35-9"><a href="sampling-resampling-in-multiple-dimensions.html#cb35-9" aria-hidden="true" tabindex="-1"></a>        alpha <span class="sc">-</span> beta<span class="sc">^</span><span class="dv">5</span>)</span>
+<span id="cb35-10"><a href="sampling-resampling-in-multiple-dimensions.html#cb35-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb35-11"><a href="sampling-resampling-in-multiple-dimensions.html#cb35-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-12"><a href="sampling-resampling-in-multiple-dimensions.html#cb35-12" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">6</span>)</span>
+<span id="cb35-13"><a href="sampling-resampling-in-multiple-dimensions.html#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="do">## sample from proposal distribution (for alpha and beta)</span></span>
+<span id="cb35-14"><a href="sampling-resampling-in-multiple-dimensions.html#cb35-14" aria-hidden="true" tabindex="-1"></a>samp_alpha <span class="ot">&lt;-</span> samp_beta <span class="ot">&lt;-</span>  samp_alpha <span class="ot">&lt;-</span> samp_beta <span class="ot">&lt;-</span></span>
+<span id="cb35-15"><a href="sampling-resampling-in-multiple-dimensions.html#cb35-15" aria-hidden="true" tabindex="-1"></a><span class="do">## form importance sampling weights on log-scale</span></span>
+<span id="cb35-16"><a href="sampling-resampling-in-multiple-dimensions.html#cb35-16" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="do">## exponentiate weights from log-scale w &lt;- ## exponentiate</span></span>
+<span id="cb35-17"><a href="sampling-resampling-in-multiple-dimensions.html#cb35-17" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="do">## exponentiate weights from log-scale weights from log-scale</span></span>
+<span id="cb35-18"><a href="sampling-resampling-in-multiple-dimensions.html#cb35-18" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="do">## standardize weights w &lt;- ## standardize weights</span></span>
+<span id="cb35-19"><a href="sampling-resampling-in-multiple-dimensions.html#cb35-19" aria-hidden="true" tabindex="-1"></a>q <span class="ot">&lt;-</span>  q <span class="ot">&lt;-</span></span>
+<span id="cb35-20"><a href="sampling-resampling-in-multiple-dimensions.html#cb35-20" aria-hidden="true" tabindex="-1"></a><span class="do">## get indices for resampling</span></span>
+<span id="cb35-21"><a href="sampling-resampling-in-multiple-dimensions.html#cb35-21" aria-hidden="true" tabindex="-1"></a>inds <span class="ot">&lt;-</span> <span class="do">## extract posterior sample from initial sample inds &lt;- ##</span></span>
+<span id="cb35-22"><a href="sampling-resampling-in-multiple-dimensions.html#cb35-22" aria-hidden="true" tabindex="-1"></a>inds <span class="ot">&lt;-</span> <span class="do">## extract posterior sample from initial sample extract</span></span>
+<span id="cb35-23"><a href="sampling-resampling-in-multiple-dimensions.html#cb35-23" aria-hidden="true" tabindex="-1"></a>inds <span class="ot">&lt;-</span> <span class="do">## extract posterior sample from initial sample posterior</span></span>
+<span id="cb35-24"><a href="sampling-resampling-in-multiple-dimensions.html#cb35-24" aria-hidden="true" tabindex="-1"></a>inds <span class="ot">&lt;-</span> <span class="do">## extract posterior sample from initial sample sample from</span></span>
+<span id="cb35-25"><a href="sampling-resampling-in-multiple-dimensions.html#cb35-25" aria-hidden="true" tabindex="-1"></a>inds <span class="ot">&lt;-</span> <span class="do">## extract posterior sample from initial sample initial</span></span>
+<span id="cb35-26"><a href="sampling-resampling-in-multiple-dimensions.html#cb35-26" aria-hidden="true" tabindex="-1"></a>inds <span class="ot">&lt;-</span> <span class="do">## extract posterior sample from initial sample sample</span></span>
+<span id="cb35-27"><a href="sampling-resampling-in-multiple-dimensions.html#cb35-27" aria-hidden="true" tabindex="-1"></a>post_alpha <span class="ot">&lt;-</span> post_beta <span class="ot">&lt;-</span>  post_alpha <span class="ot">&lt;-</span> post_beta <span class="ot">&lt;-</span></span>
+<span id="cb35-28"><a href="sampling-resampling-in-multiple-dimensions.html#cb35-28" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb35-29"><a href="sampling-resampling-in-multiple-dimensions.html#cb35-29" aria-hidden="true" tabindex="-1"></a><span class="do">## generate a contour plot for posterior</span></span>
+<span id="cb35-30"><a href="sampling-resampling-in-multiple-dimensions.html#cb35-30" aria-hidden="true" tabindex="-1"></a>den <span class="ot">&lt;-</span> <span class="fu">kde2d</span>(<span class="at">x =</span> post_alpha, <span class="at">y =</span> post_beta, <span class="at">n =</span> <span class="dv">100</span>)</span>
+<span id="cb35-31"><a href="sampling-resampling-in-multiple-dimensions.html#cb35-31" aria-hidden="true" tabindex="-1"></a>zlim <span class="ot">&lt;-</span> <span class="fu">range</span>(den<span class="sc">$</span>z)</span>
+<span id="cb35-32"><a href="sampling-resampling-in-multiple-dimensions.html#cb35-32" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(den<span class="sc">$</span>x, den<span class="sc">$</span>y, den<span class="sc">$</span>z, <span class="at">col =</span> <span class="st">&quot;grey10&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, </span>
+<span id="cb35-33"><a href="sampling-resampling-in-multiple-dimensions.html#cb35-33" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>), <span class="at">levels =</span> <span class="fu">pretty</span>(zlim, <span class="dv">10</span>), <span class="at">lwd =</span> <span class="dv">1</span>, <span class="at">xlab =</span> <span class="fu">expression</span>(alpha), <span class="at">ylab =</span> <span class="fu">expression</span>(beta))</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:multi2"></span>
+<img src="bookdownproj_files/figure-html/multi2-1.png" alt="Contour plot of posterior sample obtained using SIR for multivariate example" width="672" />
+<p class="caption">
+Figure 6.1: Contour plot of posterior sample obtained using SIR for multivariate example
+</p>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="implementation-of-sampling-resampling-methods.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/lmhagar/test/edit/master/02-sampling-resampling-methods.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/lmhagar/test/blob/master/02-sampling-resampling-methods.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
