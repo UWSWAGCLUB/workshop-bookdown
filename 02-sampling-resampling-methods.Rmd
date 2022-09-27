@@ -19,7 +19,7 @@ library(bookdown)
 
 *Luke Hagar*
 
-October 3, 2022
+October 6, 2022
 
 ## Introduction
 
@@ -124,7 +124,7 @@ We now discuss how to obtain an approximate sample from the density $h(\boldsymb
 **Algorithm 2**
 
 1. Generate $\boldsymbol{\theta}_i, ~ i = 1,...,n$ from $g(\boldsymbol{\theta})$.
-2. For each $\boldsymbol{\theta}_i$, compute $\omega_i = f(\boldsymbol{\theta})/g(\boldsymbol{\theta})$.
+2. For each $\boldsymbol{\theta}_i$, compute $\omega_i = f(\boldsymbol{\theta}_i)/g(\boldsymbol{\theta_i})$.
 3. Let $q_i = \omega_i/\sum_{j=1}^n\omega_j$ for $i = 1,...,n$.
 4. Draw $\{\boldsymbol{\theta}^*_1,..., \boldsymbol{\theta}^*_m\}$ from the discrete distribution over $\{\boldsymbol{\theta}_1, ..., \boldsymbol{\theta}_n \}$ with replacement, where mass $q_i$ is placed on $\boldsymbol{\theta}_i$.
 
