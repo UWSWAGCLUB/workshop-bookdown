@@ -1,7 +1,7 @@
 --- 
 title: "SWAG Workshops Repository"
 author: "UW Statistical Workshops and Applications Group"
-date: "September 26, 2022"
+date: "September 23, 2022"
 site: bookdown::bookdown_site
 bibliography: references.bib 
 ---
