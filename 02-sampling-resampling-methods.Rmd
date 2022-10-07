@@ -415,21 +415,18 @@ propLog <- function(alpha, beta){
 
 set.seed(6)
 ## sample from proposal distribution (for alpha and beta)
-samp_alpha <- 
-samp_beta <- 
+samp_alpha <- runif(n)
+samp_beta <- runif(n)
   
 ## form importance sampling weights on log-scale 
-w <- 
-## exponentiate weights from log-scale
-w <- 
-## standardize weights
-q <- 
+w <- propLog(samp_alpha, samp_beta)
+w <- exp(w - max(w))
+q <- w/sum(w)
 
-## get indices for resampling
-inds <-
-## extract posterior sample from initial sample
-post_alpha <-
-post_beta <- 
+## resample to create approximate sample from posterior
+inds <- sample(seq(1,n,by = 1), size = m, replace = TRUE, prob = q)
+post_alpha <- samp_alpha[inds]
+post_beta <- samp_beta[inds]
 
 library(MASS)
 ## generate a contour plot for posterior

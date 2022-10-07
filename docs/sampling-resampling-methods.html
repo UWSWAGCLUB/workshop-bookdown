@@ -582,28 +582,25 @@ where <span class="math inline">\(n\)</span> = 1 million for this example. This 
 <span id="cb35-8"><a href="sampling-resampling-methods.html#cb35-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-9"><a href="sampling-resampling-methods.html#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">6</span>)</span>
 <span id="cb35-10"><a href="sampling-resampling-methods.html#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="do">## sample from proposal distribution (for alpha and beta)</span></span>
-<span id="cb35-11"><a href="sampling-resampling-methods.html#cb35-11" aria-hidden="true" tabindex="-1"></a>samp_alpha <span class="ot">&lt;-</span> </span>
-<span id="cb35-12"><a href="sampling-resampling-methods.html#cb35-12" aria-hidden="true" tabindex="-1"></a>samp_beta <span class="ot">&lt;-</span> </span>
+<span id="cb35-11"><a href="sampling-resampling-methods.html#cb35-11" aria-hidden="true" tabindex="-1"></a>samp_alpha <span class="ot">&lt;-</span> <span class="fu">runif</span>(n)</span>
+<span id="cb35-12"><a href="sampling-resampling-methods.html#cb35-12" aria-hidden="true" tabindex="-1"></a>samp_beta <span class="ot">&lt;-</span> <span class="fu">runif</span>(n)</span>
 <span id="cb35-13"><a href="sampling-resampling-methods.html#cb35-13" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb35-14"><a href="sampling-resampling-methods.html#cb35-14" aria-hidden="true" tabindex="-1"></a><span class="do">## form importance sampling weights on log-scale </span></span>
-<span id="cb35-15"><a href="sampling-resampling-methods.html#cb35-15" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> </span>
-<span id="cb35-16"><a href="sampling-resampling-methods.html#cb35-16" aria-hidden="true" tabindex="-1"></a><span class="do">## exponentiate weights from log-scale</span></span>
-<span id="cb35-17"><a href="sampling-resampling-methods.html#cb35-17" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> </span>
-<span id="cb35-18"><a href="sampling-resampling-methods.html#cb35-18" aria-hidden="true" tabindex="-1"></a><span class="do">## standardize weights</span></span>
-<span id="cb35-19"><a href="sampling-resampling-methods.html#cb35-19" aria-hidden="true" tabindex="-1"></a>q <span class="ot">&lt;-</span> </span>
-<span id="cb35-20"><a href="sampling-resampling-methods.html#cb35-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-21"><a href="sampling-resampling-methods.html#cb35-21" aria-hidden="true" tabindex="-1"></a><span class="do">## get indices for resampling</span></span>
-<span id="cb35-22"><a href="sampling-resampling-methods.html#cb35-22" aria-hidden="true" tabindex="-1"></a>inds <span class="ot">&lt;-</span></span>
-<span id="cb35-23"><a href="sampling-resampling-methods.html#cb35-23" aria-hidden="true" tabindex="-1"></a><span class="do">## extract posterior sample from initial sample</span></span>
-<span id="cb35-24"><a href="sampling-resampling-methods.html#cb35-24" aria-hidden="true" tabindex="-1"></a>post_alpha <span class="ot">&lt;-</span></span>
-<span id="cb35-25"><a href="sampling-resampling-methods.html#cb35-25" aria-hidden="true" tabindex="-1"></a>post_beta <span class="ot">&lt;-</span> </span>
-<span id="cb35-26"><a href="sampling-resampling-methods.html#cb35-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-27"><a href="sampling-resampling-methods.html#cb35-27" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
-<span id="cb35-28"><a href="sampling-resampling-methods.html#cb35-28" aria-hidden="true" tabindex="-1"></a><span class="do">## generate a contour plot for posterior</span></span>
-<span id="cb35-29"><a href="sampling-resampling-methods.html#cb35-29" aria-hidden="true" tabindex="-1"></a>den <span class="ot">&lt;-</span> <span class="fu">kde2d</span>(<span class="at">x=</span>post_alpha, <span class="at">y=</span>post_beta, <span class="at">n =</span> <span class="dv">100</span>)</span>
-<span id="cb35-30"><a href="sampling-resampling-methods.html#cb35-30" aria-hidden="true" tabindex="-1"></a>zlim <span class="ot">&lt;-</span> <span class="fu">range</span>(den<span class="sc">$</span>z)</span>
-<span id="cb35-31"><a href="sampling-resampling-methods.html#cb35-31" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(den<span class="sc">$</span>x, den<span class="sc">$</span>y, den<span class="sc">$</span>z, <span class="at">col=</span><span class="st">&quot;grey10&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),</span>
-<span id="cb35-32"><a href="sampling-resampling-methods.html#cb35-32" aria-hidden="true" tabindex="-1"></a>        <span class="at">levels =</span> <span class="fu">pretty</span>(zlim, <span class="dv">10</span>), <span class="at">lwd=</span><span class="dv">1</span>, <span class="at">xlab =</span> <span class="fu">expression</span>(alpha), <span class="at">ylab =</span> <span class="fu">expression</span>(beta))</span></code></pre></div>
+<span id="cb35-15"><a href="sampling-resampling-methods.html#cb35-15" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="fu">propLog</span>(samp_alpha, samp_beta)</span>
+<span id="cb35-16"><a href="sampling-resampling-methods.html#cb35-16" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="fu">exp</span>(w <span class="sc">-</span> <span class="fu">max</span>(w))</span>
+<span id="cb35-17"><a href="sampling-resampling-methods.html#cb35-17" aria-hidden="true" tabindex="-1"></a>q <span class="ot">&lt;-</span> w<span class="sc">/</span><span class="fu">sum</span>(w)</span>
+<span id="cb35-18"><a href="sampling-resampling-methods.html#cb35-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-19"><a href="sampling-resampling-methods.html#cb35-19" aria-hidden="true" tabindex="-1"></a><span class="do">## resample to create approximate sample from posterior</span></span>
+<span id="cb35-20"><a href="sampling-resampling-methods.html#cb35-20" aria-hidden="true" tabindex="-1"></a>inds <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">seq</span>(<span class="dv">1</span>,n,<span class="at">by =</span> <span class="dv">1</span>), <span class="at">size =</span> m, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> q)</span>
+<span id="cb35-21"><a href="sampling-resampling-methods.html#cb35-21" aria-hidden="true" tabindex="-1"></a>post_alpha <span class="ot">&lt;-</span> samp_alpha[inds]</span>
+<span id="cb35-22"><a href="sampling-resampling-methods.html#cb35-22" aria-hidden="true" tabindex="-1"></a>post_beta <span class="ot">&lt;-</span> samp_beta[inds]</span>
+<span id="cb35-23"><a href="sampling-resampling-methods.html#cb35-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-24"><a href="sampling-resampling-methods.html#cb35-24" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb35-25"><a href="sampling-resampling-methods.html#cb35-25" aria-hidden="true" tabindex="-1"></a><span class="do">## generate a contour plot for posterior</span></span>
+<span id="cb35-26"><a href="sampling-resampling-methods.html#cb35-26" aria-hidden="true" tabindex="-1"></a>den <span class="ot">&lt;-</span> <span class="fu">kde2d</span>(<span class="at">x=</span>post_alpha, <span class="at">y=</span>post_beta, <span class="at">n =</span> <span class="dv">100</span>)</span>
+<span id="cb35-27"><a href="sampling-resampling-methods.html#cb35-27" aria-hidden="true" tabindex="-1"></a>zlim <span class="ot">&lt;-</span> <span class="fu">range</span>(den<span class="sc">$</span>z)</span>
+<span id="cb35-28"><a href="sampling-resampling-methods.html#cb35-28" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(den<span class="sc">$</span>x, den<span class="sc">$</span>y, den<span class="sc">$</span>z, <span class="at">col=</span><span class="st">&quot;grey10&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),</span>
+<span id="cb35-29"><a href="sampling-resampling-methods.html#cb35-29" aria-hidden="true" tabindex="-1"></a>        <span class="at">levels =</span> <span class="fu">pretty</span>(zlim, <span class="dv">10</span>), <span class="at">lwd=</span><span class="dv">1</span>, <span class="at">xlab =</span> <span class="fu">expression</span>(alpha), <span class="at">ylab =</span> <span class="fu">expression</span>(beta))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:multi2"></span>
 <img src="bookdownproj_files/figure-html/multi2-1.png" alt="Contour plot of posterior sample obtained using SIR for multivariate example" width="672" />
 <p class="caption">
