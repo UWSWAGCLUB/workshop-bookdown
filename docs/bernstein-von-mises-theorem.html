@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 Bernstein-von Mises Theorem | SWAG Workshops Repository</title>
+  <meta name="description" content="Chapter 3 Bernstein-von Mises Theorem | SWAG Workshops Repository" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 Bernstein-von Mises Theorem | SWAG Workshops Repository" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Bernstein-von Mises Theorem | SWAG Workshops Repository" />
+  
+  
+  
+
+<meta name="author" content="UW Statistical Workshops and Applications Group" />
+
+
+<meta name="date" content="2022-09-23" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="chapter2.html"/>
+<link rel="next" href="references.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">SWAG Workshops Repository</a></li>
+
+<li class="divider"></li>
+<li><a href="index.html#introduction" id="toc-introduction"><span class="toc-section-number">1</span> Introduction</a></li>
+<li><a href="chapter2.html#chapter2" id="toc-chapter2"><span class="toc-section-number">2</span> Sampling-Resampling Methods</a>
+<ul>
+<li><a href="chapter2.html#introduction-1" id="toc-introduction-1"><span class="toc-section-number">2.1</span> Introduction</a></li>
+<li><a href="chapter2.html#rejection-sampling" id="toc-rejection-sampling"><span class="toc-section-number">2.2</span> Rejection Sampling</a></li>
+<li><a href="chapter2.html#sampling-resampling-methods" id="toc-sampling-resampling-methods"><span class="toc-section-number">2.3</span> Sampling-Resampling Methods</a>
+<ul>
+<li><a href="chapter2.html#overview-of-the-sampling-importance-resampling-algorithm" id="toc-overview-of-the-sampling-importance-resampling-algorithm"><span class="toc-section-number">2.3.1</span> Overview of the Sampling-Importance-Resampling Algorithm</a></li>
+<li><a href="chapter2.html#computational-considerations" id="toc-computational-considerations"><span class="toc-section-number">2.3.2</span> Computational Considerations</a></li>
+</ul></li>
+<li><a href="chapter2.html#implementation-of-sampling-resampling-methods" id="toc-implementation-of-sampling-resampling-methods"><span class="toc-section-number">2.4</span> Implementation of Sampling-Resampling Methods</a>
+<ul>
+<li><a href="chapter2.html#illustrative-example-with-binary-data" id="toc-illustrative-example-with-binary-data"><span class="toc-section-number">2.4.1</span> Illustrative Example with Binary Data</a></li>
+<li><a href="chapter2.html#practical-considerations-for-choosing-proposal-distributions" id="toc-practical-considerations-for-choosing-proposal-distributions"><span class="toc-section-number">2.4.2</span> Practical Considerations for Choosing Proposal Distributions</a></li>
+<li><a href="chapter2.html#comparing-proposal-distributions" id="toc-comparing-proposal-distributions"><span class="toc-section-number">2.4.3</span> Comparing Proposal Distributions</a></li>
+</ul></li>
+<li><a href="chapter2.html#sampling-resampling-in-multiple-dimensions" id="toc-sampling-resampling-in-multiple-dimensions"><span class="toc-section-number">2.5</span> Sampling-Resampling in Multiple Dimensions</a>
+<ul>
+<li><a href="chapter2.html#exercise-with-illustrative-example" id="toc-exercise-with-illustrative-example"><span class="toc-section-number">2.5.1</span> Exercise with Illustrative Example</a></li>
+</ul></li>
+</ul></li>
+<li><a href="bernstein-von-mises-theorem.html#bernstein-von-mises-theorem" id="toc-bernstein-von-mises-theorem"><span class="toc-section-number">3</span> Bernstein-von Mises Theorem</a>
+<ul>
+<li><a href="bernstein-von-mises-theorem.html#introduction-2" id="toc-introduction-2"><span class="toc-section-number">3.1</span> Introduction</a>
+<ul>
+<li><a href="bernstein-von-mises-theorem.html#bayesian-inference" id="toc-bayesian-inference"><span class="toc-section-number">3.1.1</span> Bayesian Inference</a></li>
+</ul></li>
+<li><a href="bernstein-von-mises-theorem.html#theorem" id="toc-theorem"><span class="toc-section-number">3.2</span> Theorem</a>
+<ul>
+<li><a href="bernstein-von-mises-theorem.html#importance" id="toc-importance"><span class="toc-section-number">3.2.1</span> Importance</a></li>
+<li><a href="bernstein-von-mises-theorem.html#required-assumptions" id="toc-required-assumptions"><span class="toc-section-number">3.2.2</span> Required Assumptions</a></li>
+<li><a href="bernstein-von-mises-theorem.html#example-1---normal-normal-model" id="toc-example-1---normal-normal-model"><span class="toc-section-number">3.2.3</span> Example 1 - Normal-normal model</a></li>
+<li><a href="bernstein-von-mises-theorem.html#example-2---bernoulli-beta-model" id="toc-example-2---bernoulli-beta-model"><span class="toc-section-number">3.2.4</span> Example 2 - Bernoulli-Beta Model</a></li>
+</ul></li>
+<li><a href="bernstein-von-mises-theorem.html#limitations" id="toc-limitations"><span class="toc-section-number">3.3</span> Limitations</a>
+<ul>
+<li><a href="bernstein-von-mises-theorem.html#other-thoughts-on-consistency" id="toc-other-thoughts-on-consistency"><span class="toc-section-number">3.3.1</span> Other thoughts on consistency</a></li>
+<li><a href="bernstein-von-mises-theorem.html#example-3---prior-has-zero-density-at-theta_0" id="toc-example-3---prior-has-zero-density-at-theta_0"><span class="toc-section-number">3.3.2</span> Example 3 - Prior has zero density at <span class="math inline">\(\theta_0\)</span></a></li>
+<li><a href="bernstein-von-mises-theorem.html#example-4---true-parameter-value-is-on-the-boundary" id="toc-example-4---true-parameter-value-is-on-the-boundary"><span class="toc-section-number">3.3.3</span> Example 4 - True parameter value is on the boundary</a></li>
+</ul></li>
+</ul></li>
+<li><a href="references.html#references" id="toc-references"><span class="toc-section-number">4</span> References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">SWAG Workshops Repository</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="bernstein-von-mises-theorem" class="section level1" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Bernstein-von Mises Theorem</h1>
+<p><em>Augustine Wigle</em></p>
+<div id="introduction-2" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Introduction</h2>
+<p>The Bernstein-von Mises theorem (or BVM theorem) connects Bayesian and frequentist inference. In this workshop, we will state the theorem, talk about its importance, and touch on some of the required assumptions. We will work through some examples in R which let us visualize the theorem, and finally, we will talk about violations of the assumptions. This workshop is intended to introduce you to the theorem and encourage you to consider when it applies. It is not a rigourous treatment of the theorem - for those interested in the more technical details, we recommend <span class="citation">Van der Vaart (2000)</span> and <span class="citation">Kleijn and Van der Vaart (2012)</span>. In this section we will give a brief review of Bayesian inference, the posterior distribution, and credible intervals.</p>
+<div id="bayesian-inference" class="section level3" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> Bayesian Inference</h3>
+<p>Since this theorem applies to Bayesian models, we will give a quick review of Bayesian inference. In Bayesian inference, our state of knowledge about anything unknown is described by a probability distribution. Bayesian statistical conclusions about a parameter <span class="math inline">\(\theta\)</span> are made in terms of probabilistic statements conditional on the observed data <span class="math inline">\(y\)</span>. The distribution of interest is therefore <span class="math inline">\(p(\theta \mid y)\)</span>, the posterior distribution. We first specify a model which provides the joint probability distribution, that is, <span class="math inline">\(p(\theta, y) = p(\theta)p(y\mid \theta)\)</span>, where <span class="math inline">\(p(\theta)\)</span> is the prior distribution, which describes prior beliefs about the parameter(s) <span class="math inline">\(\theta\)</span>, and <span class="math inline">\(p(y\mid \theta)\)</span> is the data distribution of the likelihood. Then, Bayes’ theorem shows how to obtain the posterior distribution:
+<span class="math display">\[\begin{equation*}
+p(\theta \mid y) = \frac{p(\theta)p(y\mid \theta)}{p(y)}
+\end{equation*}\]</span>
+In most models, <span class="math inline">\(p(\theta\mid y)\)</span> does not have a known parametric form and computational methods are required to overcome this problem, such as Markov Chain Monte Carlo (MCMC), or sampling-resampling techniques, covered in <a href="chapter2.html#chapter2">Chapter 2</a>. In some special cases of likelihood and prior distribution combinations, the posterior can be determined analytically. These are called conjugate models. In the examples throughout this workshop, we will use conjugate models to avoid the need for fancy sampling techniques.</p>
+<p>Point estimates for <span class="math inline">\(\theta\)</span> can be derived from the posterior distribution, for example, by taking the posterior median or mean. Credible intervals are the Bayesian version of confidence intervals. A credible interval of credibility level <span class="math inline">\(100\times(1-\alpha)\)</span> are defined as sets where the posterior probability of <span class="math inline">\(\theta\)</span> in the set is <span class="math inline">\(100\times(1-\alpha)\)</span> and can be obtained in a variety of ways, such as by taking the lower and upper <span class="math inline">\(\alpha/2\)</span> quantiles of the posterior distribution.</p>
+</div>
+</div>
+<div id="theorem" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Theorem</h2>
+A succinct statement of the theorem is as follows (for a more detailed and technical statement and proof, see <span class="citation">Van der Vaart (2000)</span>):
+
+<div class="theorem">
+<span id="thm:unnamed-chunk-12" class="theorem"><strong>Theorem 3.1  </strong></span><strong>Under certain assumptions</strong>, a posterior distribution converges to a multivariate normal distribution centred at the maximum likelihood estimate <span class="math inline">\(\hat \theta\)</span> and with covariance matrix given by <span class="math inline">\(n^{-1}I(\theta_0)^{-1}\)</span> as the sample size <span class="math inline">\(n \rightarrow \infty\)</span> , where <span class="math inline">\(\theta_0\)</span> is the true population parameter and <span class="math inline">\(I(\theta_0)\)</span> is the Fisher information matrix evaluated at <span class="math inline">\(\theta_0\)</span>.
+</div>
+<p>Or in other words, as you get more data, the posterior looks more and more like the sampling distribution of the MLE (if the assumptions are satisfied).</p>
+<div id="importance" class="section level3" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> Importance</h3>
+<p>The BVM theorem is useful because it provides a frequentist justification for Bayesian inference. The main takeaway of the theorem is that Bayesian inference is asymptotically correct from a frequentist perspective. In particular, Bayesian credible intervals are asymptotically confidence intervals. Another way to think about the theorem’s interpretation is that the influence of the prior disappears and the posterior becomes normal once you observe enough data. This is analogous to a pure frequentist approach where there is no prior information and the sampling distribution of the MLE becomes normal as you observe more and more data.</p>
+</div>
+<div id="required-assumptions" class="section level3" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> Required Assumptions</h3>
+<p>Of course, for the theorem to hold, we require several assumptions to be satisfied. We are only going to touch on some of the more important conditions and we will not go into the technical details for this workshop (for technical details see <span class="citation">Van der Vaart (2000)</span>). Some of the more important assumptions are:</p>
+<ul>
+<li>The log-likelihood is smooth</li>
+<li>The MLE is consistent</li>
+<li>The prior distribution has non-zero density in a neighborhood of the true value <span class="math inline">\(\theta_0\)</span></li>
+<li>The true parameter value is on the interior of the parameter space</li>
+<li>The model has a finite and fixed number of parameters</li>
+</ul>
+<p>We will discuss when some of these conditions may be violated and see some examples. We will start with an example where this theorem holds!</p>
+</div>
+<div id="example-1---normal-normal-model" class="section level3" number="3.2.3">
+<h3><span class="header-section-number">3.2.3</span> Example 1 - Normal-normal model</h3>
+<p>Let’s consider a nice example: we observe <span class="math inline">\(Y_1, \dots, Y_n\)</span> from a <span class="math inline">\(N(\theta, 1)\)</span> distribution. We are interested in estimating <span class="math inline">\(\theta\)</span>. Let’s also suppose that the true value of <span class="math inline">\(\theta\)</span> is 0.</p>
+<p><strong>Bayesian Approach</strong></p>
+<p>We will use a normal prior for <span class="math inline">\(\theta\)</span>, that is, <span class="math inline">\(\theta \sim N(0,1)\)</span>. This is actually an example of a conjugate distribution and so there is an analytical solution for the posterior, which will make plotting the solution very convenient:
+<span class="math display">\[\begin{equation*}
+\theta \mid Y_1, \dots, Y_n \sim N(\frac{\sum_{i=1}^n Y_i}{n+1}, \frac{1}{n + 1}).
+\end{equation*}\]</span></p>
+<p><strong>Frequentist Approach</strong></p>
+<p>The MLE of <span class="math inline">\(\theta\)</span> is the sample mean, <span class="math inline">\(\hat\theta = \sum_{i=1}^nY_i/n\)</span> and the Fisher information is <span class="math inline">\(1\)</span>. The sampling distribution of <span class="math inline">\(\hat \theta\)</span> is
+<span class="math display">\[\begin{equation*}
+\hat \theta\sim N(0, \frac{1}{n}).
+\end{equation*}\]</span></p>
+<p>Let’s look at what happens as we observe more and more data in R.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="bernstein-von-mises-theorem.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set true param value</span></span>
+<span id="cb36-2"><a href="bernstein-von-mises-theorem.html#cb36-2" aria-hidden="true" tabindex="-1"></a>theta_true <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb36-3"><a href="bernstein-von-mises-theorem.html#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="bernstein-von-mises-theorem.html#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Functions to calculate the posterior mean and sd</span></span>
+<span id="cb36-5"><a href="bernstein-von-mises-theorem.html#cb36-5" aria-hidden="true" tabindex="-1"></a>post_mean <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb36-6"><a href="bernstein-von-mises-theorem.html#cb36-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb36-7"><a href="bernstein-von-mises-theorem.html#cb36-7" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">length</span>(x)</span>
+<span id="cb36-8"><a href="bernstein-von-mises-theorem.html#cb36-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb36-9"><a href="bernstein-von-mises-theorem.html#cb36-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>(x)<span class="sc">/</span>(n<span class="sc">+</span><span class="dv">1</span>)</span>
+<span id="cb36-10"><a href="bernstein-von-mises-theorem.html#cb36-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb36-11"><a href="bernstein-von-mises-theorem.html#cb36-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb36-12"><a href="bernstein-von-mises-theorem.html#cb36-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-13"><a href="bernstein-von-mises-theorem.html#cb36-13" aria-hidden="true" tabindex="-1"></a>post_sd <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb36-14"><a href="bernstein-von-mises-theorem.html#cb36-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb36-15"><a href="bernstein-von-mises-theorem.html#cb36-15" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">length</span>(x)</span>
+<span id="cb36-16"><a href="bernstein-von-mises-theorem.html#cb36-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb36-17"><a href="bernstein-von-mises-theorem.html#cb36-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sqrt</span>(<span class="dv">1</span><span class="sc">/</span>(n<span class="sc">+</span><span class="dv">1</span>))</span>
+<span id="cb36-18"><a href="bernstein-von-mises-theorem.html#cb36-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb36-19"><a href="bernstein-von-mises-theorem.html#cb36-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb36-20"><a href="bernstein-von-mises-theorem.html#cb36-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-21"><a href="bernstein-von-mises-theorem.html#cb36-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to calculate asymptotic sd for MLE</span></span>
+<span id="cb36-22"><a href="bernstein-von-mises-theorem.html#cb36-22" aria-hidden="true" tabindex="-1"></a>mle_sd <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb36-23"><a href="bernstein-von-mises-theorem.html#cb36-23" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb36-24"><a href="bernstein-von-mises-theorem.html#cb36-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sqrt</span>(<span class="dv">1</span><span class="sc">/</span><span class="fu">length</span>(x))</span>
+<span id="cb36-25"><a href="bernstein-von-mises-theorem.html#cb36-25" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb36-26"><a href="bernstein-von-mises-theorem.html#cb36-26" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb36-27"><a href="bernstein-von-mises-theorem.html#cb36-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-28"><a href="bernstein-von-mises-theorem.html#cb36-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate some data of different sample sizes</span></span>
+<span id="cb36-29"><a href="bernstein-von-mises-theorem.html#cb36-29" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2022</span>)</span>
+<span id="cb36-30"><a href="bernstein-von-mises-theorem.html#cb36-30" aria-hidden="true" tabindex="-1"></a>y_small <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="at">mean =</span> theta_true, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb36-31"><a href="bernstein-von-mises-theorem.html#cb36-31" aria-hidden="true" tabindex="-1"></a>y_med <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">50</span>, <span class="at">mean =</span> theta_true, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb36-32"><a href="bernstein-von-mises-theorem.html#cb36-32" aria-hidden="true" tabindex="-1"></a>y_large <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">mean =</span> theta_true, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb36-33"><a href="bernstein-von-mises-theorem.html#cb36-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-34"><a href="bernstein-von-mises-theorem.html#cb36-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up Plotting</span></span>
+<span id="cb36-35"><a href="bernstein-von-mises-theorem.html#cb36-35" aria-hidden="true" tabindex="-1"></a>x_vals <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.01</span>)</span>
+<span id="cb36-36"><a href="bernstein-von-mises-theorem.html#cb36-36" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>))</span>
+<span id="cb36-37"><a href="bernstein-von-mises-theorem.html#cb36-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-38"><a href="bernstein-von-mises-theorem.html#cb36-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the asymptotic distribution of MLE and posterior distribution for n  = 10</span></span>
+<span id="cb36-39"><a href="bernstein-von-mises-theorem.html#cb36-39" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_vals, <span class="fu">dnorm</span>(x_vals, <span class="at">mean =</span> <span class="fu">mean</span>(y_small), <span class="at">sd =</span> <span class="fu">mle_sd</span>(y_small)), </span>
+<span id="cb36-40"><a href="bernstein-von-mises-theorem.html#cb36-40" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> <span class="st">&quot;firebrick&quot;</span>,</span>
+<span id="cb36-41"><a href="bernstein-von-mises-theorem.html#cb36-41" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;y&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="at">main =</span> <span class="st">&quot;n = 10&quot;</span>,</span>
+<span id="cb36-42"><a href="bernstein-von-mises-theorem.html#cb36-42" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">1.3</span>))</span>
+<span id="cb36-43"><a href="bernstein-von-mises-theorem.html#cb36-43" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x_vals, <span class="fu">dnorm</span>(x_vals, <span class="at">mean =</span> <span class="fu">post_mean</span>(y_small), <span class="at">sd =</span> <span class="fu">post_sd</span>(y_small)), <span class="at">col =</span> <span class="st">&quot;navy&quot;</span>)</span>
+<span id="cb36-44"><a href="bernstein-von-mises-theorem.html#cb36-44" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb36-45"><a href="bernstein-von-mises-theorem.html#cb36-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the asymptotic distribution of MLE and posterior distribution for n  = 50</span></span>
+<span id="cb36-46"><a href="bernstein-von-mises-theorem.html#cb36-46" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_vals, <span class="fu">dnorm</span>(x_vals, <span class="at">mean =</span> <span class="fu">mean</span>(y_med), <span class="at">sd =</span> <span class="fu">mle_sd</span>(y_med)), </span>
+<span id="cb36-47"><a href="bernstein-von-mises-theorem.html#cb36-47" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> <span class="st">&quot;firebrick&quot;</span>,</span>
+<span id="cb36-48"><a href="bernstein-von-mises-theorem.html#cb36-48" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;y&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="at">main =</span> <span class="st">&quot;n = 50&quot;</span>)</span>
+<span id="cb36-49"><a href="bernstein-von-mises-theorem.html#cb36-49" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x_vals, <span class="fu">dnorm</span>(x_vals, <span class="at">mean =</span> <span class="fu">post_mean</span>(y_med), <span class="at">sd =</span> <span class="fu">post_sd</span>(y_med)), <span class="at">col =</span> <span class="st">&quot;navy&quot;</span>)</span>
+<span id="cb36-50"><a href="bernstein-von-mises-theorem.html#cb36-50" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb36-51"><a href="bernstein-von-mises-theorem.html#cb36-51" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the asymptotic distribution of MLE and posterior distribution for n  = 100</span></span>
+<span id="cb36-52"><a href="bernstein-von-mises-theorem.html#cb36-52" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_vals, <span class="fu">dnorm</span>(x_vals, <span class="at">mean =</span> <span class="fu">mean</span>(y_large), <span class="at">sd =</span> <span class="fu">mle_sd</span>(y_large)), </span>
+<span id="cb36-53"><a href="bernstein-von-mises-theorem.html#cb36-53" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> <span class="st">&quot;firebrick&quot;</span>,</span>
+<span id="cb36-54"><a href="bernstein-von-mises-theorem.html#cb36-54" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;y&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="at">main =</span> <span class="st">&quot;n = 100&quot;</span>)</span>
+<span id="cb36-55"><a href="bernstein-von-mises-theorem.html#cb36-55" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x_vals, <span class="fu">dnorm</span>(x_vals, <span class="at">mean =</span> <span class="fu">post_mean</span>(y_large), <span class="at">sd =</span> <span class="fu">post_sd</span>(y_large)), <span class="at">col =</span> <span class="st">&quot;navy&quot;</span>)</span>
+<span id="cb36-56"><a href="bernstein-von-mises-theorem.html#cb36-56" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Posterior Distribution&quot;</span>, <span class="st">&quot;MLE Sampling Distribution&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;navy&quot;</span>, <span class="st">&quot;firebrick&quot;</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb36-57"><a href="bernstein-von-mises-theorem.html#cb36-57" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/example%201-1.png" width="672" /></p>
+</div>
+<div id="example-2---bernoulli-beta-model" class="section level3" number="3.2.4">
+<h3><span class="header-section-number">3.2.4</span> Example 2 - Bernoulli-Beta Model</h3>
+<p>In the previous example, we didn’t actually need Bernstein-von Mises to get asymptotic normality of the posterior, because the posterior distribution was already normal by definition regardless of how much data we had. Let’s look at another example where we can see the posterior getting more normal as we observe more data.</p>
+<p>Again, we will take advantage of conjugacy for computational convenience. This time, consider observing <span class="math inline">\(Y_1, \dots, Y_n\)</span> from <span class="math inline">\(Bernoulli(p)\)</span>, where the true value of <span class="math inline">\(p\)</span> is 0.5.</p>
+<p><strong>Bayesian Approach</strong></p>
+<p>We will use a <span class="math inline">\(Beta(1, 5)\)</span> distribution to take advantage of conjugacy. Then the posterior distribution for <span class="math inline">\(p\)</span> is:
+<span class="math display">\[\begin{equation*}
+p\mid Y_1,\dots, Y_n \sim Beta(1+ \sum_{i=1}^n Y_i, n+5 - \sum_{i=1}^n Y_i)
+\end{equation*}\]</span></p>
+<p><strong>Frequentist Approach</strong></p>
+<p>The MLE <span class="math inline">\(\hat p = \sum_{i=1}^n Y_i/n\)</span> and the Fisher information is <span class="math inline">\(1/p(1-p)\)</span>. The sampling distribution is then
+<span class="math display">\[\begin{equation*}
+\hat p \sim N(0.5, \frac{p(1-p)}{n})
+\end{equation*}\]</span></p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="bernstein-von-mises-theorem.html#cb37-1" aria-hidden="true" tabindex="-1"></a>p_true <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb37-2"><a href="bernstein-von-mises-theorem.html#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="bernstein-von-mises-theorem.html#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Functions to calculate the posterior parameters</span></span>
+<span id="cb37-4"><a href="bernstein-von-mises-theorem.html#cb37-4" aria-hidden="true" tabindex="-1"></a>post_alpha <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb37-5"><a href="bernstein-von-mises-theorem.html#cb37-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb37-6"><a href="bernstein-von-mises-theorem.html#cb37-6" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span><span class="sc">+</span><span class="fu">sum</span>(x)</span>
+<span id="cb37-7"><a href="bernstein-von-mises-theorem.html#cb37-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb37-8"><a href="bernstein-von-mises-theorem.html#cb37-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb37-9"><a href="bernstein-von-mises-theorem.html#cb37-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-10"><a href="bernstein-von-mises-theorem.html#cb37-10" aria-hidden="true" tabindex="-1"></a>post_beta <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb37-11"><a href="bernstein-von-mises-theorem.html#cb37-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb37-12"><a href="bernstein-von-mises-theorem.html#cb37-12" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">length</span>(x)</span>
+<span id="cb37-13"><a href="bernstein-von-mises-theorem.html#cb37-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb37-14"><a href="bernstein-von-mises-theorem.html#cb37-14" aria-hidden="true" tabindex="-1"></a>  n<span class="sc">+</span><span class="dv">5</span><span class="sc">-</span><span class="fu">sum</span>(x)</span>
+<span id="cb37-15"><a href="bernstein-von-mises-theorem.html#cb37-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb37-16"><a href="bernstein-von-mises-theorem.html#cb37-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb37-17"><a href="bernstein-von-mises-theorem.html#cb37-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-18"><a href="bernstein-von-mises-theorem.html#cb37-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to calculate asymptotic sd for MLE</span></span>
+<span id="cb37-19"><a href="bernstein-von-mises-theorem.html#cb37-19" aria-hidden="true" tabindex="-1"></a>mle_sd <span class="ot">&lt;-</span> <span class="cf">function</span>(p, x) {</span>
+<span id="cb37-20"><a href="bernstein-von-mises-theorem.html#cb37-20" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb37-21"><a href="bernstein-von-mises-theorem.html#cb37-21" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">length</span>(x)</span>
+<span id="cb37-22"><a href="bernstein-von-mises-theorem.html#cb37-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb37-23"><a href="bernstein-von-mises-theorem.html#cb37-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sqrt</span>(p<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p)<span class="sc">/</span>n)</span>
+<span id="cb37-24"><a href="bernstein-von-mises-theorem.html#cb37-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb37-25"><a href="bernstein-von-mises-theorem.html#cb37-25" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb37-26"><a href="bernstein-von-mises-theorem.html#cb37-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-27"><a href="bernstein-von-mises-theorem.html#cb37-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate some data of different sample sizes</span></span>
+<span id="cb37-28"><a href="bernstein-von-mises-theorem.html#cb37-28" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2022</span>)</span>
+<span id="cb37-29"><a href="bernstein-von-mises-theorem.html#cb37-29" aria-hidden="true" tabindex="-1"></a>y_small <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">10</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> p_true)</span>
+<span id="cb37-30"><a href="bernstein-von-mises-theorem.html#cb37-30" aria-hidden="true" tabindex="-1"></a>y_med <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">50</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> p_true)</span>
+<span id="cb37-31"><a href="bernstein-von-mises-theorem.html#cb37-31" aria-hidden="true" tabindex="-1"></a>y_large <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">200</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> p_true)</span>
+<span id="cb37-32"><a href="bernstein-von-mises-theorem.html#cb37-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-33"><a href="bernstein-von-mises-theorem.html#cb37-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up Plotting</span></span>
+<span id="cb37-34"><a href="bernstein-von-mises-theorem.html#cb37-34" aria-hidden="true" tabindex="-1"></a>x_vals <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.01</span>)</span>
+<span id="cb37-35"><a href="bernstein-von-mises-theorem.html#cb37-35" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>))</span>
+<span id="cb37-36"><a href="bernstein-von-mises-theorem.html#cb37-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-37"><a href="bernstein-von-mises-theorem.html#cb37-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the asymptotic distribution of MLE and posterior distribution for n  = 10</span></span>
+<span id="cb37-38"><a href="bernstein-von-mises-theorem.html#cb37-38" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_vals, <span class="fu">dnorm</span>(x_vals, <span class="at">mean =</span> <span class="fu">mean</span>(y_small), <span class="at">sd =</span> <span class="fu">mle_sd</span>(p_true, y_small)), </span>
+<span id="cb37-39"><a href="bernstein-von-mises-theorem.html#cb37-39" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> <span class="st">&quot;firebrick&quot;</span>,</span>
+<span id="cb37-40"><a href="bernstein-von-mises-theorem.html#cb37-40" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;y&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="at">main =</span> <span class="st">&quot;n = 10&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">3</span>))</span>
+<span id="cb37-41"><a href="bernstein-von-mises-theorem.html#cb37-41" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x_vals, <span class="fu">dbeta</span>(x_vals, <span class="at">shape1 =</span> <span class="fu">post_alpha</span>(y_small), <span class="at">shape2 =</span> <span class="fu">post_beta</span>(y_small)), <span class="at">col =</span> <span class="st">&quot;navy&quot;</span>)</span>
+<span id="cb37-42"><a href="bernstein-von-mises-theorem.html#cb37-42" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> p_true, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb37-43"><a href="bernstein-von-mises-theorem.html#cb37-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-44"><a href="bernstein-von-mises-theorem.html#cb37-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the asymptotic distribution of MLE and posterior distribution for n  = 50</span></span>
+<span id="cb37-45"><a href="bernstein-von-mises-theorem.html#cb37-45" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_vals, <span class="fu">dnorm</span>(x_vals, <span class="at">mean =</span> <span class="fu">mean</span>(y_med), <span class="at">sd =</span> <span class="fu">mle_sd</span>(p_true, y_med)), </span>
+<span id="cb37-46"><a href="bernstein-von-mises-theorem.html#cb37-46" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> <span class="st">&quot;firebrick&quot;</span>,</span>
+<span id="cb37-47"><a href="bernstein-von-mises-theorem.html#cb37-47" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;y&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="at">main =</span> <span class="st">&quot;n = 50&quot;</span>)</span>
+<span id="cb37-48"><a href="bernstein-von-mises-theorem.html#cb37-48" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x_vals, <span class="fu">dbeta</span>(x_vals, <span class="at">shape1 =</span> <span class="fu">post_alpha</span>(y_med), <span class="at">shape2 =</span> <span class="fu">post_beta</span>(y_med)), <span class="at">col =</span> <span class="st">&quot;navy&quot;</span>)</span>
+<span id="cb37-49"><a href="bernstein-von-mises-theorem.html#cb37-49" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> p_true, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb37-50"><a href="bernstein-von-mises-theorem.html#cb37-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-51"><a href="bernstein-von-mises-theorem.html#cb37-51" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the asymptotic distribution of MLE and posterior distribution for n  = 100</span></span>
+<span id="cb37-52"><a href="bernstein-von-mises-theorem.html#cb37-52" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_vals, <span class="fu">dnorm</span>(x_vals, <span class="at">mean =</span> <span class="fu">mean</span>(y_large), <span class="at">sd =</span> <span class="fu">mle_sd</span>(p_true, y_large)), </span>
+<span id="cb37-53"><a href="bernstein-von-mises-theorem.html#cb37-53" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> <span class="st">&quot;firebrick&quot;</span>,</span>
+<span id="cb37-54"><a href="bernstein-von-mises-theorem.html#cb37-54" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;y&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="at">main =</span> <span class="st">&quot;n = 200&quot;</span>)</span>
+<span id="cb37-55"><a href="bernstein-von-mises-theorem.html#cb37-55" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x_vals, <span class="fu">dbeta</span>(x_vals, <span class="at">shape1 =</span> <span class="fu">post_alpha</span>(y_large), <span class="at">shape2 =</span> <span class="fu">post_beta</span>(y_large)), <span class="at">col =</span> <span class="st">&quot;navy&quot;</span>)</span>
+<span id="cb37-56"><a href="bernstein-von-mises-theorem.html#cb37-56" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> p_true, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb37-57"><a href="bernstein-von-mises-theorem.html#cb37-57" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Posterior Distribution&quot;</span>, <span class="st">&quot;MLE Sampling Distribution&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;navy&quot;</span>, <span class="st">&quot;firebrick&quot;</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/bernoulli%20example-1.png" width="672" /></p>
+</div>
+</div>
+<div id="limitations" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Limitations</h2>
+<p>We do need to be careful with applying Bernstein-von Mises to make sure important assumptions are satisfied! Several of these examples were motivated by <a href="https://statmodeling.stat.columbia.edu/2017/11/27/asymptotically-we-are-all-dead/">this blog post</a> by Dan Simpson which I found entertaining and thought-provoking <span class="citation">(Simpson 2017)</span>.</p>
+<p>Here are some examples of when important assumptions of BVM might be violated:</p>
+<ul>
+<li>The log-likelihood being smooth may be violated in situations were we want to integrate out nuisance parameters, because this can cause spikes in the log likelihood.</li>
+<li>Our model may not have a fixed number of parameters, for example, in a multi-level model where observing more data may require including more categories and therefore more parameters.</li>
+<li>Some models have infinite-dimensional parameters, such as models which use non-parametric effects to model unknown functions.</li>
+<li>The prior may give zero density to the true parameter value - see example 3</li>
+<li><span class="math inline">\(\theta_0\)</span> may be on the boundary of the parameter space - see example 4</li>
+<li>The MLE may not be consistent when the log-likelihood is multimodal, such as in some mixture models. Some other situations where the MLE may not be consistent arise when other assumptions are violated, like the number of parameters increasing with <span class="math inline">\(n\)</span> or the true parameter value being on the boundary of the parameter space.</li>
+</ul>
+<div id="other-thoughts-on-consistency" class="section level3" number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> Other thoughts on consistency</h3>
+<p>Other considerations around consistency which I found interesting are raised by Dan Simpson in his blog post mentioned above. When we consider consistency, we need to consider how the data were collected, and consider what it means to have independent replicates of the same experiment. A lot of datasets are observational, and so there is no guarantee that the data can actually be used to give a consistent estimator of the parameter we want to estimate, regardless of how many times we conduct the experiment. Similarly, collecting a lot of data can take a long time, and over time, the underlying process that we are trying to study may change. This will also present a challenge for consistency.</p>
+</div>
+<div id="example-3---prior-has-zero-density-at-theta_0" class="section level3" number="3.3.2">
+<h3><span class="header-section-number">3.3.2</span> Example 3 - Prior has zero density at <span class="math inline">\(\theta_0\)</span></h3>
+<p>An example of this would be using a uniform prior for a standard deviation and choosing an upper bound which is less than the true standard deviation.</p>
+<p>For this talk, we won’t do an example where the prior gives 0 density to the true value because for these models we would need to use some computational tools tog et the posterior distribution, but we can look at what happens when the prior gives very little density to the true value. Let’s return to the first example, where we have collected data from a normal distribution with known variance 1 and we want to estimate its mean. In the first example, we used a prior centred at 0 with variance 1, and the true value happened to be 0. What if the true mean is actually 1000? The prior <span class="math inline">\(N(0,1)\)</span> is now very informative, and will give very little density (but still non-zero) to the true parameter value. Now we have:</p>
+<p><em>Bayesian Approach</em></p>
+<p>Recall that the posterior is:
+<span class="math display">\[\begin{equation*}
+\theta \mid Y_1, \dots, Y_n \sim N(\frac{\sum_{i=1}^n Y_i}{n+1}, \frac{1}{n + 1}).
+\end{equation*}\]</span></p>
+<p><em>Frequentist Approach</em></p>
+<p>The asymptotic distribution of the MLE is:
+<span class="math display">\[\begin{equation*}
+\hat \theta\sim N(1000, \frac{1}{n}).
+\end{equation*}\]</span></p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="bernstein-von-mises-theorem.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set true param value</span></span>
+<span id="cb38-2"><a href="bernstein-von-mises-theorem.html#cb38-2" aria-hidden="true" tabindex="-1"></a>theta_true <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb38-3"><a href="bernstein-von-mises-theorem.html#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="bernstein-von-mises-theorem.html#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Functions to calculate the posterior mean and sd</span></span>
+<span id="cb38-5"><a href="bernstein-von-mises-theorem.html#cb38-5" aria-hidden="true" tabindex="-1"></a>post_mean <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb38-6"><a href="bernstein-von-mises-theorem.html#cb38-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb38-7"><a href="bernstein-von-mises-theorem.html#cb38-7" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">length</span>(x)</span>
+<span id="cb38-8"><a href="bernstein-von-mises-theorem.html#cb38-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb38-9"><a href="bernstein-von-mises-theorem.html#cb38-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>(x)<span class="sc">/</span>(n<span class="sc">+</span><span class="dv">1</span>)</span>
+<span id="cb38-10"><a href="bernstein-von-mises-theorem.html#cb38-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb38-11"><a href="bernstein-von-mises-theorem.html#cb38-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb38-12"><a href="bernstein-von-mises-theorem.html#cb38-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-13"><a href="bernstein-von-mises-theorem.html#cb38-13" aria-hidden="true" tabindex="-1"></a>post_sd <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb38-14"><a href="bernstein-von-mises-theorem.html#cb38-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb38-15"><a href="bernstein-von-mises-theorem.html#cb38-15" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">length</span>(x)</span>
+<span id="cb38-16"><a href="bernstein-von-mises-theorem.html#cb38-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb38-17"><a href="bernstein-von-mises-theorem.html#cb38-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sqrt</span>(<span class="dv">1</span><span class="sc">/</span>(n<span class="sc">+</span><span class="dv">1</span>))</span>
+<span id="cb38-18"><a href="bernstein-von-mises-theorem.html#cb38-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb38-19"><a href="bernstein-von-mises-theorem.html#cb38-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb38-20"><a href="bernstein-von-mises-theorem.html#cb38-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-21"><a href="bernstein-von-mises-theorem.html#cb38-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to calculate asymptotic sd for MLE</span></span>
+<span id="cb38-22"><a href="bernstein-von-mises-theorem.html#cb38-22" aria-hidden="true" tabindex="-1"></a>mle_sd <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb38-23"><a href="bernstein-von-mises-theorem.html#cb38-23" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb38-24"><a href="bernstein-von-mises-theorem.html#cb38-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sqrt</span>(<span class="dv">1</span><span class="sc">/</span><span class="fu">length</span>(x))</span>
+<span id="cb38-25"><a href="bernstein-von-mises-theorem.html#cb38-25" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb38-26"><a href="bernstein-von-mises-theorem.html#cb38-26" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb38-27"><a href="bernstein-von-mises-theorem.html#cb38-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-28"><a href="bernstein-von-mises-theorem.html#cb38-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate some data of different sample sizes</span></span>
+<span id="cb38-29"><a href="bernstein-von-mises-theorem.html#cb38-29" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2022</span>)</span>
+<span id="cb38-30"><a href="bernstein-von-mises-theorem.html#cb38-30" aria-hidden="true" tabindex="-1"></a>y_small <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="at">mean =</span> theta_true, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb38-31"><a href="bernstein-von-mises-theorem.html#cb38-31" aria-hidden="true" tabindex="-1"></a>y_med <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">mean =</span> theta_true, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb38-32"><a href="bernstein-von-mises-theorem.html#cb38-32" aria-hidden="true" tabindex="-1"></a>y_large <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>, <span class="at">mean =</span> theta_true, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb38-33"><a href="bernstein-von-mises-theorem.html#cb38-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-34"><a href="bernstein-von-mises-theorem.html#cb38-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up Plotting</span></span>
+<span id="cb38-35"><a href="bernstein-von-mises-theorem.html#cb38-35" aria-hidden="true" tabindex="-1"></a>x_vals <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">985</span>, <span class="dv">1001</span>, <span class="at">by =</span> <span class="fl">0.01</span>)</span>
+<span id="cb38-36"><a href="bernstein-von-mises-theorem.html#cb38-36" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>))</span>
+<span id="cb38-37"><a href="bernstein-von-mises-theorem.html#cb38-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-38"><a href="bernstein-von-mises-theorem.html#cb38-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the asymptotic distribution of MLE and posterior distribution for n  = 10</span></span>
+<span id="cb38-39"><a href="bernstein-von-mises-theorem.html#cb38-39" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_vals, <span class="fu">dnorm</span>(x_vals, <span class="at">mean =</span> <span class="fu">mean</span>(y_small), <span class="at">sd =</span> <span class="fu">mle_sd</span>(y_small)), </span>
+<span id="cb38-40"><a href="bernstein-von-mises-theorem.html#cb38-40" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> <span class="st">&quot;firebrick&quot;</span>,</span>
+<span id="cb38-41"><a href="bernstein-von-mises-theorem.html#cb38-41" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;y&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="at">main =</span> <span class="st">&quot;n = 10&quot;</span>,</span>
+<span id="cb38-42"><a href="bernstein-von-mises-theorem.html#cb38-42" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">1.3</span>))</span>
+<span id="cb38-43"><a href="bernstein-von-mises-theorem.html#cb38-43" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x_vals, <span class="fu">dnorm</span>(x_vals, <span class="at">mean =</span> <span class="fu">post_mean</span>(y_small), <span class="at">sd =</span> <span class="fu">post_sd</span>(y_small)), <span class="at">col =</span> <span class="st">&quot;navy&quot;</span>)</span>
+<span id="cb38-44"><a href="bernstein-von-mises-theorem.html#cb38-44" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> theta_true, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb38-45"><a href="bernstein-von-mises-theorem.html#cb38-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the asymptotic distribution of MLE and posterior distribution for n  = 100</span></span>
+<span id="cb38-46"><a href="bernstein-von-mises-theorem.html#cb38-46" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_vals, <span class="fu">dnorm</span>(x_vals, <span class="at">mean =</span> <span class="fu">mean</span>(y_med), <span class="at">sd =</span> <span class="fu">mle_sd</span>(y_med)), </span>
+<span id="cb38-47"><a href="bernstein-von-mises-theorem.html#cb38-47" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> <span class="st">&quot;firebrick&quot;</span>,</span>
+<span id="cb38-48"><a href="bernstein-von-mises-theorem.html#cb38-48" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;y&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="at">main =</span> <span class="st">&quot;n = 100&quot;</span>)</span>
+<span id="cb38-49"><a href="bernstein-von-mises-theorem.html#cb38-49" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x_vals, <span class="fu">dnorm</span>(x_vals, <span class="at">mean =</span> <span class="fu">post_mean</span>(y_med), <span class="at">sd =</span> <span class="fu">post_sd</span>(y_med)), <span class="at">col =</span> <span class="st">&quot;navy&quot;</span>)</span>
+<span id="cb38-50"><a href="bernstein-von-mises-theorem.html#cb38-50" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> theta_true, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb38-51"><a href="bernstein-von-mises-theorem.html#cb38-51" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the asymptotic distribution of MLE and posterior distribution for n  = 1000</span></span>
+<span id="cb38-52"><a href="bernstein-von-mises-theorem.html#cb38-52" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_vals, <span class="fu">dnorm</span>(x_vals, <span class="at">mean =</span> <span class="fu">mean</span>(y_large), <span class="at">sd =</span> <span class="fu">mle_sd</span>(y_large)), </span>
+<span id="cb38-53"><a href="bernstein-von-mises-theorem.html#cb38-53" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> <span class="st">&quot;firebrick&quot;</span>,</span>
+<span id="cb38-54"><a href="bernstein-von-mises-theorem.html#cb38-54" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;y&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="at">main =</span> <span class="st">&quot;n = 1000&quot;</span>)</span>
+<span id="cb38-55"><a href="bernstein-von-mises-theorem.html#cb38-55" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x_vals, <span class="fu">dnorm</span>(x_vals, <span class="at">mean =</span> <span class="fu">post_mean</span>(y_large), <span class="at">sd =</span> <span class="fu">post_sd</span>(y_large)), <span class="at">col =</span> <span class="st">&quot;navy&quot;</span>)</span>
+<span id="cb38-56"><a href="bernstein-von-mises-theorem.html#cb38-56" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> theta_true, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb38-57"><a href="bernstein-von-mises-theorem.html#cb38-57" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Posterior Distribution&quot;</span>, <span class="st">&quot;MLE Sampling Distribution&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;navy&quot;</span>, <span class="st">&quot;firebrick&quot;</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/small%20density%20to%20true%20value-1.png" width="672" /></p>
+</div>
+<div id="example-4---true-parameter-value-is-on-the-boundary" class="section level3" number="3.3.3">
+<h3><span class="header-section-number">3.3.3</span> Example 4 - True parameter value is on the boundary</h3>
+<p>Let’s return to the Bernoulli example from before, but this time we will see what happens when the probability is on the boundary, that is, the true value of <span class="math inline">\(p = 1\)</span>.</p>
+<p><strong>Bayesian Approach</strong></p>
+<p>Recall the posterior distribution for <span class="math inline">\(p\)</span> with a <span class="math inline">\(Beta(1, 5)\)</span> prior is:
+<span class="math display">\[\begin{equation*}
+p\mid Y_1,\dots, Y_n \sim Beta(1+ \sum_{i=1}^n Y_i, n+5 - \sum_{i=1}^n Y_i)
+\end{equation*}\]</span></p>
+<p><strong>Frequentist Approach</strong></p>
+<p>The MLE <span class="math inline">\(\hat p = \sum_{i=1}^n Y_i/n\)</span> and the Fisher information is <span class="math inline">\(1/p(1-p)\)</span>. The sampling distribution is then
+<span class="math display">\[\begin{equation*}
+\hat p \sim N(1, 0).
+\end{equation*}\]</span></p>
+<p>Note that the variance of the MLE’s sampling distribution is now zero, so in other words, it is just a point mass at <span class="math inline">\(p=1\)</span>! Let’s see what happens to the posterior.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="bernstein-von-mises-theorem.html#cb39-1" aria-hidden="true" tabindex="-1"></a>p_true <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb39-2"><a href="bernstein-von-mises-theorem.html#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="bernstein-von-mises-theorem.html#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Functions to calculate the posterior mean and sd</span></span>
+<span id="cb39-4"><a href="bernstein-von-mises-theorem.html#cb39-4" aria-hidden="true" tabindex="-1"></a>post_alpha <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb39-5"><a href="bernstein-von-mises-theorem.html#cb39-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb39-6"><a href="bernstein-von-mises-theorem.html#cb39-6" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span><span class="sc">+</span><span class="fu">sum</span>(x)</span>
+<span id="cb39-7"><a href="bernstein-von-mises-theorem.html#cb39-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb39-8"><a href="bernstein-von-mises-theorem.html#cb39-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb39-9"><a href="bernstein-von-mises-theorem.html#cb39-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-10"><a href="bernstein-von-mises-theorem.html#cb39-10" aria-hidden="true" tabindex="-1"></a>post_beta <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb39-11"><a href="bernstein-von-mises-theorem.html#cb39-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb39-12"><a href="bernstein-von-mises-theorem.html#cb39-12" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">length</span>(x)</span>
+<span id="cb39-13"><a href="bernstein-von-mises-theorem.html#cb39-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb39-14"><a href="bernstein-von-mises-theorem.html#cb39-14" aria-hidden="true" tabindex="-1"></a>  n<span class="sc">+</span><span class="dv">5</span><span class="sc">-</span><span class="fu">sum</span>(x)</span>
+<span id="cb39-15"><a href="bernstein-von-mises-theorem.html#cb39-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb39-16"><a href="bernstein-von-mises-theorem.html#cb39-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb39-17"><a href="bernstein-von-mises-theorem.html#cb39-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-18"><a href="bernstein-von-mises-theorem.html#cb39-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to calculate asymptotic sd for MLE</span></span>
+<span id="cb39-19"><a href="bernstein-von-mises-theorem.html#cb39-19" aria-hidden="true" tabindex="-1"></a>mle_sd <span class="ot">&lt;-</span> <span class="cf">function</span>(p, x) {</span>
+<span id="cb39-20"><a href="bernstein-von-mises-theorem.html#cb39-20" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb39-21"><a href="bernstein-von-mises-theorem.html#cb39-21" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">length</span>(x)</span>
+<span id="cb39-22"><a href="bernstein-von-mises-theorem.html#cb39-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb39-23"><a href="bernstein-von-mises-theorem.html#cb39-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sqrt</span>(p<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p)<span class="sc">/</span>n)</span>
+<span id="cb39-24"><a href="bernstein-von-mises-theorem.html#cb39-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb39-25"><a href="bernstein-von-mises-theorem.html#cb39-25" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb39-26"><a href="bernstein-von-mises-theorem.html#cb39-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-27"><a href="bernstein-von-mises-theorem.html#cb39-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate some data of different sample sizes</span></span>
+<span id="cb39-28"><a href="bernstein-von-mises-theorem.html#cb39-28" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2022</span>)</span>
+<span id="cb39-29"><a href="bernstein-von-mises-theorem.html#cb39-29" aria-hidden="true" tabindex="-1"></a>y_small <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">10</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> p_true)</span>
+<span id="cb39-30"><a href="bernstein-von-mises-theorem.html#cb39-30" aria-hidden="true" tabindex="-1"></a>y_med <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">100</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> p_true)</span>
+<span id="cb39-31"><a href="bernstein-von-mises-theorem.html#cb39-31" aria-hidden="true" tabindex="-1"></a>y_large <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1000</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> p_true)</span>
+<span id="cb39-32"><a href="bernstein-von-mises-theorem.html#cb39-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-33"><a href="bernstein-von-mises-theorem.html#cb39-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up Plotting</span></span>
+<span id="cb39-34"><a href="bernstein-von-mises-theorem.html#cb39-34" aria-hidden="true" tabindex="-1"></a>x_vals <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.01</span>)</span>
+<span id="cb39-35"><a href="bernstein-von-mises-theorem.html#cb39-35" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>))</span>
+<span id="cb39-36"><a href="bernstein-von-mises-theorem.html#cb39-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-37"><a href="bernstein-von-mises-theorem.html#cb39-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the asymptotic distribution of MLE and posterior distribution for n  = 10</span></span>
+<span id="cb39-38"><a href="bernstein-von-mises-theorem.html#cb39-38" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_vals, <span class="fu">dbeta</span>(x_vals, <span class="at">shape1 =</span> <span class="fu">post_alpha</span>(y_small), <span class="at">shape2 =</span> <span class="fu">post_beta</span>(y_small)), <span class="at">col =</span> <span class="st">&quot;navy&quot;</span>, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>,</span>
+<span id="cb39-39"><a href="bernstein-von-mises-theorem.html#cb39-39" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;y&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="at">main =</span> <span class="st">&quot;n = 10&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">3</span>))</span>
+<span id="cb39-40"><a href="bernstein-von-mises-theorem.html#cb39-40" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> p_true, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;firebrick&quot;</span>)</span>
+<span id="cb39-41"><a href="bernstein-von-mises-theorem.html#cb39-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-42"><a href="bernstein-von-mises-theorem.html#cb39-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the asymptotic distribution of MLE and posterior distribution for n  = 50</span></span>
+<span id="cb39-43"><a href="bernstein-von-mises-theorem.html#cb39-43" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_vals, <span class="fu">dbeta</span>(x_vals, <span class="at">shape1 =</span> <span class="fu">post_alpha</span>(y_med), <span class="at">shape2 =</span> <span class="fu">post_beta</span>(y_med)), <span class="at">col =</span> <span class="st">&quot;navy&quot;</span>, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>,</span>
+<span id="cb39-44"><a href="bernstein-von-mises-theorem.html#cb39-44" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;y&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="at">main =</span> <span class="st">&quot;n = 100&quot;</span>)</span>
+<span id="cb39-45"><a href="bernstein-von-mises-theorem.html#cb39-45" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> p_true, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;firebrick&quot;</span>)</span>
+<span id="cb39-46"><a href="bernstein-von-mises-theorem.html#cb39-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-47"><a href="bernstein-von-mises-theorem.html#cb39-47" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the asymptotic distribution of MLE and posterior distribution for n  = 100</span></span>
+<span id="cb39-48"><a href="bernstein-von-mises-theorem.html#cb39-48" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_vals, <span class="fu">dbeta</span>(x_vals, <span class="at">shape1 =</span> <span class="fu">post_alpha</span>(y_large), <span class="at">shape2 =</span> <span class="fu">post_beta</span>(y_large)), <span class="at">col =</span> <span class="st">&quot;navy&quot;</span>, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>,</span>
+<span id="cb39-49"><a href="bernstein-von-mises-theorem.html#cb39-49" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;y&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="at">main =</span> <span class="st">&quot;n = 1000&quot;</span>)</span>
+<span id="cb39-50"><a href="bernstein-von-mises-theorem.html#cb39-50" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> p_true, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;firebrick&quot;</span>)</span>
+<span id="cb39-51"><a href="bernstein-von-mises-theorem.html#cb39-51" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Posterior Distribution&quot;</span>, <span class="st">&quot;MLE Sampling Distribution&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;navy&quot;</span>, <span class="st">&quot;firebrick&quot;</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/parameter%20on%20boundary-1.png" width="672" /></p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="chapter2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/uwswagclub/workshop-bookdown/edit/master/03-bernstein-von-mises-theorem.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/uwswagclub/workshop-bookdown/blob/master/03-bernstein-von-mises-theorem.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
