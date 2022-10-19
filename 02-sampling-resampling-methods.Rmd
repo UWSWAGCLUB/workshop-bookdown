@@ -1,4 +1,4 @@
-# Sampling-Resampling Methods
+# Sampling-Resampling Methods {#chapter2}
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
