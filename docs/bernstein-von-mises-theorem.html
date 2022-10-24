@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 Bernstein-von Mises Theorem | SWAG Workshops Repository</title>
   <meta name="description" content="Chapter 3 Bernstein-von Mises Theorem | SWAG Workshops Repository" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 Bernstein-von Mises Theorem | SWAG Workshops Repository" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,8 +31,7 @@
   
   
 <link rel="prev" href="chapter2.html"/>
-<link rel="next" href="references.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<link rel="next" href="variational-inference.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -51,8 +49,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -159,48 +158,56 @@ div.csl-indent {
 <li><a href="./">SWAG Workshops Repository</a></li>
 
 <li class="divider"></li>
-<li><a href="index.html#introduction" id="toc-introduction"><span class="toc-section-number">1</span> Introduction</a></li>
-<li><a href="chapter2.html#chapter2" id="toc-chapter2"><span class="toc-section-number">2</span> Sampling-Resampling Methods</a>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="chapter2.html"><a href="chapter2.html"><i class="fa fa-check"></i><b>2</b> Sampling-Resampling Methods</a>
 <ul>
-<li><a href="chapter2.html#introduction-1" id="toc-introduction-1"><span class="toc-section-number">2.1</span> Introduction</a></li>
-<li><a href="chapter2.html#rejection-sampling" id="toc-rejection-sampling"><span class="toc-section-number">2.2</span> Rejection Sampling</a></li>
-<li><a href="chapter2.html#sampling-resampling-methods" id="toc-sampling-resampling-methods"><span class="toc-section-number">2.3</span> Sampling-Resampling Methods</a>
+<li class="chapter" data-level="2.1" data-path="chapter2.html"><a href="chapter2.html#introduction-1"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="chapter2.html"><a href="chapter2.html#rejection-sampling"><i class="fa fa-check"></i><b>2.2</b> Rejection Sampling</a></li>
+<li class="chapter" data-level="2.3" data-path="chapter2.html"><a href="chapter2.html#sampling-resampling-methods"><i class="fa fa-check"></i><b>2.3</b> Sampling-Resampling Methods</a>
 <ul>
-<li><a href="chapter2.html#overview-of-the-sampling-importance-resampling-algorithm" id="toc-overview-of-the-sampling-importance-resampling-algorithm"><span class="toc-section-number">2.3.1</span> Overview of the Sampling-Importance-Resampling Algorithm</a></li>
-<li><a href="chapter2.html#computational-considerations" id="toc-computational-considerations"><span class="toc-section-number">2.3.2</span> Computational Considerations</a></li>
+<li class="chapter" data-level="2.3.1" data-path="chapter2.html"><a href="chapter2.html#overview-of-the-sampling-importance-resampling-algorithm"><i class="fa fa-check"></i><b>2.3.1</b> Overview of the Sampling-Importance-Resampling Algorithm</a></li>
+<li class="chapter" data-level="2.3.2" data-path="chapter2.html"><a href="chapter2.html#computational-considerations"><i class="fa fa-check"></i><b>2.3.2</b> Computational Considerations</a></li>
 </ul></li>
-<li><a href="chapter2.html#implementation-of-sampling-resampling-methods" id="toc-implementation-of-sampling-resampling-methods"><span class="toc-section-number">2.4</span> Implementation of Sampling-Resampling Methods</a>
+<li class="chapter" data-level="2.4" data-path="chapter2.html"><a href="chapter2.html#implementation-of-sampling-resampling-methods"><i class="fa fa-check"></i><b>2.4</b> Implementation of Sampling-Resampling Methods</a>
 <ul>
-<li><a href="chapter2.html#illustrative-example-with-binary-data" id="toc-illustrative-example-with-binary-data"><span class="toc-section-number">2.4.1</span> Illustrative Example with Binary Data</a></li>
-<li><a href="chapter2.html#practical-considerations-for-choosing-proposal-distributions" id="toc-practical-considerations-for-choosing-proposal-distributions"><span class="toc-section-number">2.4.2</span> Practical Considerations for Choosing Proposal Distributions</a></li>
-<li><a href="chapter2.html#comparing-proposal-distributions" id="toc-comparing-proposal-distributions"><span class="toc-section-number">2.4.3</span> Comparing Proposal Distributions</a></li>
+<li class="chapter" data-level="2.4.1" data-path="chapter2.html"><a href="chapter2.html#illustrative-example-with-binary-data"><i class="fa fa-check"></i><b>2.4.1</b> Illustrative Example with Binary Data</a></li>
+<li class="chapter" data-level="2.4.2" data-path="chapter2.html"><a href="chapter2.html#practical-considerations-for-choosing-proposal-distributions"><i class="fa fa-check"></i><b>2.4.2</b> Practical Considerations for Choosing Proposal Distributions</a></li>
+<li class="chapter" data-level="2.4.3" data-path="chapter2.html"><a href="chapter2.html#comparing-proposal-distributions"><i class="fa fa-check"></i><b>2.4.3</b> Comparing Proposal Distributions</a></li>
 </ul></li>
-<li><a href="chapter2.html#sampling-resampling-in-multiple-dimensions" id="toc-sampling-resampling-in-multiple-dimensions"><span class="toc-section-number">2.5</span> Sampling-Resampling in Multiple Dimensions</a>
+<li class="chapter" data-level="2.5" data-path="chapter2.html"><a href="chapter2.html#sampling-resampling-in-multiple-dimensions"><i class="fa fa-check"></i><b>2.5</b> Sampling-Resampling in Multiple Dimensions</a>
 <ul>
-<li><a href="chapter2.html#exercise-with-illustrative-example" id="toc-exercise-with-illustrative-example"><span class="toc-section-number">2.5.1</span> Exercise with Illustrative Example</a></li>
-</ul></li>
-</ul></li>
-<li><a href="bernstein-von-mises-theorem.html#bernstein-von-mises-theorem" id="toc-bernstein-von-mises-theorem"><span class="toc-section-number">3</span> Bernstein-von Mises Theorem</a>
-<ul>
-<li><a href="bernstein-von-mises-theorem.html#introduction-2" id="toc-introduction-2"><span class="toc-section-number">3.1</span> Introduction</a>
-<ul>
-<li><a href="bernstein-von-mises-theorem.html#bayesian-inference" id="toc-bayesian-inference"><span class="toc-section-number">3.1.1</span> Bayesian Inference</a></li>
-</ul></li>
-<li><a href="bernstein-von-mises-theorem.html#theorem" id="toc-theorem"><span class="toc-section-number">3.2</span> Theorem</a>
-<ul>
-<li><a href="bernstein-von-mises-theorem.html#importance" id="toc-importance"><span class="toc-section-number">3.2.1</span> Importance</a></li>
-<li><a href="bernstein-von-mises-theorem.html#required-assumptions" id="toc-required-assumptions"><span class="toc-section-number">3.2.2</span> Required Assumptions</a></li>
-<li><a href="bernstein-von-mises-theorem.html#example-1---normal-normal-model" id="toc-example-1---normal-normal-model"><span class="toc-section-number">3.2.3</span> Example 1 - Normal-normal model</a></li>
-<li><a href="bernstein-von-mises-theorem.html#example-2---bernoulli-beta-model" id="toc-example-2---bernoulli-beta-model"><span class="toc-section-number">3.2.4</span> Example 2 - Bernoulli-Beta Model</a></li>
-</ul></li>
-<li><a href="bernstein-von-mises-theorem.html#limitations" id="toc-limitations"><span class="toc-section-number">3.3</span> Limitations</a>
-<ul>
-<li><a href="bernstein-von-mises-theorem.html#other-thoughts-on-consistency" id="toc-other-thoughts-on-consistency"><span class="toc-section-number">3.3.1</span> Other thoughts on consistency</a></li>
-<li><a href="bernstein-von-mises-theorem.html#example-3---prior-has-zero-density-at-theta_0" id="toc-example-3---prior-has-zero-density-at-theta_0"><span class="toc-section-number">3.3.2</span> Example 3 - Prior has zero density at <span class="math inline">\(\theta_0\)</span></a></li>
-<li><a href="bernstein-von-mises-theorem.html#example-4---true-parameter-value-is-on-the-boundary" id="toc-example-4---true-parameter-value-is-on-the-boundary"><span class="toc-section-number">3.3.3</span> Example 4 - True parameter value is on the boundary</a></li>
+<li class="chapter" data-level="2.5.1" data-path="chapter2.html"><a href="chapter2.html#exercise-with-illustrative-example"><i class="fa fa-check"></i><b>2.5.1</b> Exercise with Illustrative Example</a></li>
 </ul></li>
 </ul></li>
-<li><a href="references.html#references" id="toc-references"><span class="toc-section-number">4</span> References</a></li>
+<li class="chapter" data-level="3" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html"><i class="fa fa-check"></i><b>3</b> Bernstein-von Mises Theorem</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#introduction-2"><i class="fa fa-check"></i><b>3.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#bayesian-inference"><i class="fa fa-check"></i><b>3.1.1</b> Bayesian Inference</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#theorem"><i class="fa fa-check"></i><b>3.2</b> Theorem</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#importance"><i class="fa fa-check"></i><b>3.2.1</b> Importance</a></li>
+<li class="chapter" data-level="3.2.2" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#required-assumptions"><i class="fa fa-check"></i><b>3.2.2</b> Required Assumptions</a></li>
+<li class="chapter" data-level="3.2.3" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#example-1---normal-normal-model"><i class="fa fa-check"></i><b>3.2.3</b> Example 1 - Normal-normal model</a></li>
+<li class="chapter" data-level="3.2.4" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#example-2---bernoulli-beta-model"><i class="fa fa-check"></i><b>3.2.4</b> Example 2 - Bernoulli-Beta Model</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#limitations"><i class="fa fa-check"></i><b>3.3</b> Limitations</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#other-thoughts-on-consistency"><i class="fa fa-check"></i><b>3.3.1</b> Other thoughts on consistency</a></li>
+<li class="chapter" data-level="3.3.2" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#example-3---prior-has-zero-density-at-theta_0"><i class="fa fa-check"></i><b>3.3.2</b> Example 3 - Prior has zero density at <span class="math inline">\(\theta_0\)</span></a></li>
+<li class="chapter" data-level="3.3.3" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#example-4---true-parameter-value-is-on-the-boundary"><i class="fa fa-check"></i><b>3.3.3</b> Example 4 - True parameter value is on the boundary</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="variational-inference.html"><a href="variational-inference.html"><i class="fa fa-check"></i><b>4</b> Variational Inference</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="variational-inference.html"><a href="variational-inference.html#introduction-3"><i class="fa fa-check"></i><b>4.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="variational-inference.html"><a href="variational-inference.html#frequentist-setting"><i class="fa fa-check"></i><b>4.1.1</b> Frequentist Setting</a></li>
+<li class="chapter" data-level="4.1.2" data-path="variational-inference.html"><a href="variational-inference.html#bayesian-setting"><i class="fa fa-check"></i><b>4.1.2</b> Bayesian Setting</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>5</b> References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -220,14 +227,14 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="bernstein-von-mises-theorem" class="section level1" number="3">
-<h1><span class="header-section-number">Chapter 3</span> Bernstein-von Mises Theorem</h1>
+<div id="bernstein-von-mises-theorem" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Bernstein-von Mises Theorem<a href="bernstein-von-mises-theorem.html#bernstein-von-mises-theorem" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Augustine Wigle</em></p>
-<div id="introduction-2" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Introduction</h2>
+<div id="introduction-2" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Introduction<a href="bernstein-von-mises-theorem.html#introduction-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The Bernstein-von Mises theorem (or BVM theorem) connects Bayesian and frequentist inference. In this workshop, we will state the theorem, talk about its importance, and touch on some of the required assumptions. We will work through some examples in R which let us visualize the theorem, and finally, we will talk about violations of the assumptions. This workshop is intended to introduce you to the theorem and encourage you to consider when it applies. It is not a rigourous treatment of the theorem - for those interested in the more technical details, we recommend <span class="citation">Van der Vaart (2000)</span> and <span class="citation">Kleijn and Van der Vaart (2012)</span>. In this section we will give a brief review of Bayesian inference, the posterior distribution, and credible intervals.</p>
-<div id="bayesian-inference" class="section level3" number="3.1.1">
-<h3><span class="header-section-number">3.1.1</span> Bayesian Inference</h3>
+<div id="bayesian-inference" class="section level3 hasAnchor" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> Bayesian Inference<a href="bernstein-von-mises-theorem.html#bayesian-inference" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Since this theorem applies to Bayesian models, we will give a quick review of Bayesian inference. In Bayesian inference, our state of knowledge about anything unknown is described by a probability distribution. Bayesian statistical conclusions about a parameter <span class="math inline">\(\theta\)</span> are made in terms of probabilistic statements conditional on the observed data <span class="math inline">\(y\)</span>. The distribution of interest is therefore <span class="math inline">\(p(\theta \mid y)\)</span>, the posterior distribution. We first specify a model which provides the joint probability distribution, that is, <span class="math inline">\(p(\theta, y) = p(\theta)p(y\mid \theta)\)</span>, where <span class="math inline">\(p(\theta)\)</span> is the prior distribution, which describes prior beliefs about the parameter(s) <span class="math inline">\(\theta\)</span>, and <span class="math inline">\(p(y\mid \theta)\)</span> is the data distribution of the likelihood. Then, Bayes’ theorem shows how to obtain the posterior distribution:
 <span class="math display">\[\begin{equation*}
 p(\theta \mid y) = \frac{p(\theta)p(y\mid \theta)}{p(y)}
@@ -236,20 +243,19 @@ In most models, <span class="math inline">\(p(\theta\mid y)\)</span> does not ha
 <p>Point estimates for <span class="math inline">\(\theta\)</span> can be derived from the posterior distribution, for example, by taking the posterior median or mean. Credible intervals are the Bayesian version of confidence intervals. A credible interval of credibility level <span class="math inline">\(100\times(1-\alpha)\)</span> are defined as sets where the posterior probability of <span class="math inline">\(\theta\)</span> in the set is <span class="math inline">\(100\times(1-\alpha)\)</span> and can be obtained in a variety of ways, such as by taking the lower and upper <span class="math inline">\(\alpha/2\)</span> quantiles of the posterior distribution.</p>
 </div>
 </div>
-<div id="theorem" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> Theorem</h2>
-A succinct statement of the theorem is as follows (for a more detailed and technical statement and proof, see <span class="citation">Van der Vaart (2000)</span>):
-
-<div class="theorem">
-<span id="thm:unnamed-chunk-12" class="theorem"><strong>Theorem 3.1  </strong></span><strong>Under certain assumptions</strong>, a posterior distribution converges to a multivariate normal distribution centred at the maximum likelihood estimate <span class="math inline">\(\hat \theta\)</span> and with covariance matrix given by <span class="math inline">\(n^{-1}I(\theta_0)^{-1}\)</span> as the sample size <span class="math inline">\(n \rightarrow \infty\)</span> , where <span class="math inline">\(\theta_0\)</span> is the true population parameter and <span class="math inline">\(I(\theta_0)\)</span> is the Fisher information matrix evaluated at <span class="math inline">\(\theta_0\)</span>.
-</div>
+<div id="theorem" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Theorem<a href="bernstein-von-mises-theorem.html#theorem" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A succinct statement of the theorem is as follows (for a more detailed and technical statement and proof, see <span class="citation">Van der Vaart (2000)</span>):
+::: {.theorem #unnamed-chunk-12}
+<strong>Under certain assumptions</strong>, a posterior distribution converges to a multivariate normal distribution centred at the maximum likelihood estimate <span class="math inline">\(\hat \theta\)</span> and with covariance matrix given by <span class="math inline">\(n^{-1}I(\theta_0)^{-1}\)</span> as the sample size <span class="math inline">\(n \rightarrow \infty\)</span> , where <span class="math inline">\(\theta_0\)</span> is the true population parameter and <span class="math inline">\(I(\theta_0)\)</span> is the Fisher information matrix evaluated at <span class="math inline">\(\theta_0\)</span>.
+:::</p>
 <p>Or in other words, as you get more data, the posterior looks more and more like the sampling distribution of the MLE (if the assumptions are satisfied).</p>
-<div id="importance" class="section level3" number="3.2.1">
-<h3><span class="header-section-number">3.2.1</span> Importance</h3>
+<div id="importance" class="section level3 hasAnchor" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> Importance<a href="bernstein-von-mises-theorem.html#importance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The BVM theorem is useful because it provides a frequentist justification for Bayesian inference. The main takeaway of the theorem is that Bayesian inference is asymptotically correct from a frequentist perspective. In particular, Bayesian credible intervals are asymptotically confidence intervals. Another way to think about the theorem’s interpretation is that the influence of the prior disappears and the posterior becomes normal once you observe enough data. This is analogous to a pure frequentist approach where there is no prior information and the sampling distribution of the MLE becomes normal as you observe more and more data.</p>
 </div>
-<div id="required-assumptions" class="section level3" number="3.2.2">
-<h3><span class="header-section-number">3.2.2</span> Required Assumptions</h3>
+<div id="required-assumptions" class="section level3 hasAnchor" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> Required Assumptions<a href="bernstein-von-mises-theorem.html#required-assumptions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Of course, for the theorem to hold, we require several assumptions to be satisfied. We are only going to touch on some of the more important conditions and we will not go into the technical details for this workshop (for technical details see <span class="citation">Van der Vaart (2000)</span>). Some of the more important assumptions are:</p>
 <ul>
 <li>The log-likelihood is smooth</li>
@@ -260,8 +266,8 @@ A succinct statement of the theorem is as follows (for a more detailed and techn
 </ul>
 <p>We will discuss when some of these conditions may be violated and see some examples. We will start with an example where this theorem holds!</p>
 </div>
-<div id="example-1---normal-normal-model" class="section level3" number="3.2.3">
-<h3><span class="header-section-number">3.2.3</span> Example 1 - Normal-normal model</h3>
+<div id="example-1---normal-normal-model" class="section level3 hasAnchor" number="3.2.3">
+<h3><span class="header-section-number">3.2.3</span> Example 1 - Normal-normal model<a href="bernstein-von-mises-theorem.html#example-1---normal-normal-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Let’s consider a nice example: we observe <span class="math inline">\(Y_1, \dots, Y_n\)</span> from a <span class="math inline">\(N(\theta, 1)\)</span> distribution. We are interested in estimating <span class="math inline">\(\theta\)</span>. Let’s also suppose that the true value of <span class="math inline">\(\theta\)</span> is 0.</p>
 <p><strong>Bayesian Approach</strong></p>
 <p>We will use a normal prior for <span class="math inline">\(\theta\)</span>, that is, <span class="math inline">\(\theta \sim N(0,1)\)</span>. This is actually an example of a conjugate distribution and so there is an analytical solution for the posterior, which will make plotting the solution very convenient:
@@ -333,8 +339,8 @@ A succinct statement of the theorem is as follows (for a more detailed and techn
 <span id="cb36-57"><a href="bernstein-von-mises-theorem.html#cb36-57" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="bookdownproj_files/figure-html/example%201-1.png" width="672" /></p>
 </div>
-<div id="example-2---bernoulli-beta-model" class="section level3" number="3.2.4">
-<h3><span class="header-section-number">3.2.4</span> Example 2 - Bernoulli-Beta Model</h3>
+<div id="example-2---bernoulli-beta-model" class="section level3 hasAnchor" number="3.2.4">
+<h3><span class="header-section-number">3.2.4</span> Example 2 - Bernoulli-Beta Model<a href="bernstein-von-mises-theorem.html#example-2---bernoulli-beta-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In the previous example, we didn’t actually need Bernstein-von Mises to get asymptotic normality of the posterior, because the posterior distribution was already normal by definition regardless of how much data we had. Let’s look at another example where we can see the posterior getting more normal as we observe more data.</p>
 <p>Again, we will take advantage of conjugacy for computational convenience. This time, consider observing <span class="math inline">\(Y_1, \dots, Y_n\)</span> from <span class="math inline">\(Bernoulli(p)\)</span>, where the true value of <span class="math inline">\(p\)</span> is 0.5.</p>
 <p><strong>Bayesian Approach</strong></p>
@@ -407,8 +413,8 @@ p\mid Y_1,\dots, Y_n \sim Beta(1+ \sum_{i=1}^n Y_i, n+5 - \sum_{i=1}^n Y_i)
 <p><img src="bookdownproj_files/figure-html/bernoulli%20example-1.png" width="672" /></p>
 </div>
 </div>
-<div id="limitations" class="section level2" number="3.3">
-<h2><span class="header-section-number">3.3</span> Limitations</h2>
+<div id="limitations" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Limitations<a href="bernstein-von-mises-theorem.html#limitations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We do need to be careful with applying Bernstein-von Mises to make sure important assumptions are satisfied! Several of these examples were motivated by <a href="https://statmodeling.stat.columbia.edu/2017/11/27/asymptotically-we-are-all-dead/">this blog post</a> by Dan Simpson which I found entertaining and thought-provoking <span class="citation">(Simpson 2017)</span>.</p>
 <p>Here are some examples of when important assumptions of BVM might be violated:</p>
 <ul>
@@ -419,12 +425,12 @@ p\mid Y_1,\dots, Y_n \sim Beta(1+ \sum_{i=1}^n Y_i, n+5 - \sum_{i=1}^n Y_i)
 <li><span class="math inline">\(\theta_0\)</span> may be on the boundary of the parameter space - see example 4</li>
 <li>The MLE may not be consistent when the log-likelihood is multimodal, such as in some mixture models. Some other situations where the MLE may not be consistent arise when other assumptions are violated, like the number of parameters increasing with <span class="math inline">\(n\)</span> or the true parameter value being on the boundary of the parameter space.</li>
 </ul>
-<div id="other-thoughts-on-consistency" class="section level3" number="3.3.1">
-<h3><span class="header-section-number">3.3.1</span> Other thoughts on consistency</h3>
+<div id="other-thoughts-on-consistency" class="section level3 hasAnchor" number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> Other thoughts on consistency<a href="bernstein-von-mises-theorem.html#other-thoughts-on-consistency" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Other considerations around consistency which I found interesting are raised by Dan Simpson in his blog post mentioned above. When we consider consistency, we need to consider how the data were collected, and consider what it means to have independent replicates of the same experiment. A lot of datasets are observational, and so there is no guarantee that the data can actually be used to give a consistent estimator of the parameter we want to estimate, regardless of how many times we conduct the experiment. Similarly, collecting a lot of data can take a long time, and over time, the underlying process that we are trying to study may change. This will also present a challenge for consistency.</p>
 </div>
-<div id="example-3---prior-has-zero-density-at-theta_0" class="section level3" number="3.3.2">
-<h3><span class="header-section-number">3.3.2</span> Example 3 - Prior has zero density at <span class="math inline">\(\theta_0\)</span></h3>
+<div id="example-3---prior-has-zero-density-at-theta_0" class="section level3 hasAnchor" number="3.3.2">
+<h3><span class="header-section-number">3.3.2</span> Example 3 - Prior has zero density at <span class="math inline">\(\theta_0\)</span><a href="bernstein-von-mises-theorem.html#example-3---prior-has-zero-density-at-theta_0" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>An example of this would be using a uniform prior for a standard deviation and choosing an upper bound which is less than the true standard deviation.</p>
 <p>For this talk, we won’t do an example where the prior gives 0 density to the true value because for these models we would need to use some computational tools tog et the posterior distribution, but we can look at what happens when the prior gives very little density to the true value. Let’s return to the first example, where we have collected data from a normal distribution with known variance 1 and we want to estimate its mean. In the first example, we used a prior centred at 0 with variance 1, and the true value happened to be 0. What if the true mean is actually 1000? The prior <span class="math inline">\(N(0,1)\)</span> is now very informative, and will give very little density (but still non-zero) to the true parameter value. Now we have:</p>
 <p><em>Bayesian Approach</em></p>
@@ -496,8 +502,8 @@ p\mid Y_1,\dots, Y_n \sim Beta(1+ \sum_{i=1}^n Y_i, n+5 - \sum_{i=1}^n Y_i)
 <span id="cb38-57"><a href="bernstein-von-mises-theorem.html#cb38-57" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Posterior Distribution&quot;</span>, <span class="st">&quot;MLE Sampling Distribution&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;navy&quot;</span>, <span class="st">&quot;firebrick&quot;</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code></pre></div>
 <p><img src="bookdownproj_files/figure-html/small%20density%20to%20true%20value-1.png" width="672" /></p>
 </div>
-<div id="example-4---true-parameter-value-is-on-the-boundary" class="section level3" number="3.3.3">
-<h3><span class="header-section-number">3.3.3</span> Example 4 - True parameter value is on the boundary</h3>
+<div id="example-4---true-parameter-value-is-on-the-boundary" class="section level3 hasAnchor" number="3.3.3">
+<h3><span class="header-section-number">3.3.3</span> Example 4 - True parameter value is on the boundary<a href="bernstein-von-mises-theorem.html#example-4---true-parameter-value-is-on-the-boundary" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Let’s return to the Bernoulli example from before, but this time we will see what happens when the probability is on the boundary, that is, the true value of <span class="math inline">\(p = 1\)</span>.</p>
 <p><strong>Bayesian Approach</strong></p>
 <p>Recall the posterior distribution for <span class="math inline">\(p\)</span> with a <span class="math inline">\(Beta(1, 5)\)</span> prior is:
@@ -572,7 +578,7 @@ p\mid Y_1,\dots, Y_n \sim Beta(1+ \sum_{i=1}^n Y_i, n+5 - \sum_{i=1}^n Y_i)
         </div>
       </div>
 <a href="chapter2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="variational-inference.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -632,7 +638,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

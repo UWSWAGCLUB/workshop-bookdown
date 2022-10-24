@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Sampling-Resampling Methods | SWAG Workshops Repository</title>
   <meta name="description" content="Chapter 2 Sampling-Resampling Methods | SWAG Workshops Repository" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 Sampling-Resampling Methods | SWAG Workshops Repository" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -33,7 +32,6 @@
   
 <link rel="prev" href="index.html"/>
 <link rel="next" href="bernstein-von-mises-theorem.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -51,8 +49,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -159,48 +158,56 @@ div.csl-indent {
 <li><a href="./">SWAG Workshops Repository</a></li>
 
 <li class="divider"></li>
-<li><a href="index.html#introduction" id="toc-introduction"><span class="toc-section-number">1</span> Introduction</a></li>
-<li><a href="chapter2.html#chapter2" id="toc-chapter2"><span class="toc-section-number">2</span> Sampling-Resampling Methods</a>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="chapter2.html"><a href="chapter2.html"><i class="fa fa-check"></i><b>2</b> Sampling-Resampling Methods</a>
 <ul>
-<li><a href="chapter2.html#introduction-1" id="toc-introduction-1"><span class="toc-section-number">2.1</span> Introduction</a></li>
-<li><a href="chapter2.html#rejection-sampling" id="toc-rejection-sampling"><span class="toc-section-number">2.2</span> Rejection Sampling</a></li>
-<li><a href="chapter2.html#sampling-resampling-methods" id="toc-sampling-resampling-methods"><span class="toc-section-number">2.3</span> Sampling-Resampling Methods</a>
+<li class="chapter" data-level="2.1" data-path="chapter2.html"><a href="chapter2.html#introduction-1"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="chapter2.html"><a href="chapter2.html#rejection-sampling"><i class="fa fa-check"></i><b>2.2</b> Rejection Sampling</a></li>
+<li class="chapter" data-level="2.3" data-path="chapter2.html"><a href="chapter2.html#sampling-resampling-methods"><i class="fa fa-check"></i><b>2.3</b> Sampling-Resampling Methods</a>
 <ul>
-<li><a href="chapter2.html#overview-of-the-sampling-importance-resampling-algorithm" id="toc-overview-of-the-sampling-importance-resampling-algorithm"><span class="toc-section-number">2.3.1</span> Overview of the Sampling-Importance-Resampling Algorithm</a></li>
-<li><a href="chapter2.html#computational-considerations" id="toc-computational-considerations"><span class="toc-section-number">2.3.2</span> Computational Considerations</a></li>
+<li class="chapter" data-level="2.3.1" data-path="chapter2.html"><a href="chapter2.html#overview-of-the-sampling-importance-resampling-algorithm"><i class="fa fa-check"></i><b>2.3.1</b> Overview of the Sampling-Importance-Resampling Algorithm</a></li>
+<li class="chapter" data-level="2.3.2" data-path="chapter2.html"><a href="chapter2.html#computational-considerations"><i class="fa fa-check"></i><b>2.3.2</b> Computational Considerations</a></li>
 </ul></li>
-<li><a href="chapter2.html#implementation-of-sampling-resampling-methods" id="toc-implementation-of-sampling-resampling-methods"><span class="toc-section-number">2.4</span> Implementation of Sampling-Resampling Methods</a>
+<li class="chapter" data-level="2.4" data-path="chapter2.html"><a href="chapter2.html#implementation-of-sampling-resampling-methods"><i class="fa fa-check"></i><b>2.4</b> Implementation of Sampling-Resampling Methods</a>
 <ul>
-<li><a href="chapter2.html#illustrative-example-with-binary-data" id="toc-illustrative-example-with-binary-data"><span class="toc-section-number">2.4.1</span> Illustrative Example with Binary Data</a></li>
-<li><a href="chapter2.html#practical-considerations-for-choosing-proposal-distributions" id="toc-practical-considerations-for-choosing-proposal-distributions"><span class="toc-section-number">2.4.2</span> Practical Considerations for Choosing Proposal Distributions</a></li>
-<li><a href="chapter2.html#comparing-proposal-distributions" id="toc-comparing-proposal-distributions"><span class="toc-section-number">2.4.3</span> Comparing Proposal Distributions</a></li>
+<li class="chapter" data-level="2.4.1" data-path="chapter2.html"><a href="chapter2.html#illustrative-example-with-binary-data"><i class="fa fa-check"></i><b>2.4.1</b> Illustrative Example with Binary Data</a></li>
+<li class="chapter" data-level="2.4.2" data-path="chapter2.html"><a href="chapter2.html#practical-considerations-for-choosing-proposal-distributions"><i class="fa fa-check"></i><b>2.4.2</b> Practical Considerations for Choosing Proposal Distributions</a></li>
+<li class="chapter" data-level="2.4.3" data-path="chapter2.html"><a href="chapter2.html#comparing-proposal-distributions"><i class="fa fa-check"></i><b>2.4.3</b> Comparing Proposal Distributions</a></li>
 </ul></li>
-<li><a href="chapter2.html#sampling-resampling-in-multiple-dimensions" id="toc-sampling-resampling-in-multiple-dimensions"><span class="toc-section-number">2.5</span> Sampling-Resampling in Multiple Dimensions</a>
+<li class="chapter" data-level="2.5" data-path="chapter2.html"><a href="chapter2.html#sampling-resampling-in-multiple-dimensions"><i class="fa fa-check"></i><b>2.5</b> Sampling-Resampling in Multiple Dimensions</a>
 <ul>
-<li><a href="chapter2.html#exercise-with-illustrative-example" id="toc-exercise-with-illustrative-example"><span class="toc-section-number">2.5.1</span> Exercise with Illustrative Example</a></li>
-</ul></li>
-</ul></li>
-<li><a href="bernstein-von-mises-theorem.html#bernstein-von-mises-theorem" id="toc-bernstein-von-mises-theorem"><span class="toc-section-number">3</span> Bernstein-von Mises Theorem</a>
-<ul>
-<li><a href="bernstein-von-mises-theorem.html#introduction-2" id="toc-introduction-2"><span class="toc-section-number">3.1</span> Introduction</a>
-<ul>
-<li><a href="bernstein-von-mises-theorem.html#bayesian-inference" id="toc-bayesian-inference"><span class="toc-section-number">3.1.1</span> Bayesian Inference</a></li>
-</ul></li>
-<li><a href="bernstein-von-mises-theorem.html#theorem" id="toc-theorem"><span class="toc-section-number">3.2</span> Theorem</a>
-<ul>
-<li><a href="bernstein-von-mises-theorem.html#importance" id="toc-importance"><span class="toc-section-number">3.2.1</span> Importance</a></li>
-<li><a href="bernstein-von-mises-theorem.html#required-assumptions" id="toc-required-assumptions"><span class="toc-section-number">3.2.2</span> Required Assumptions</a></li>
-<li><a href="bernstein-von-mises-theorem.html#example-1---normal-normal-model" id="toc-example-1---normal-normal-model"><span class="toc-section-number">3.2.3</span> Example 1 - Normal-normal model</a></li>
-<li><a href="bernstein-von-mises-theorem.html#example-2---bernoulli-beta-model" id="toc-example-2---bernoulli-beta-model"><span class="toc-section-number">3.2.4</span> Example 2 - Bernoulli-Beta Model</a></li>
-</ul></li>
-<li><a href="bernstein-von-mises-theorem.html#limitations" id="toc-limitations"><span class="toc-section-number">3.3</span> Limitations</a>
-<ul>
-<li><a href="bernstein-von-mises-theorem.html#other-thoughts-on-consistency" id="toc-other-thoughts-on-consistency"><span class="toc-section-number">3.3.1</span> Other thoughts on consistency</a></li>
-<li><a href="bernstein-von-mises-theorem.html#example-3---prior-has-zero-density-at-theta_0" id="toc-example-3---prior-has-zero-density-at-theta_0"><span class="toc-section-number">3.3.2</span> Example 3 - Prior has zero density at <span class="math inline">\(\theta_0\)</span></a></li>
-<li><a href="bernstein-von-mises-theorem.html#example-4---true-parameter-value-is-on-the-boundary" id="toc-example-4---true-parameter-value-is-on-the-boundary"><span class="toc-section-number">3.3.3</span> Example 4 - True parameter value is on the boundary</a></li>
+<li class="chapter" data-level="2.5.1" data-path="chapter2.html"><a href="chapter2.html#exercise-with-illustrative-example"><i class="fa fa-check"></i><b>2.5.1</b> Exercise with Illustrative Example</a></li>
 </ul></li>
 </ul></li>
-<li><a href="references.html#references" id="toc-references"><span class="toc-section-number">4</span> References</a></li>
+<li class="chapter" data-level="3" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html"><i class="fa fa-check"></i><b>3</b> Bernstein-von Mises Theorem</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#introduction-2"><i class="fa fa-check"></i><b>3.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#bayesian-inference"><i class="fa fa-check"></i><b>3.1.1</b> Bayesian Inference</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#theorem"><i class="fa fa-check"></i><b>3.2</b> Theorem</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#importance"><i class="fa fa-check"></i><b>3.2.1</b> Importance</a></li>
+<li class="chapter" data-level="3.2.2" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#required-assumptions"><i class="fa fa-check"></i><b>3.2.2</b> Required Assumptions</a></li>
+<li class="chapter" data-level="3.2.3" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#example-1---normal-normal-model"><i class="fa fa-check"></i><b>3.2.3</b> Example 1 - Normal-normal model</a></li>
+<li class="chapter" data-level="3.2.4" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#example-2---bernoulli-beta-model"><i class="fa fa-check"></i><b>3.2.4</b> Example 2 - Bernoulli-Beta Model</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#limitations"><i class="fa fa-check"></i><b>3.3</b> Limitations</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#other-thoughts-on-consistency"><i class="fa fa-check"></i><b>3.3.1</b> Other thoughts on consistency</a></li>
+<li class="chapter" data-level="3.3.2" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#example-3---prior-has-zero-density-at-theta_0"><i class="fa fa-check"></i><b>3.3.2</b> Example 3 - Prior has zero density at <span class="math inline">\(\theta_0\)</span></a></li>
+<li class="chapter" data-level="3.3.3" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#example-4---true-parameter-value-is-on-the-boundary"><i class="fa fa-check"></i><b>3.3.3</b> Example 4 - True parameter value is on the boundary</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="variational-inference.html"><a href="variational-inference.html"><i class="fa fa-check"></i><b>4</b> Variational Inference</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="variational-inference.html"><a href="variational-inference.html#introduction-3"><i class="fa fa-check"></i><b>4.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="variational-inference.html"><a href="variational-inference.html#frequentist-setting"><i class="fa fa-check"></i><b>4.1.1</b> Frequentist Setting</a></li>
+<li class="chapter" data-level="4.1.2" data-path="variational-inference.html"><a href="variational-inference.html#bayesian-setting"><i class="fa fa-check"></i><b>4.1.2</b> Bayesian Setting</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>5</b> References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -220,16 +227,16 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="chapter2" class="section level1" number="2">
-<h1><span class="header-section-number">Chapter 2</span> Sampling-Resampling Methods</h1>
+<div id="chapter2" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Sampling-Resampling Methods<a href="chapter2.html#chapter2" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><em>Luke Hagar</em></p>
 <p>October 6, 2022</p>
-<div id="introduction-1" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> Introduction</h2>
+<div id="introduction-1" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Introduction<a href="chapter2.html#introduction-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Welcome to the first workshop for the Statistical Workshops and Applications Group (SWAG)! This workshop discusses sampling-resampling methods, mainly in the context of Bayesian inference.</p>
 </div>
-<div id="rejection-sampling" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> Rejection Sampling</h2>
+<div id="rejection-sampling" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Rejection Sampling<a href="chapter2.html#rejection-sampling" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Before introducing sampling-resampling methods, we briefly discuss rejection sampling <span class="citation">(Ripley 2009)</span> along with its strengths and shortcomings. In what follows, we discuss the set up for our sampling scenario.</p>
 <ul>
 <li>Let’s suppose we can easily generate a sample from a continuous density function <span class="math inline">\(g(\boldsymbol{\theta})\)</span>. We call this the proposal distribution.</li>
@@ -325,10 +332,10 @@ Figure 2.2: Visualization of rejection sampling with accepted points (green) and
 </ol>
 <p>When using sampling-resampling methods, remark 1 is often not of concern.</p>
 </div>
-<div id="sampling-resampling-methods" class="section level2" number="2.3">
-<h2><span class="header-section-number">2.3</span> Sampling-Resampling Methods</h2>
-<div id="overview-of-the-sampling-importance-resampling-algorithm" class="section level3" number="2.3.1">
-<h3><span class="header-section-number">2.3.1</span> Overview of the Sampling-Importance-Resampling Algorithm</h3>
+<div id="sampling-resampling-methods" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Sampling-Resampling Methods<a href="chapter2.html#sampling-resampling-methods" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="overview-of-the-sampling-importance-resampling-algorithm" class="section level3 hasAnchor" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Overview of the Sampling-Importance-Resampling Algorithm<a href="chapter2.html#overview-of-the-sampling-importance-resampling-algorithm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We now discuss how to obtain an approximate sample from the density <span class="math inline">\(h(\boldsymbol{\theta})\)</span> using a particular weighted sampling-resampling method, which is a variant of the bootstrap procedure <span class="citation">(Efron 1982)</span>. This method was first formally proposed in <span class="citation">Rubin (1987)</span> and <span class="citation">Rubin (1988)</span> as the sampling-importance-resampling (SIR) algorithm. We introduce this procedure via Algorithm 2, which uses notation from <span class="citation">Smith and Gelfand (1992)</span>.</p>
 <p><strong>Algorithm 2</strong></p>
 <ol style="list-style-type: decimal">
@@ -343,8 +350,8 @@ Figure 2.2: Visualization of rejection sampling with accepted points (green) and
 <span class="math display">\[\pi(\boldsymbol{\theta}| \boldsymbol{x}) = \frac{L(\boldsymbol{\theta}; \boldsymbol{x})p(\boldsymbol{\theta})}{\int L(\boldsymbol{\theta}; \boldsymbol{x})p(\boldsymbol{\theta})d\boldsymbol{\theta}} \propto L(\boldsymbol{\theta}; \boldsymbol{x})p(\boldsymbol{\theta}).\]</span></p>
 <p>Thus, we have <span class="math inline">\(h(\boldsymbol{\theta}) = \pi(\boldsymbol{\theta}| \boldsymbol{x})\)</span> and <span class="math inline">\(f(\boldsymbol{\theta}) = L(\boldsymbol{\theta}; \boldsymbol{x})p(\boldsymbol{\theta})\)</span> using the notation from earlier. For a given <span class="math inline">\(\boldsymbol{\theta}\)</span> value, it is straightforward to compute <span class="math inline">\(f(\boldsymbol{\theta})\)</span>; however, we are often not able to compute <span class="math inline">\(h(\boldsymbol{\theta})\)</span> directly. As such, the SIR algorithm goes well with the framework for Bayesian inference. It can be used to generate an approximate sample from the posterior distribution of interest <span class="math inline">\(h(\boldsymbol{\theta}) = \pi(\boldsymbol{\theta}| \boldsymbol{x})\)</span> and serves as an alternative to more standard Markov chain Monte Carlo (MCMC) methods in many scenarios. The SIR algorithm can be used with non-Bayesian methods, but the remainder of this workshop focuses on implementing the SIR algorithm to conduct approximate posterior sampling.</p>
 </div>
-<div id="computational-considerations" class="section level3" number="2.3.2">
-<h3><span class="header-section-number">2.3.2</span> Computational Considerations</h3>
+<div id="computational-considerations" class="section level3 hasAnchor" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> Computational Considerations<a href="chapter2.html#computational-considerations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The SIR algorithm often produces more stable results when <span class="math inline">\(\omega_i, i = 1,...,n\)</span> are computed on the logarithmic scale. This is consistent with other methods for Bayesian inference that do not involve sampling-resampling. Particularly when <span class="math inline">\(\boldsymbol{\theta}\)</span> is multivariate, <span class="math inline">\(f(\boldsymbol{\theta})\)</span> and <span class="math inline">\(g(\boldsymbol{\theta})\)</span> can take small positive values that are extremely close to 0. Computing <span class="math inline">\(\text{log}(\omega_i)\)</span> helps make underflow errors less common, as we will see shortly. We have that
 <span class="math display">\[\text{log}(\omega_i) = \text{log}(f(\boldsymbol{\theta}_i)) - \text{log}(g(\boldsymbol{\theta}_i)).\]</span>
 In the context of Bayesian inference, <span class="math inline">\(f(\boldsymbol{\theta}) = L(\boldsymbol{\theta}; \boldsymbol{x})p(\boldsymbol{\theta})\)</span> is generally the product of several terms, so <span class="math inline">\(\text{log}(f(\boldsymbol{\theta}_i))\)</span> is often easier to manipulate than <span class="math inline">\(f(\boldsymbol{\theta}_i)\)</span>. When <span class="math inline">\(g(\boldsymbol{\theta})\)</span> is a well known probability distribution, we can often compute <span class="math inline">\(\text{log}(g(\boldsymbol{\theta}_i))\)</span> using built-in R functions. For instance, if <span class="math inline">\(g(\boldsymbol{\theta})\)</span> is the standard normal distribution, we can compute <span class="math inline">\(\text{log}(g(\boldsymbol{\theta}_i))\)</span> as <span class="math inline">\(\texttt{dnorm(}\boldsymbol{\theta}_i\texttt{, log = TRUE)}\)</span>.</p>
@@ -390,10 +397,10 @@ In the context of Bayesian inference, <span class="math inline">\(f(\boldsymbol{
 <pre><code>## [1] 0.09003057 0.24472847 0.66524096</code></pre>
 </div>
 </div>
-<div id="implementation-of-sampling-resampling-methods" class="section level2" number="2.4">
-<h2><span class="header-section-number">2.4</span> Implementation of Sampling-Resampling Methods</h2>
-<div id="illustrative-example-with-binary-data" class="section level3" number="2.4.1">
-<h3><span class="header-section-number">2.4.1</span> Illustrative Example with Binary Data</h3>
+<div id="implementation-of-sampling-resampling-methods" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Implementation of Sampling-Resampling Methods<a href="chapter2.html#implementation-of-sampling-resampling-methods" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="illustrative-example-with-binary-data" class="section level3 hasAnchor" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> Illustrative Example with Binary Data<a href="chapter2.html#illustrative-example-with-binary-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Here, we demonstrate how to implement the SIR algorithm to faciliate posterior sampling for a simple example. In this example, we assume that we observe binary data <span class="math inline">\(x_1, ..., x_N\)</span> such that <span class="math inline">\(x_j \sim \text{BIN}(1, \theta)\)</span>. We assume that the prior for <span class="math inline">\(\theta\)</span> is an uninformative <span class="math inline">\(\text{BETA}(1,1)\)</span> prior, which implies that <span class="math inline">\(p(\theta) = 1\)</span> for <span class="math inline">\(0 &lt; \theta &lt; 1\)</span>. In this case, the posterior <span class="math inline">\(h(\theta) = \pi(\theta| \boldsymbol{x})\)</span> is such that
 <span class="math display">\[h(\boldsymbol{\theta}) \propto L(\theta; \boldsymbol{x}) = \prod_{j=1}^N\theta^{x_j}(1 - \theta)^{1-x_j} = \theta^{\sum_{j=1}^Nx_j}(1-\theta)^{N-\sum_{j=1}^Nx_j} = f(\theta).\]</span></p>
 <p>Let’s assume that we have <span class="math inline">\(N = 20\)</span> observations and that 15 of these Bernoulli trials were successful (<span class="math inline">\(\sum_{j=1}^N x_j = 15\)</span>). It follows that <span class="math inline">\(f(\theta) = \theta^{15}(1-\theta)^5\)</span> for <span class="math inline">\(0 &lt; \theta &lt; 1\)</span>. For this example, <span class="math inline">\(h(\theta)\)</span> is actually known: it is a <span class="math inline">\(\text{BETA}(16, 6)\)</span> distribution. Therefore, we do not need to use sampling-resampling methods to sample from <span class="math inline">\(h(\boldsymbol{\theta})\)</span>. However, because <span class="math inline">\(h(\theta)\)</span> is known, we can use this example to explore the performance of the SIR algorithm for different proposal distributions <span class="math inline">\(g(\boldsymbol{\theta})\)</span>. The first proposal distribution that we consider is <span class="math inline">\(g(\theta) = 1\)</span> for <span class="math inline">\(0 &lt; \theta &lt; 1\)</span> (i.e., the <span class="math inline">\(U(0,1)\)</span> distribution). We plot <span class="math inline">\(h(\theta)\)</span> and <span class="math inline">\(g(\theta)\)</span> in Figure <a href="chapter2.html#fig:unif1">2.3</a>.</p>
@@ -468,8 +475,8 @@ Figure 2.5: Histogram of standardized weights from SIR algorithm (uniform propos
 </div>
 <p>If we were to use <span class="math inline">\(h(\theta)\)</span> as the proposal, all weights should be equal to <span class="math inline">\(n^{-1} = 1000000^{-1} = 1 \times 10^{-6}\)</span>. In Figure <a href="chapter2.html#fig:unif3">2.5</a>, we can see that many of the standarized weights are extremely close to 0, and these <span class="math inline">\(\theta\)</span> values are very unlikely to be selected during the weighted sampling process. In contrast, some of the weights are more than 4 times greater than <span class="math inline">\(1 \times 10^{-6}\)</span>. If we do not generate many points from <span class="math inline">\(g(\theta)\)</span> (<span class="math inline">\(n\)</span> is small), then our posterior sample may not have many unique points. This issue can be overcome by generating a very large sample of points from the proposal distribution. We now discuss other potential choices for the proposal distribution for this example.</p>
 </div>
-<div id="practical-considerations-for-choosing-proposal-distributions" class="section level3" number="2.4.2">
-<h3><span class="header-section-number">2.4.2</span> Practical Considerations for Choosing Proposal Distributions</h3>
+<div id="practical-considerations-for-choosing-proposal-distributions" class="section level3 hasAnchor" number="2.4.2">
+<h3><span class="header-section-number">2.4.2</span> Practical Considerations for Choosing Proposal Distributions<a href="chapter2.html#practical-considerations-for-choosing-proposal-distributions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Diffuse distributions that are easy to sample from are often popular choices for proposal distributions. In particular, the uniform and normal distributions are often parameterized appropriately to serve this purpose. There are adaptive extensions to the SIR algorithm, including those by <span class="citation">West (1993)</span> and <span class="citation">Givens and Raftery (1996)</span>. These methods typically specify a diffuse proposal distribution to obtain an initial sample from <span class="math inline">\(h(\boldsymbol{\theta})\)</span>. This initial sample from <span class="math inline">\(h(\boldsymbol{\theta})\)</span> then informs a better proposal distribution and the SIR algorithm is run again. This process is repeated as necessary. We do not discuss these methods further in this workshop; we focus on the case where an approximate sample is obtained by running the SIR algorithm one time with a given proposal distribution.</p>
 <p>We now show how to implement the SIR algorithm for this example with the normal proposal density <span class="math inline">\(N(0.75, 0.15)\)</span>, where <span class="math inline">\(0.15\)</span> is the standard deviation. We discuss why this is an appropriate proposal distribution shortly. The results are visualized in Figure <a href="chapter2.html#fig:norm1">2.6</a>.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="chapter2.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">3</span>)</span>
@@ -551,8 +558,8 @@ Figure 2.8: Histogram of posterior sample 3 obtained using SIR (with densities f
 <pre><code>## [1] 0.01455077</code></pre>
 <p>The maximum standardized weight for this simulation is 0.01455. This is 14550 times larger than <span class="math inline">\(1 \times 10^{-6}\)</span>, which indicates that the proposal distribution does not resemble the density of interest <span class="math inline">\(h(\theta)\)</span> very much.</p>
 </div>
-<div id="comparing-proposal-distributions" class="section level3" number="2.4.3">
-<h3><span class="header-section-number">2.4.3</span> Comparing Proposal Distributions</h3>
+<div id="comparing-proposal-distributions" class="section level3 hasAnchor" number="2.4.3">
+<h3><span class="header-section-number">2.4.3</span> Comparing Proposal Distributions<a href="chapter2.html#comparing-proposal-distributions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Here, we consider two numerical metrics to evaluate the suitability of the proposal distribution that are presented in <span class="citation">Givens and Raftery (1996)</span>. If the typically unknown <span class="math inline">\(h(\boldsymbol{\theta})\)</span> were used as a proposal distribution, all standardized sampling weights would take a value of <span class="math inline">\(1 \times 10^{-6}\)</span>. When most sampling weights take values close to <span class="math inline">\(1 \times 10^{-6}\)</span>, our final approximate sample of size <span class="math inline">\(m\)</span> should contain many unique points. That is, our sample should not be comprised of several points that are each selected many times.</p>
 <p>We let <span class="math inline">\(Q\)</span> be the number of unique points in our final sample of <span class="math inline">\(m\)</span> values. When all sampling weights are constant (i.e., equal to <span class="math inline">\(1/n\)</span>), then <span class="math inline">\(\mathbb{E}(Q) \approx n(1- \text{exp}(-m/n))\)</span>. We then define
 <span class="math display">\[U = \frac{Q}{n(1- \text{exp}(-m/n))}.\]</span>
@@ -585,10 +592,10 @@ where <span class="math inline">\(n\)</span> = 1 million for this example. This 
 <p>The <span class="math inline">\(D\)</span> values are 2.046 for <span class="math inline">\(U(0,1)\)</span>, 0.291 for <span class="math inline">\(N(0.75, 0.15)\)</span>, and 658.621 for <span class="math inline">\(N(0.85, 0.05)\)</span>. The <span class="math inline">\(N(0.75, 0.15)\)</span> proposal distribution has the smallest <span class="math inline">\(D\)</span> value. <span class="citation">Givens and Raftery (1996)</span> suggested comparing competing proposal distributions using the ratio of their D values. In this case, the <span class="math inline">\(N(0.75, 0.15)\)</span> proposal is about 7 times better than the <span class="math inline">\(U(0,1)\)</span> proposal.</p>
 </div>
 </div>
-<div id="sampling-resampling-in-multiple-dimensions" class="section level2" number="2.5">
-<h2><span class="header-section-number">2.5</span> Sampling-Resampling in Multiple Dimensions</h2>
-<div id="exercise-with-illustrative-example" class="section level3" number="2.5.1">
-<h3><span class="header-section-number">2.5.1</span> Exercise with Illustrative Example</h3>
+<div id="sampling-resampling-in-multiple-dimensions" class="section level2 hasAnchor" number="2.5">
+<h2><span class="header-section-number">2.5</span> Sampling-Resampling in Multiple Dimensions<a href="chapter2.html#sampling-resampling-in-multiple-dimensions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="exercise-with-illustrative-example" class="section level3 hasAnchor" number="2.5.1">
+<h3><span class="header-section-number">2.5.1</span> Exercise with Illustrative Example<a href="chapter2.html#exercise-with-illustrative-example" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We now briefly consider how to implement the SIR algorithm for a multivariate example. In this example, we assume that we observe data <span class="math inline">\(x_1, x_2 &gt;0\)</span>. Here, we assume that <span class="math inline">\(\boldsymbol{\theta} = (\alpha, \beta)^T\)</span> for <span class="math inline">\(0 &lt; \alpha &lt; 1\)</span> and <span class="math inline">\(0 &lt; \beta &lt; 1\)</span>. We independently assume a <span class="math inline">\(U(0,1)\)</span> prior for <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>, which implies that <span class="math inline">\(p(\alpha, \beta) = 1\)</span> for <span class="math inline">\(0 &lt; \alpha, \beta &lt; 1\)</span>. In this case, the posterior <span class="math inline">\(h(\alpha, \beta) = \pi(\alpha, \beta| \boldsymbol{x})\)</span> is proportional to the likelihood function that we define below:
 <span class="math display">\[h(\alpha, \beta) \propto L(\alpha, \beta; \boldsymbol{x}) = \alpha(1-\alpha)\beta(1-\beta)\text{exp}(-x_1\alpha -\beta^{x_2}) = f(\alpha,\beta).\]</span></p>
 <p>Let’s assume that we observe <span class="math inline">\(x_1 = 3\)</span> and <span class="math inline">\(x_2 = 5\)</span> We will use the prior <span class="math inline">\(p(\alpha, \beta) = 1\)</span> for <span class="math inline">\(0 &lt; \alpha, \beta &lt; 1\)</span> as the proposal density <span class="math inline">\(g(\alpha, \beta)\)</span>. You can complete the following code block to generate a contour plot of the posterior sample, depicted in Figure <a href="chapter2.html#fig:multi2">2.9</a>. A helper function is provided to compute <span class="math inline">\(\text{log}(f(\alpha, \beta))\)</span>. In general, it can be more difficult to chose proposal densities for multivariate posteriors of interest, especially when the support is unbounded. Adaptive sampling-resampling methods can be quite useful in these situations. Moreover, we generally require larger values for <span class="math inline">\(n\)</span> and <span class="math inline">\(m\)</span> used with the SIR algorithm when the domain over which we want to sample is multivariate.</p>
@@ -697,7 +704,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');
