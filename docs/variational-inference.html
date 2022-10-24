@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Variational Inference | SWAG Workshops Repository</title>
+  <meta name="description" content="Chapter 4 Variational Inference | SWAG Workshops Repository" />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Variational Inference | SWAG Workshops Repository" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Variational Inference | SWAG Workshops Repository" />
+  
+  
+  
+
+<meta name="author" content="UW Statistical Workshops and Applications Group" />
+
+
+<meta name="date" content="2022-09-23" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="bernstein-von-mises-theorem.html"/>
+<link rel="next" href="references.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">SWAG Workshops Repository</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="chapter2.html"><a href="chapter2.html"><i class="fa fa-check"></i><b>2</b> Sampling-Resampling Methods</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="chapter2.html"><a href="chapter2.html#introduction-1"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="chapter2.html"><a href="chapter2.html#rejection-sampling"><i class="fa fa-check"></i><b>2.2</b> Rejection Sampling</a></li>
+<li class="chapter" data-level="2.3" data-path="chapter2.html"><a href="chapter2.html#sampling-resampling-methods"><i class="fa fa-check"></i><b>2.3</b> Sampling-Resampling Methods</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="chapter2.html"><a href="chapter2.html#overview-of-the-sampling-importance-resampling-algorithm"><i class="fa fa-check"></i><b>2.3.1</b> Overview of the Sampling-Importance-Resampling Algorithm</a></li>
+<li class="chapter" data-level="2.3.2" data-path="chapter2.html"><a href="chapter2.html#computational-considerations"><i class="fa fa-check"></i><b>2.3.2</b> Computational Considerations</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="chapter2.html"><a href="chapter2.html#implementation-of-sampling-resampling-methods"><i class="fa fa-check"></i><b>2.4</b> Implementation of Sampling-Resampling Methods</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="chapter2.html"><a href="chapter2.html#illustrative-example-with-binary-data"><i class="fa fa-check"></i><b>2.4.1</b> Illustrative Example with Binary Data</a></li>
+<li class="chapter" data-level="2.4.2" data-path="chapter2.html"><a href="chapter2.html#practical-considerations-for-choosing-proposal-distributions"><i class="fa fa-check"></i><b>2.4.2</b> Practical Considerations for Choosing Proposal Distributions</a></li>
+<li class="chapter" data-level="2.4.3" data-path="chapter2.html"><a href="chapter2.html#comparing-proposal-distributions"><i class="fa fa-check"></i><b>2.4.3</b> Comparing Proposal Distributions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="chapter2.html"><a href="chapter2.html#sampling-resampling-in-multiple-dimensions"><i class="fa fa-check"></i><b>2.5</b> Sampling-Resampling in Multiple Dimensions</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="chapter2.html"><a href="chapter2.html#exercise-with-illustrative-example"><i class="fa fa-check"></i><b>2.5.1</b> Exercise with Illustrative Example</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html"><i class="fa fa-check"></i><b>3</b> Bernstein-von Mises Theorem</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#introduction-2"><i class="fa fa-check"></i><b>3.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#bayesian-inference"><i class="fa fa-check"></i><b>3.1.1</b> Bayesian Inference</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#theorem"><i class="fa fa-check"></i><b>3.2</b> Theorem</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#importance"><i class="fa fa-check"></i><b>3.2.1</b> Importance</a></li>
+<li class="chapter" data-level="3.2.2" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#required-assumptions"><i class="fa fa-check"></i><b>3.2.2</b> Required Assumptions</a></li>
+<li class="chapter" data-level="3.2.3" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#example-1---normal-normal-model"><i class="fa fa-check"></i><b>3.2.3</b> Example 1 - Normal-normal model</a></li>
+<li class="chapter" data-level="3.2.4" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#example-2---bernoulli-beta-model"><i class="fa fa-check"></i><b>3.2.4</b> Example 2 - Bernoulli-Beta Model</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#limitations"><i class="fa fa-check"></i><b>3.3</b> Limitations</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#other-thoughts-on-consistency"><i class="fa fa-check"></i><b>3.3.1</b> Other thoughts on consistency</a></li>
+<li class="chapter" data-level="3.3.2" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#example-3---prior-has-zero-density-at-theta_0"><i class="fa fa-check"></i><b>3.3.2</b> Example 3 - Prior has zero density at <span class="math inline">\(\theta_0\)</span></a></li>
+<li class="chapter" data-level="3.3.3" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#example-4---true-parameter-value-is-on-the-boundary"><i class="fa fa-check"></i><b>3.3.3</b> Example 4 - True parameter value is on the boundary</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="variational-inference.html"><a href="variational-inference.html"><i class="fa fa-check"></i><b>4</b> Variational Inference</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="variational-inference.html"><a href="variational-inference.html#introduction-3"><i class="fa fa-check"></i><b>4.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="variational-inference.html"><a href="variational-inference.html#frequentist-setting"><i class="fa fa-check"></i><b>4.1.1</b> Frequentist Setting</a></li>
+<li class="chapter" data-level="4.1.2" data-path="variational-inference.html"><a href="variational-inference.html#bayesian-setting"><i class="fa fa-check"></i><b>4.1.2</b> Bayesian Setting</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>5</b> References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">SWAG Workshops Repository</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="variational-inference" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Variational Inference<a href="variational-inference.html#variational-inference" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><em>Meixi Chen</em></p>
+<div id="introduction-3" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Introduction<a href="variational-inference.html#introduction-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Variational inference (VI) is an inference technique that is commonly used to approximate an intractable quantity such as a probability density. In the following, we introduce two scenarios where the VI is often used, one in a frequentist setting and the other in a Bayesian setting.</p>
+<div id="frequentist-setting" class="section level3 hasAnchor" number="4.1.1">
+<h3><span class="header-section-number">4.1.1</span> Frequentist Setting<a href="variational-inference.html#frequentist-setting" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The frequentist example is adapted from the one in <span class="citation">Chen (2020)</span>. Consider the following IID observations <span class="math inline">\(Y_1,\ldots,Y_n\)</span>. Now assume that each <span class="math inline">\(Y_i\)</span> is accompanied with an unobserved latent variable <span class="math inline">\(Z_i\)</span>. That is, the complete data is <span class="math inline">\((Y_1,Z_1),\ldots,(Y_n,Z_n)\)</span>, but we only observe the incomplete data <span class="math inline">\(Y_1,\ldots,Y_n\)</span>.</p>
+<p>Assume that we know the parametric model for the complete data is <span class="math inline">\(p(y, z\mid \theta)\)</span>, and our interest lies in estimating <span class="math inline">\(\theta\)</span>. One way to do it is to maximize the observed log-likelihood <span class="math inline">\(\ell(\theta\mid y_1,\ldots,y_n) = \sum_{i=1}^n \log p(y_i\mid\theta)\)</span>, where
+<span class="math display" id="eq:pyz-int">\[\begin{equation}
+\tag{4.1}
+  p(y_i\mid\theta)=\int p(y_i, z_i\mid \theta) \ dz_i.
+\end{equation}\]</span>
+However, this integral is typically difficult to compute. Many techniques exist to deal with the problem of <a href="variational-inference.html#eq:pyz-int">(4.1)</a> (e.g., MCMC, Laplace approximation, EM). The VI is one such method to solve this problem, which writes
+<span class="math display" id="eq:approx-int">\[\begin{equation}
+\tag{4.2}
+  \begin{aligned}
+    p(y\mid \theta) &amp;= \int p(y, z\mid \theta)\ dz\\
+    &amp;= \int \frac{p(y, z\mid \theta)}{\color{red}{q(z\mid \omega)}}\color{red}{q(z\mid \omega)} \ dz\\
+    &amp;= \mathbb{E}_{Z}\left[\frac{p(y, z\mid \theta)}{\color{red}{q(z\mid \omega)}}\right]
+  \end{aligned}
+\end{equation}\]</span>
+where <span class="math inline">\(Z\sim q(z\mid \omega)\)</span> and <span class="math inline">\(q(\cdot \mid\omega)\)</span> is called the variational distribution and typically has an easy form (e.g. Normal distribution). All possible candidate variational distributions form the variational family <span class="math inline">\(\mathcal{Q}=\{q(\cdot\mid\omega): \ \omega \in \Omega\}\)</span>.</p>
+<p>Given <a href="variational-inference.html#eq:approx-int">(4.2)</a>, we can compute the observed log-likelihood as
+<span class="math display" id="eq:calc-elbo">\[\begin{equation}
+\tag{4.3}
+\begin{aligned}
+  \ell(\theta\mid y) &amp;= \log p(y\mid \theta)\\
+  &amp;= \log \mathbb{E}_{Z}\left[\frac{p(y, z\mid \theta)}{q(z\mid \omega)}\right]\\
+  &amp;\ge \mathbb{E}_{Z}\left[\log\frac{p(y, z\mid \theta)}{q(z\mid \omega)}\right] \text{     using Jensen&#39;s inequality}\\
+  &amp;=\mathbb{E}_{Z}(\log p(y, z\mid \theta))-\mathbb{E}_{Z}(\log q(z\mid \omega))\\
+  &amp;:= \mathrm{ELBO}(\omega,\lambda\mid y) := \mathrm{ELBO}(q)
+\end{aligned}
+\end{equation}\]</span>
+where <span class="math inline">\(\mathrm{ELBO}(q)\)</span> is known as the <em>Evidence Lower Bound</em>.</p>
+<p>Now, instead of maximizing <span class="math inline">\(\ell(\theta\mid y_1,\ldots,y_n)\)</span>, we can maxmize the ELBO via any numerical optimization algorithm, i.e.,
+<span class="math display" id="eq:max-elbo">\[\begin{equation}
+\tag{4.4}
+  (\hat{\omega}, \hat{\theta}) = \underset{\omega,\theta}{\mathrm{argmax}}\frac{1}{n}\sum_{i=1}^n \mathrm{ELBO}(\omega,\lambda\mid y_i).
+\end{equation}\]</span></p>
+<p><strong>Important notes</strong></p>
+<ul>
+<li><p>The parametric form of <span class="math inline">\(q(\cdot \mid \omega)\)</span> is up to the modeler. A common choice is Normal. When <span class="math inline">\(q(z \mid \omega)\)</span> is multivariate, i.e., <span class="math inline">\(z, \omega\in\mathbb{R}^n\)</span>, it is common to use the <em>mean-field variational family</em> <span class="math inline">\(q(z\mid \omega)=\prod_{i=1}^n q(z_i\mid \omega_i)\)</span>.</p></li>
+<li><p>The VI estimator <span class="math inline">\(\hat{\theta}_{\mathrm{VI}}\)</span> generally does not converge to the MLE because <span class="math inline">\(\hat{\theta}_{\mathrm{VI}}\)</span> depends on the choice of <span class="math inline">\(q(\cdot \mid \omega)\)</span>.</p></li>
+</ul>
+<p><strong>Uncertainty assessment</strong></p>
+<p>One way to assess the uncertainty of the VI estimator <span class="math inline">\(\tilde{\theta}_{\mathrm{VI}}\)</span> is via bootstrapping.</p>
+<ol style="list-style-type: decimal">
+<li><p>Let <span class="math inline">\((Y_1^{(b)}, \ldots,Y_n^{(b)})\)</span> be the <span class="math inline">\(b\)</span>-th bootstrap sample from the original dataset, for <span class="math inline">\(b=1,\ldots, B\)</span>.</p></li>
+<li><p>Given the bootstrap sample, we can compute the bootstrap VI estimate <span class="math inline">\(\hat{\theta}_{\mathrm{VI}}^{(b)}\)</span>.</p></li>
+<li><p>After repeating the above procedure for <span class="math inline">\(B\)</span> times, we obtain <span class="math inline">\(B\)</span> bootstrap VI estimates: <span class="math inline">\(\hat{\theta}_{\mathrm{VI}}^{(1)}, \ldots, \hat{\theta}_{\mathrm{VI}}^{(B)}\)</span>.</p></li>
+<li><p>The bootstrap estimates can be used to calculate the uncertainty of the original bootstrap estimator.</p></li>
+</ol>
+</div>
+<div id="bayesian-setting" class="section level3 hasAnchor" number="4.1.2">
+<h3><span class="header-section-number">4.1.2</span> Bayesian Setting<a href="variational-inference.html#bayesian-setting" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In Bayesian statistics, the VI is often used as an alternative to the traditional MCMC sampling method to estimate the posterior distributions <span class="math inline">\(p(\theta\mid y)\)</span>.</p>
+<p>Recall that, according to the Bayes’ rule, the posterior distribution is written as
+<span class="math display">\[p(\theta\mid y) = \frac{p(y\mid \theta)p(\theta)}{\color{red}{p(y)}} = \frac{p(y\mid \theta)p(\theta)}{\int p(y\mid \theta) p(\theta)\ d\theta},\]</span>
+where <span class="math inline">\(p(y\mid \theta)\)</span> is the likelihood taking a known form and <span class="math inline">\(p(y)\)</span> is a constant. Similar to the problem in <a href="variational-inference.html#eq:pyz-int">(4.1)</a>, the integral <span class="math inline">\(p(y)=\int p(y\mid \theta) p(\theta)\ d\theta\)</span> is typically intractable, which makes calculating the posterior difficult.</p>
+<p>What the VI does in this case is to find a variational distribution <span class="math inline">\(q(\theta \mid \omega)\)</span> such that it is close enough to the posterior distribution of interest <span class="math inline">\(p(\theta\mid y)\)</span>. How do we know a distribution is “close enough” to another?</p>
+<p>The answer is using the Kullback-Leibler divergence <span class="math inline">\(\mathrm{KL}(Q\Vert P)\)</span>, which measures how different the probability distribution <span class="math inline">\(Q\)</span> is from the reference distribution <span class="math inline">\(Q\)</span>.</p>
+<p>Therefore, the VI method looks for <span class="math inline">\(q(\theta \mid \omega)\)</span> that minimizes <span class="math inline">\(\mathrm{KL}\big(q(\theta\mid \omega) \Vert p(\theta\mid y)\big)\)</span>, i.e.,
+<span class="math display">\[q^*(\theta \mid \omega) = \underset{q(\theta\mid\omega)}{\mathrm{argmin}} \mathrm{KL}\big(q(\theta\mid \omega) \Vert p(\theta\mid y)\big).\]</span></p>
+<p>The KL divergence is written as
+<span class="math display" id="eq:KL-div">\[\begin{equation}
+\tag{4.5}
+  \begin{aligned}
+    \mathrm{KL}\big(q(\theta\mid \omega) \Vert p(\theta\mid y)\big) &amp;= \mathbb{E}_{q(\cdot \mid \omega)}[\log q(\theta\mid \omega)]-\mathbb{E}_{q(\cdot \mid \omega)}[\log p(\theta\mid y)]\\
+    &amp;= \mathbb{E}_{q(\cdot \mid \omega)}[\log q(\theta\mid \omega)]-\mathbb{E}_{q(\cdot \mid \omega)}\left[\log \frac{p(\theta, y)}{p(y)}\right]\\
+    &amp;= \underbrace{\mathbb{E}_{q(\cdot \mid \omega)}[\log q(\theta\mid \omega)]-\mathbb{E}_{q(\cdot \mid \omega)}[\log p(\theta, y)]}_{-\mathrm{ELBO(q)}} + \underbrace{\color{red}{\log p(y)}}_{\text{constant}}
+  \end{aligned}
+\end{equation}\]</span></p>
+<p>Noting that <span class="math inline">\(\log p(y)\)</span> is a constant, minimizing the KL divergence <a href="variational-inference.html#eq:KL-div">(4.5)</a> is in fact equivalent to minimizing the nonconstant part of <a href="variational-inference.html#eq:KL-div">(4.5)</a>:
+<span class="math display">\[\mathbb{E}_{q(\cdot \mid \omega)}[\log q(\theta\mid \omega)]-\mathbb{E}_{q(\cdot \mid \omega)}[\log p(\theta, y)].\]</span>
+Then we notice that it is in fact the negative of the ELBO, so minimizing <a href="variational-inference.html#eq:KL-div">(4.5)</a> is in turn equivalent to maximizing the ELBO:
+<span class="math display">\[\mathrm{ELBO}(q) = \mathbb{E}_{q(\cdot \mid \omega)}[\log p(\theta, y)]-\mathbb{E}_{q(\cdot \mid \omega)}[\log q(\theta\mid \omega)].\]</span></p>
+<p>Therefore, we can estimate <span class="math inline">\(\omega\)</span> as
+<span class="math display">\[\hat{\omega} = \underset{\omega}{\mathrm{argmin}} \ \mathrm{ELBO}(q) = \underset{\omega}{\mathrm{argmin}} \ \mathrm{ELBO}(\omega\mid y).\]</span></p>
+<p>Finally, the posterior of interest is approximated by
+<span class="math display">\[p(\theta\mid y) \approx q(\theta \mid \hat{\omega}).\]</span></p>
+<p><strong>Important note</strong></p>
+<ul>
+<li><p>Similar to the frequentist setting, we need to pick the distributional form of <span class="math inline">\(q(\cdot \mid \omega)\)</span>.</p></li>
+<li><p>The posterior distribution obtained this way is an approximation rather than the truth, whereas MCMC methods guarantees that the Monte Carlo samples converge to the true posterior distribution.</p></li>
+</ul>
+<p><strong>Takeaway</strong></p>
+<ul>
+<li>Only use the VI to estimate the posterior if the dimension of the posterior is too high for sampling, or the model is too complex for MCMC methods to run within a reasonable amount of time (within a day).</li>
+</ul>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="bernstein-von-mises-theorem.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/uwswagclub/workshop-bookdown/edit/master/04-variational-inference.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/uwswagclub/workshop-bookdown/blob/master/04-variational-inference.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

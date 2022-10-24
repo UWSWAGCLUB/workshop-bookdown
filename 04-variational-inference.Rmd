@@ -1,0 +1,120 @@
+# Variational Inference
+
+```{r setup, include=FALSE}
+library(knitr)
+library(ggplot2)
+library(bookdown)
+opts_chunk$set(echo = TRUE, warning = FALSE)
+opts_chunk$set(cache = TRUE)
+opts_chunk$set(tidy.opts=list(width.cutoff=70),tidy=TRUE)
+```
+
+\newpage
+\setstretch{1.05}
+
+*Meixi Chen*
+
+## Introduction
+Variational inference (VI) is an inference technique that is commonly used to approximate an intractable quantity such as a probability density. In the following, we introduce two scenarios where the VI is often used, one in a frequentist setting and the other in a Bayesian setting.
+
+### Frequentist Setting
+The frequentist example is adapted from the one in @chen2020. Consider the following IID observations $Y_1,\ldots,Y_n$. Now assume that each $Y_i$ is accompanied with an unobserved latent variable $Z_i$. That is, the complete data is $(Y_1,Z_1),\ldots,(Y_n,Z_n)$, but we only observe the incomplete data $Y_1,\ldots,Y_n$. 
+
+Assume that we know the parametric model for the complete data is $p(y, z\mid \theta)$, and our interest lies in estimating $\theta$. One way to do it is to maximize the observed log-likelihood $\ell(\theta\mid y_1,\ldots,y_n) = \sum_{i=1}^n \log p(y_i\mid\theta)$, where
+\begin{equation}
+(\#eq:pyz-int)
+  p(y_i\mid\theta)=\int p(y_i, z_i\mid \theta) \ dz_i.
+\end{equation}
+However, this integral is typically difficult to compute. Many techniques exist to deal with the problem of \@ref(eq:pyz-int) (e.g., MCMC, Laplace approximation, EM). The VI is one such method to solve this problem, which writes
+\begin{equation}
+(\#eq:approx-int)
+  \begin{aligned}
+    p(y\mid \theta) &= \int p(y, z\mid \theta)\ dz\\
+    &= \int \frac{p(y, z\mid \theta)}{\color{red}{q(z\mid \omega)}}\color{red}{q(z\mid \omega)} \ dz\\
+    &= \mathbb{E}_{Z}\left[\frac{p(y, z\mid \theta)}{\color{red}{q(z\mid \omega)}}\right]
+  \end{aligned}
+\end{equation}
+where $Z\sim q(z\mid \omega)$ and $q(\cdot \mid\omega)$ is called the variational distribution and typically has an easy form (e.g. Normal distribution). All possible candidate variational distributions form the variational family $\mathcal{Q}=\{q(\cdot\mid\omega): \ \omega \in \Omega\}$.
+
+Given \@ref(eq:approx-int), we can compute the observed log-likelihood as
+\begin{equation}
+(\#eq:calc-elbo)
+\begin{aligned}
+  \ell(\theta\mid y) &= \log p(y\mid \theta)\\
+  &= \log \mathbb{E}_{Z}\left[\frac{p(y, z\mid \theta)}{q(z\mid \omega)}\right]\\
+  &\ge \mathbb{E}_{Z}\left[\log\frac{p(y, z\mid \theta)}{q(z\mid \omega)}\right] \text{     using Jensen's inequality}\\
+  &=\mathbb{E}_{Z}(\log p(y, z\mid \theta))-\mathbb{E}_{Z}(\log q(z\mid \omega))\\
+  &:= \mathrm{ELBO}(\omega,\lambda\mid y) := \mathrm{ELBO}(q)
+\end{aligned}
+\end{equation}
+where $\mathrm{ELBO}(q)$ is known as the *Evidence Lower Bound*.
+
+Now, instead of maximizing $\ell(\theta\mid y_1,\ldots,y_n)$, we can maxmize the ELBO via any numerical optimization algorithm, i.e.,
+\begin{equation}
+(\#eq:max-elbo)
+  (\hat{\omega}, \hat{\theta}) = \underset{\omega,\theta}{\mathrm{argmax}}\frac{1}{n}\sum_{i=1}^n \mathrm{ELBO}(\omega,\lambda\mid y_i).
+\end{equation}
+
+**Important notes**
+
+- The parametric form of $q(\cdot \mid \omega)$ is up to the modeler. A common choice is Normal. When $q(z \mid \omega)$ is multivariate, i.e., $z, \omega\in\mathbb{R}^n$, it is common to use the *mean-field variational family* $q(z\mid \omega)=\prod_{i=1}^n q(z_i\mid \omega_i)$.
+
+- The VI estimator $\hat{\theta}_{\mathrm{VI}}$ generally does not converge to the MLE because $\hat{\theta}_{\mathrm{VI}}$ depends on the choice of $q(\cdot \mid \omega)$.
+
+**Uncertainty assessment**
+
+One way to assess the uncertainty of the VI estimator $\tilde{\theta}_{\mathrm{VI}}$ is via bootstrapping. 
+
+1. Let $(Y_1^{(b)}, \ldots,Y_n^{(b)})$ be the $b$-th bootstrap sample from the original dataset, for $b=1,\ldots, B$. 
+
+2. Given the bootstrap sample, we can compute the bootstrap VI estimate $\hat{\theta}_{\mathrm{VI}}^{(b)}$.
+        
+3. After repeating the above procedure for $B$ times, we obtain $B$ bootstrap VI estimates: $\hat{\theta}_{\mathrm{VI}}^{(1)}, \ldots, \hat{\theta}_{\mathrm{VI}}^{(B)}$.
+
+4. The bootstrap estimates can be used to calculate the uncertainty of the original bootstrap estimator.
+
+
+### Bayesian Setting
+In Bayesian statistics, the VI is often used as an alternative to the traditional MCMC sampling method to estimate the posterior distributions $p(\theta\mid y)$.
+
+Recall that, according to the Bayes' rule, the posterior distribution is written as
+\[p(\theta\mid y) = \frac{p(y\mid \theta)p(\theta)}{\color{red}{p(y)}} = \frac{p(y\mid \theta)p(\theta)}{\int p(y\mid \theta) p(\theta)\ d\theta},\]
+where $p(y\mid \theta)$ is the likelihood taking a known form and $p(y)$ is a constant. Similar to the problem in \@ref(eq:pyz-int), the integral $p(y)=\int p(y\mid \theta) p(\theta)\ d\theta$ is typically intractable, which makes calculating the posterior difficult.
+
+What the VI does in this case is to find a variational distribution $q(\theta \mid \omega)$ such that it is close enough to the posterior distribution of interest $p(\theta\mid y)$. How do we know a distribution is "close enough" to another? 
+
+The answer is using the Kullback-Leibler divergence $\mathrm{KL}(Q\Vert P)$, which measures how different the probability distribution $Q$ is from the reference distribution $Q$.
+
+Therefore, the VI method looks for $q(\theta \mid \omega)$ that minimizes $\mathrm{KL}\big(q(\theta\mid \omega) \Vert p(\theta\mid y)\big)$, i.e.,
+\[q^*(\theta \mid \omega) = \underset{q(\theta\mid\omega)}{\mathrm{argmin}} \mathrm{KL}\big(q(\theta\mid \omega) \Vert p(\theta\mid y)\big).\]
+
+The KL divergence is written as 
+\begin{equation}
+(\#eq:KL-div)
+  \begin{aligned}
+    \mathrm{KL}\big(q(\theta\mid \omega) \Vert p(\theta\mid y)\big) &= \mathbb{E}_{q(\cdot \mid \omega)}[\log q(\theta\mid \omega)]-\mathbb{E}_{q(\cdot \mid \omega)}[\log p(\theta\mid y)]\\
+    &= \mathbb{E}_{q(\cdot \mid \omega)}[\log q(\theta\mid \omega)]-\mathbb{E}_{q(\cdot \mid \omega)}\left[\log \frac{p(\theta, y)}{p(y)}\right]\\
+    &= \underbrace{\mathbb{E}_{q(\cdot \mid \omega)}[\log q(\theta\mid \omega)]-\mathbb{E}_{q(\cdot \mid \omega)}[\log p(\theta, y)]}_{-\mathrm{ELBO(q)}} + \underbrace{\color{red}{\log p(y)}}_{\text{constant}}
+  \end{aligned}
+\end{equation}
+
+Noting that $\log p(y)$ is a constant, minimizing the KL divergence \@ref(eq:KL-div) is in fact equivalent to minimizing the nonconstant part of \@ref(eq:KL-div):
+\[\mathbb{E}_{q(\cdot \mid \omega)}[\log q(\theta\mid \omega)]-\mathbb{E}_{q(\cdot \mid \omega)}[\log p(\theta, y)].\] 
+Then we notice that it is in fact the negative of the ELBO, so minimizing \@ref(eq:KL-div) is in turn equivalent to maximizing the ELBO: 
+\[\mathrm{ELBO}(q) = \mathbb{E}_{q(\cdot \mid \omega)}[\log p(\theta, y)]-\mathbb{E}_{q(\cdot \mid \omega)}[\log q(\theta\mid \omega)].\]
+
+Therefore, we can estimate $\omega$ as 
+\[\hat{\omega} = \underset{\omega}{\mathrm{argmin}} \ \mathrm{ELBO}(q) = \underset{\omega}{\mathrm{argmin}} \ \mathrm{ELBO}(\omega\mid y).\]
+
+Finally, the posterior of interest is approximated by 
+\[p(\theta\mid y) \approx q(\theta \mid \hat{\omega}).\]
+
+**Important note**
+
+- Similar to the frequentist setting, we need to pick the distributional form of $q(\cdot \mid \omega)$.
+
+- The posterior distribution obtained this way is an approximation rather than the truth, whereas MCMC methods guarantees that the Monte Carlo samples converge to the true posterior distribution.
+
+**Takeaway**
+
+- Only use the VI to estimate the posterior if the dimension of the posterior is too high for sampling, or the model is too complex for MCMC methods to run within a reasonable amount of time (within a day).

@@ -34,3 +34,13 @@ other-thoughts-on-consistency
 example-3---prior-has-zero-density-at-theta_0
 example-4---true-parameter-value-is-on-the-boundary
 references
+variational-inference
+introduction-3
+frequentist-setting
+bayesian-setting
+eq:approx-int
+eq:max-elbo
+eq:pyz-int
+eq:calc-elbo
+uncertainty-assessment
+eq:KL-div
