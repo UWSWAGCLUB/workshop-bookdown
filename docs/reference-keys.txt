@@ -42,3 +42,13 @@ introduction-3
 frequentist-setting
 bayesian-setting
 references
+eq:mix-gauss
+example-1-mixture-of-gaussians
+eq:var-dist
+eq:elbo-mix-gauss
+example-mixture-of-gaussians
+coordinate-ascent-mean-field-variational-inference
+eq:prop-conditional
+eq:full-conds
+example-stochastic-variational-inference-using-pyro-in-python
+takeaways
