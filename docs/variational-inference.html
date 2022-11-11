@@ -265,14 +265,14 @@ where <span class="math inline">\(Z\sim q(z\mid \omega)\)</span> and <span class
   &amp;= \log \mathbb{E}_{Z}\left[\frac{p(y, z\mid \theta)}{q(z\mid \omega)}\right]\\
   &amp;\ge \mathbb{E}_{Z}\left[\log\frac{p(y, z\mid \theta)}{q(z\mid \omega)}\right] \text{     using Jensen&#39;s inequality}\\
   &amp;=\mathbb{E}_{Z}(\log p(y, z\mid \theta))-\mathbb{E}_{Z}(\log q(z\mid \omega))\\
-  &amp;:= \mathrm{ELBO}(\omega,\lambda\mid y) := \mathrm{ELBO}(q)
+  &amp;:= \mathrm{ELBO}(\omega,\theta\mid y) := \mathrm{ELBO}(q)
 \end{aligned}
 \end{equation}\]</span>
 where <span class="math inline">\(\mathrm{ELBO}(q)\)</span> is known as the <em>Evidence Lower Bound</em>.</p>
 <p>Now, instead of maximizing <span class="math inline">\(\ell(\theta\mid y_1,\ldots,y_n)\)</span>, we can maxmize the ELBO via any numerical optimization algorithm, i.e.,
 <span class="math display" id="eq:max-elbo">\[\begin{equation}
 \tag{4.4}
-  (\hat{\omega}, \hat{\theta}) = \underset{\omega,\theta}{\mathrm{argmax}}\frac{1}{n}\sum_{i=1}^n \mathrm{ELBO}(\omega,\lambda\mid y_i).
+  (\hat{\omega}, \hat{\theta}) = \underset{\omega,\theta}{\mathrm{argmax}}\frac{1}{n}\sum_{i=1}^n \mathrm{ELBO}(\omega,\theta\mid y_i).
 \end{equation}\]</span></p>
 <p><strong>Important notes</strong></p>
 <ul>
@@ -295,7 +295,7 @@ where <span class="math inline">\(\mathrm{ELBO}(q)\)</span> is known as the <em>
 <span class="math display">\[p(\theta\mid y) = \frac{p(y\mid \theta)p(\theta)}{\color{red}{p(y)}} = \frac{p(y\mid \theta)p(\theta)}{\int p(y\mid \theta) p(\theta)\ d\theta},\]</span>
 where <span class="math inline">\(p(y\mid \theta)\)</span> is the likelihood taking a known form and <span class="math inline">\(p(y)\)</span> is a constant. Similar to the problem in <a href="variational-inference.html#eq:pyz-int">(4.1)</a>, the integral <span class="math inline">\(p(y)=\int p(y\mid \theta) p(\theta)\ d\theta\)</span> is typically intractable, which makes calculating the posterior difficult.</p>
 <p>What the VI does in this case is to find a variational distribution <span class="math inline">\(q(\theta \mid \omega)\)</span> such that it is close enough to the posterior distribution of interest <span class="math inline">\(p(\theta\mid y)\)</span>. How do we know a distribution is “close enough” to another?</p>
-<p>The answer is using the Kullback-Leibler divergence <span class="math inline">\(\mathrm{KL}(Q\Vert P)\)</span>, which measures how different the probability distribution <span class="math inline">\(Q\)</span> is from the reference distribution <span class="math inline">\(Q\)</span>.</p>
+<p>The answer is using the Kullback-Leibler divergence <span class="math inline">\(\mathrm{KL}(Q\Vert P)\)</span>, which measures how different the probability distribution <span class="math inline">\(Q\)</span> is from the reference distribution <span class="math inline">\(P\)</span>.</p>
 <p>Therefore, the VI method looks for <span class="math inline">\(q(\theta \mid \omega)\)</span> that minimizes <span class="math inline">\(\mathrm{KL}\big(q(\theta\mid \omega) \Vert p(\theta\mid y)\big)\)</span>, i.e.,
 <span class="math display">\[q^*(\theta \mid \omega) = \underset{q(\theta\mid\omega)}{\mathrm{argmin}} \mathrm{KL}\big(q(\theta\mid \omega) \Vert p(\theta\mid y)\big).\]</span></p>
 <p>The KL divergence is written as
@@ -562,7 +562,7 @@ We can also define a Bayesian version of it called <code>bayes_model</code> as f
 <p><img src="bookdownproj_files/figure-html/unnamed-chunk-7-3.png" width="480" /></p>
 <p>Below is the time taken to optimize the ELBO using the VI method.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="variational-inference.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(vi_end<span class="op">-</span>vi_start)</span></code></pre></div>
-<pre><code>## 8.06751036643982</code></pre>
+<pre><code>## 8.566372871398926</code></pre>
 <p>Then we can print out the estimated variational parameters (<span class="math inline">\(\boldsymbol{\omega}\)</span>), which are the mean and variance of each variational Normal distribution.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="variational-inference.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name, value <span class="kw">in</span> pyro.get_param_store().items():</span>
 <span id="cb11-2"><a href="variational-inference.html#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(name, pyro.param(name).data.cpu().numpy())</span></code></pre></div>
@@ -614,7 +614,7 @@ We can also define a Bayesian version of it called <code>bayes_model</code> as f
 ## Number of divergences: 0</code></pre>
 <p>Below is the time taken to draw 2000 MCMC samples (including 1000 warmups). We can see MCMC is almost an order of magnitude slower than the VI.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="variational-inference.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mc_end<span class="op">-</span>mc_start)</span></code></pre></div>
-<pre><code>## 58.66574740409851</code></pre>
+<pre><code>## 68.41707587242126</code></pre>
 <p>We can also plot the histograms of the MCMC samples of the two slopes. Compared to the histograms obtained using the VI, these don’t look much different.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="variational-inference.html#cb18-1" aria-hidden="true" tabindex="-1"></a>mc_slope_within_africa <span class="op">=</span> mc_samples[<span class="st">&quot;bR&quot;</span>] <span class="op">+</span> mc_samples[<span class="st">&quot;bAR&quot;</span>]</span>
 <span id="cb18-2"><a href="variational-inference.html#cb18-2" aria-hidden="true" tabindex="-1"></a>mc_slope_outside_africa <span class="op">=</span> mc_samples[<span class="st">&quot;bR&quot;</span>]</span>

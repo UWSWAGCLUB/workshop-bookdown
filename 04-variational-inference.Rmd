@@ -44,7 +44,7 @@ Given \@ref(eq:approx-int), we can compute the observed log-likelihood as
   &= \log \mathbb{E}_{Z}\left[\frac{p(y, z\mid \theta)}{q(z\mid \omega)}\right]\\
   &\ge \mathbb{E}_{Z}\left[\log\frac{p(y, z\mid \theta)}{q(z\mid \omega)}\right] \text{     using Jensen's inequality}\\
   &=\mathbb{E}_{Z}(\log p(y, z\mid \theta))-\mathbb{E}_{Z}(\log q(z\mid \omega))\\
-  &:= \mathrm{ELBO}(\omega,\lambda\mid y) := \mathrm{ELBO}(q)
+  &:= \mathrm{ELBO}(\omega,\theta\mid y) := \mathrm{ELBO}(q)
 \end{aligned}
 \end{equation}
 where $\mathrm{ELBO}(q)$ is known as the *Evidence Lower Bound*.
@@ -52,7 +52,7 @@ where $\mathrm{ELBO}(q)$ is known as the *Evidence Lower Bound*.
 Now, instead of maximizing $\ell(\theta\mid y_1,\ldots,y_n)$, we can maxmize the ELBO via any numerical optimization algorithm, i.e.,
 \begin{equation}
 (\#eq:max-elbo)
-  (\hat{\omega}, \hat{\theta}) = \underset{\omega,\theta}{\mathrm{argmax}}\frac{1}{n}\sum_{i=1}^n \mathrm{ELBO}(\omega,\lambda\mid y_i).
+  (\hat{\omega}, \hat{\theta}) = \underset{\omega,\theta}{\mathrm{argmax}}\frac{1}{n}\sum_{i=1}^n \mathrm{ELBO}(\omega,\theta\mid y_i).
 \end{equation}
 
 **Important notes**
@@ -83,7 +83,7 @@ where $p(y\mid \theta)$ is the likelihood taking a known form and $p(y)$ is a co
 
 What the VI does in this case is to find a variational distribution $q(\theta \mid \omega)$ such that it is close enough to the posterior distribution of interest $p(\theta\mid y)$. How do we know a distribution is "close enough" to another? 
 
-The answer is using the Kullback-Leibler divergence $\mathrm{KL}(Q\Vert P)$, which measures how different the probability distribution $Q$ is from the reference distribution $Q$.
+The answer is using the Kullback-Leibler divergence $\mathrm{KL}(Q\Vert P)$, which measures how different the probability distribution $Q$ is from the reference distribution $P$.
 
 Therefore, the VI method looks for $q(\theta \mid \omega)$ that minimizes $\mathrm{KL}\big(q(\theta\mid \omega) \Vert p(\theta\mid y)\big)$, i.e.,
 \[q^*(\theta \mid \omega) = \underset{q(\theta\mid\omega)}{\mathrm{argmin}} \mathrm{KL}\big(q(\theta\mid \omega) \Vert p(\theta\mid y)\big).\]
