@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 Smoothing Techniques | SWAG Workshops Repository</title>
+  <meta name="description" content="Chapter 5 Smoothing Techniques | SWAG Workshops Repository" />
+  <meta name="generator" content="bookdown 0.12 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 Smoothing Techniques | SWAG Workshops Repository" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Smoothing Techniques | SWAG Workshops Repository" />
+  
+  
+  
+
+<meta name="author" content="UW Statistical Workshops and Applications Group" />
+
+
+<meta name="date" content="2022-09-23" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="variational-inference.html">
+<link rel="next" href="references.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">SWAG Workshops Repository</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="chapter2.html"><a href="chapter2.html"><i class="fa fa-check"></i><b>2</b> Sampling-Resampling Methods</a><ul>
+<li class="chapter" data-level="2.1" data-path="chapter2.html"><a href="chapter2.html#introduction-1"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="chapter2.html"><a href="chapter2.html#rejection-sampling"><i class="fa fa-check"></i><b>2.2</b> Rejection Sampling</a></li>
+<li class="chapter" data-level="2.3" data-path="chapter2.html"><a href="chapter2.html#sampling-resampling-methods"><i class="fa fa-check"></i><b>2.3</b> Sampling-Resampling Methods</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="chapter2.html"><a href="chapter2.html#overview-of-the-sampling-importance-resampling-algorithm"><i class="fa fa-check"></i><b>2.3.1</b> Overview of the Sampling-Importance-Resampling Algorithm</a></li>
+<li class="chapter" data-level="2.3.2" data-path="chapter2.html"><a href="chapter2.html#computational-considerations"><i class="fa fa-check"></i><b>2.3.2</b> Computational Considerations</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="chapter2.html"><a href="chapter2.html#implementation-of-sampling-resampling-methods"><i class="fa fa-check"></i><b>2.4</b> Implementation of Sampling-Resampling Methods</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="chapter2.html"><a href="chapter2.html#illustrative-example-with-binary-data"><i class="fa fa-check"></i><b>2.4.1</b> Illustrative Example with Binary Data</a></li>
+<li class="chapter" data-level="2.4.2" data-path="chapter2.html"><a href="chapter2.html#practical-considerations-for-choosing-proposal-distributions"><i class="fa fa-check"></i><b>2.4.2</b> Practical Considerations for Choosing Proposal Distributions</a></li>
+<li class="chapter" data-level="2.4.3" data-path="chapter2.html"><a href="chapter2.html#comparing-proposal-distributions"><i class="fa fa-check"></i><b>2.4.3</b> Comparing Proposal Distributions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="chapter2.html"><a href="chapter2.html#sampling-resampling-in-multiple-dimensions"><i class="fa fa-check"></i><b>2.5</b> Sampling-Resampling in Multiple Dimensions</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="chapter2.html"><a href="chapter2.html#exercise-with-illustrative-example"><i class="fa fa-check"></i><b>2.5.1</b> Exercise with Illustrative Example</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html"><i class="fa fa-check"></i><b>3</b> Bernstein-von Mises Theorem</a><ul>
+<li class="chapter" data-level="3.1" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#introduction-2"><i class="fa fa-check"></i><b>3.1</b> Introduction</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#bayesian-inference"><i class="fa fa-check"></i><b>3.1.1</b> Bayesian Inference</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#theorem"><i class="fa fa-check"></i><b>3.2</b> Theorem</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#importance"><i class="fa fa-check"></i><b>3.2.1</b> Importance</a></li>
+<li class="chapter" data-level="3.2.2" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#required-assumptions"><i class="fa fa-check"></i><b>3.2.2</b> Required Assumptions</a></li>
+<li class="chapter" data-level="3.2.3" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#example-1---normal-normal-model"><i class="fa fa-check"></i><b>3.2.3</b> Example 1 - Normal-normal model</a></li>
+<li class="chapter" data-level="3.2.4" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#example-2---bernoulli-beta-model"><i class="fa fa-check"></i><b>3.2.4</b> Example 2 - Bernoulli-Beta Model</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#limitations"><i class="fa fa-check"></i><b>3.3</b> Limitations</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#other-thoughts-on-consistency"><i class="fa fa-check"></i><b>3.3.1</b> Other thoughts on consistency</a></li>
+<li class="chapter" data-level="3.3.2" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#example-3---prior-has-zero-density-at-theta_0"><i class="fa fa-check"></i><b>3.3.2</b> Example 3 - Prior has zero density at <span class="math inline">\(\theta_0\)</span></a></li>
+<li class="chapter" data-level="3.3.3" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#example-4---true-parameter-value-is-on-the-boundary"><i class="fa fa-check"></i><b>3.3.3</b> Example 4 - True parameter value is on the boundary</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="variational-inference.html"><a href="variational-inference.html"><i class="fa fa-check"></i><b>4</b> Variational Inference</a><ul>
+<li class="chapter" data-level="4.1" data-path="variational-inference.html"><a href="variational-inference.html#introduction-3"><i class="fa fa-check"></i><b>4.1</b> Introduction</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="variational-inference.html"><a href="variational-inference.html#frequentist-setting"><i class="fa fa-check"></i><b>4.1.1</b> Frequentist Setting</a></li>
+<li class="chapter" data-level="4.1.2" data-path="variational-inference.html"><a href="variational-inference.html#bayesian-setting"><i class="fa fa-check"></i><b>4.1.2</b> Bayesian Setting</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="variational-inference.html"><a href="variational-inference.html#example-mixture-of-gaussians"><i class="fa fa-check"></i><b>4.2</b> Example: Mixture of Gaussians</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="variational-inference.html"><a href="variational-inference.html#coordinate-ascent-mean-field-variational-inference"><i class="fa fa-check"></i><b>4.2.1</b> Coordinate Ascent Mean-Field Variational Inference</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="variational-inference.html"><a href="variational-inference.html#example-stochastic-variational-inference-using-pyro-in-python"><i class="fa fa-check"></i><b>4.3</b> Example: Stochastic Variational Inference using Pyro in Python</a></li>
+<li class="chapter" data-level="4.4" data-path="variational-inference.html"><a href="variational-inference.html#takeaways"><i class="fa fa-check"></i><b>4.4</b> Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="smoothing-techniques.html"><a href="smoothing-techniques.html"><i class="fa fa-check"></i><b>5</b> Smoothing Techniques</a><ul>
+<li class="chapter" data-level="5.1" data-path="smoothing-techniques.html"><a href="smoothing-techniques.html#introduction-4"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
+<li class="chapter" data-level="5.2" data-path="smoothing-techniques.html"><a href="smoothing-techniques.html#kernel-smoothing-methods"><i class="fa fa-check"></i><b>5.2</b> Kernel Smoothing Methods</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="smoothing-techniques.html"><a href="smoothing-techniques.html#local-linear-regression"><i class="fa fa-check"></i><b>5.2.1</b> Local linear regression</a></li>
+<li class="chapter" data-level="5.2.2" data-path="smoothing-techniques.html"><a href="smoothing-techniques.html#tuning-parameter-bandwidth-selection"><i class="fa fa-check"></i><b>5.2.2</b> Tuning Parameter (bandwidth) Selection</a></li>
+<li class="chapter" data-level="5.2.3" data-path="smoothing-techniques.html"><a href="smoothing-techniques.html#extension-and-example-local-logistic-regression"><i class="fa fa-check"></i><b>5.2.3</b> Extension and example: Local logistic regression</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="smoothing-techniques.html"><a href="smoothing-techniques.html#smoothing-spline"><i class="fa fa-check"></i><b>5.3</b> Smoothing Spline</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="smoothing-techniques.html"><a href="smoothing-techniques.html#computation-1"><i class="fa fa-check"></i><b>5.3.1</b> Computation</a></li>
+<li class="chapter" data-level="5.3.2" data-path="smoothing-techniques.html"><a href="smoothing-techniques.html#tuning-parameter-selection"><i class="fa fa-check"></i><b>5.3.2</b> Tuning Parameter Selection</a></li>
+<li class="chapter" data-level="5.3.3" data-path="smoothing-techniques.html"><a href="smoothing-techniques.html#extension-and-example-nonparametric-logistic-regression"><i class="fa fa-check"></i><b>5.3.3</b> Extension and example: Nonparametric logistic regression</a></li>
+<li class="chapter" data-level="5.3.4" data-path="smoothing-techniques.html"><a href="smoothing-techniques.html#take-home-note"><i class="fa fa-check"></i><b>5.3.4</b> Take-home note</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>6</b> References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">SWAG Workshops Repository</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="smoothing-techniques" class="section level1">
+<h1><span class="header-section-number">Chapter 5</span> Smoothing Techniques</h1>
+
+<p><em>Jie Jian</em></p>
+<p>Smoothing techniques are frequently used to reduce the variability of the observational data and enhance prediction accuracy, while still providing an adequate fit. In this workshop, we will introduce two popular smoothing methods, kernel smoothing and smoothing splines, from their formulations to the computations. Each method has a smoothing parameter that controls the amount of roughness. We will demonstrate how to choose the optimal tuning parameters from the perspective of variance-bias trade-off. Some examples of how to apply the two methods will be provided. Part of the codes and materials come from <span class="citation">Hastie et al. (2009)</span> and <span class="citation">James et al. (2013)</span>.</p>
+<div id="introduction-4" class="section level2">
+<h2><span class="header-section-number">5.1</span> Introduction</h2>
+<p>A fundamental problem in statistical learning is to use a data set <span class="math inline">\(\{ (x_i,y_i) \}_{i=1}^n\)</span> to learn a function <span class="math inline">\(f(\cdot)\)</span> such that <span class="math inline">\(f(x_i)\)</span> fit the data <span class="math inline">\(y_i\)</span> well, so we can use the estimated function <span class="math inline">\(f\)</span> on the new data <span class="math inline">\(x\)</span> to predict the future outcome <span class="math inline">\(y\)</span>. In a statistical analysis, we have two sources of information, data and models. Data is “unbiased” but it contains noise, and models involve more constraints so contain less noise but introduce bias. In between the two extremes, we can use smoothing techniques to extract more information from the data and meanwhile control the variance.</p>
+<div id="example-boston-house-value" class="section level4">
+<h4><span class="header-section-number">5.1.0.1</span> Example: Boston house value</h4>
+<p>Housing values and other information about Boston suburbs.</p>
+<p>The variable <em>lstat</em> measures the percentage of individuals with lower socioeconomic status. The variable <em>medv</em> records median house values for 506 neighborhoods around Boston.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(MASS)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">y =<span class="st"> </span>Boston<span class="op">$</span>medv</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">x =<span class="st"> </span>Boston<span class="op">$</span>lstat</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">y.lab =<span class="st"> &quot;Median Property Value&quot;</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">x.lab =<span class="st"> &quot;Lower Status (%)&quot;</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw">plot</span>(x, y, <span class="dt">cex.lab =</span> <span class="fl">1.1</span>, <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>, <span class="dt">xlab =</span> x.lab, <span class="dt">ylab =</span> y.lab, </a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">    <span class="dt">main =</span> <span class="st">&quot;&quot;</span>, <span class="dt">bty =</span> <span class="st">&quot;l&quot;</span>)</a></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(splines)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">library</span>(FNN)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">xrange &lt;-<span class="st"> </span><span class="kw">extendrange</span>(x)</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">Xorder &lt;-<span class="st"> </span><span class="kw">order</span>(x)</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">xnew &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(xrange), <span class="kw">max</span>(xrange), <span class="dt">length.out =</span> <span class="dv">500</span>)</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">fit1 &lt;-<span class="st"> </span><span class="kw">knn.reg</span>(x, <span class="dt">y =</span> y, <span class="dt">k =</span> <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">fit2 &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span><span class="kw">bs</span>(x, <span class="dt">degree =</span> <span class="dv">3</span>, <span class="dt">df =</span> <span class="dv">4</span>))</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">ypred2 &lt;-<span class="st"> </span><span class="kw">predict</span>(fit2, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">x =</span> xnew))</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="kw">plot</span>(x, y, <span class="dt">col =</span> <span class="st">&quot;grey80&quot;</span>, <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">cex =</span> <span class="fl">0.5</span>, <span class="dt">main =</span> <span class="st">&quot;Fits with different </span><span class="ch">\&quot;</span><span class="st">smoothness</span><span class="ch">\&quot;</span><span class="st">&quot;</span>, </a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">    <span class="dt">xlab =</span> x.lab, <span class="dt">ylab =</span> y.lab)</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="kw">lines</span>(x[Xorder], fit1<span class="op">$</span>pred[Xorder], <span class="dt">col =</span> <span class="kw">adjustcolor</span>(<span class="st">&quot;steelblue&quot;</span>, <span class="fl">0.5</span>), </a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">    <span class="dt">lwd =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="kw">lines</span>(xnew, ypred2, <span class="dt">col =</span> <span class="st">&quot;darkgreen&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb2-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="kw">legend</span>(<span class="kw">max</span>(xrange) <span class="op">-</span><span class="st"> </span><span class="dv">15</span>, <span class="kw">max</span>(<span class="kw">extendrange</span>(y)), <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;5 nearest neighbours&quot;</span>, </a>
+<a class="sourceLine" id="cb2-18" data-line-number="18">    <span class="st">&quot;B-spline df=4&quot;</span>), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;steelblue&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>))</a></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+</div>
+</div>
+<div id="kernel-smoothing-methods" class="section level2">
+<h2><span class="header-section-number">5.2</span> Kernel Smoothing Methods</h2>
+<p>A natural way to achieve smoothness is to utilize the local information of data to compute the fit, so that the the estimated model would not change too much over the data. In the kernel smoothing method, for any data point <span class="math inline">\(x_i\)</span>, the value of the function at the point <span class="math inline">\(f(x_0)\)</span> is estimated using the combination of nearby observations. The contribution of each observation <span class="math inline">\(x_i\)</span> is calculated using a weight function, defined as Kernel <span class="math inline">\(K_\lambda(x_0,x_i)\)</span>, related to the distance between <span class="math inline">\(x_0\)</span> and <span class="math inline">\(x_i\)</span>. The parameter <span class="math inline">\(\lambda\)</span> controls the width of the neighborhood.</p>
+<div id="local-linear-regression" class="section level3">
+<h3><span class="header-section-number">5.2.1</span> Local linear regression</h3>
+<p>Locally weighted regression solves a separate weighted least squares problem at each target point <span class="math inline">\(x_0\)</span>: <span class="math display">\[\min\limits_{\alpha(x_0),\beta(x_0)} \sum_{i=1}^N K_\lambda (x_0,x_i) [y_i - \alpha(x_0)-\beta(x_0)x_i]^2.\]</span></p>
+The estimated function at each target point <span class="math inline">\(x_0\)</span> is <span class="math inline">\(\hat{f}(x_0)=\hat{\alpha} (x_0)+\hat{\beta}(x_0) x_i\)</span>. We can only use it to fit at a single point. The smoothing parameter <span class="math inline">\(\lambda\)</span> in the kernel function, which determines the width of the local neighborhood, has to be determined. Large <span class="math inline">\(\lambda\)</span> implies lower variance (averages over more observations) but higher bias (we essentially assume the true function is constant within the window).
+<center>
+<img src="smoothing_fig2.png" alt="Kernel functions (p194, Hastie et al. 2009)" />
+</center>
+<center>
+<img src="smoothing_fig1.png" alt="Locally weighted linear regression (p195, Hastie et al. 2009)" />
+</center>
+<div id="computation" class="section level4">
+<h4><span class="header-section-number">5.2.1.1</span> Computation</h4>
+<p>For each target point <span class="math inline">\(x_0\)</span>,
+<span class="math display">\[\begin{bmatrix} \hat{\alpha} [x_0]  \\ \hat{\beta} [x_0] \end{bmatrix}=\arg\min\limits_{\alpha,\beta}  \sum_{i=1}^N K_\lambda (x_0,x_i)\cdot (y_i-\alpha-(x_i-x_0) \beta)^2,\]</span>
+if we define an <span class="math inline">\(n-\)</span>by<span class="math inline">\(-n\)</span> weighting matrix <span class="math display">\[W_h(x_0) = diag(K_\lambda(x_0,x_1),\cdots,K_\lambda(x_0,x_n)) ,\]</span>
+then we can rewrite this optimization as
+<span class="math display">\[\begin{bmatrix} \hat{\alpha} [x_0]  \\ \hat{\beta} [x_0] \end{bmatrix}=\arg\min\limits_{\alpha,\beta} \| W_h(x_0) \cdot (Y- [\mathbf{1}_n\ \  X_0] \begin{bmatrix}\alpha  \\ \beta \end{bmatrix})^2\|^2_2,\]</span>
+which is a OLS optimization
+<span class="math display">\[\begin{bmatrix} \hat{\alpha}[x_0]  \\ \hat{\beta} [x_0]\end{bmatrix}=([\mathbf{1}_n\ \  X_0]&#39; W_h(x_0) [\mathbf{1}_n\ \  X_0])^{-1}([\mathbf{1}_n\ \  X_0]&#39;W_h(x_0) Y).\]</span></p>
+</div>
+<div id="one-line-implementation-in-r-loess" class="section level4">
+<h4><span class="header-section-number">5.2.1.2</span> One-line implementation in R: loess</h4>
+<p><em>loess</em> function in R fits a LOcally wEighted Sum of Squares estimate.</p>
+<ul>
+<li>The local neighborhood determined by either
+<ul>
+<li>span: the portion of points in the local neighborhood</li>
+<li>enp.target: effective degrees of freedom</li>
+</ul></li>
+<li>The kernel is Tukey’s tri-cube.</li>
+<li>Degree can be 0, 1, or 2. The default is a local quadratic.</li>
+<li>Up to 4 predictors.</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">fit1 =<span class="st"> </span><span class="kw">loess</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">span =</span> <span class="fl">0.05</span>)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">fit2 =<span class="st"> </span><span class="kw">loess</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">span =</span> <span class="fl">0.3</span>)</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="kw">plot</span>(x, y, <span class="dt">col =</span> <span class="st">&quot;grey80&quot;</span>, <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">cex =</span> <span class="fl">0.5</span>, <span class="dt">main =</span> <span class="st">&quot;loess with different spans&quot;</span>, </a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">    <span class="dt">xlab =</span> x.lab, <span class="dt">ylab =</span> y.lab)</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="kw">lines</span>(x[Xorder], <span class="kw">predict</span>(fit1, x[Xorder]), <span class="dt">col =</span> <span class="kw">adjustcolor</span>(<span class="st">&quot;steelblue&quot;</span>, </a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">    <span class="fl">0.5</span>), <span class="dt">lwd =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="kw">lines</span>(x[Xorder], <span class="kw">predict</span>(fit2, x[Xorder]), <span class="dt">col =</span> <span class="st">&quot;darkgreen&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="kw">legend</span>(<span class="kw">max</span>(xrange) <span class="op">-</span><span class="st"> </span><span class="dv">15</span>, <span class="kw">max</span>(<span class="kw">extendrange</span>(y)), <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;span=0.05&quot;</span>, <span class="st">&quot;span=0.3&quot;</span>), </a>
+<a class="sourceLine" id="cb3-11" data-line-number="11">    <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;steelblue&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>))</a></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+<div id="bias-and-vairance" class="section level4">
+<h4><span class="header-section-number">5.2.1.3</span> Bias and vairance</h4>
+<p><span class="math inline">\(\text{bias}(\hat{\alpha} [x_0])=O(h^2)\)</span>
+and
+<span class="math inline">\(var (\hat{\alpha}[x_0])=O_p (\frac{1}{nh^d}),\)</span>
+where <span class="math inline">\(h\)</span> is the bandwidth and <span class="math inline">\(d\)</span> is the dimensionality of <span class="math inline">\(x\)</span>.</p>
+<p>Theoretically, we can pick the bandwidth <span class="math inline">\(h\)</span> in some optimal sense such that <span class="math inline">\(h=\arg\max\limits_{h} (c_1 h^4 + c_2 \frac{1}{nh^2})\)</span>. Therefore, the asymptotic rate for the bandwidth <span class="math inline">\(h\)</span> is <span class="math inline">\(h=O(n^{-1/(d+4)})\)</span>.</p>
+<p>[derivation skipped]</p>
+</div>
+</div>
+<div id="tuning-parameter-bandwidth-selection" class="section level3">
+<h3><span class="header-section-number">5.2.2</span> Tuning Parameter (bandwidth) Selection</h3>
+<p>The tuning parameter <span class="math inline">\(\lambda\)</span> of the kernel <span class="math inline">\(K_\lambda\)</span> controls the width of the averaging window.
+- if the window is narrow, <span class="math inline">\(\hat{f}(x_0)\)</span> is an average of a small number of <span class="math inline">\(y_i\)</span> close to <span class="math inline">\(x_0\)</span>, and its variance will be relatively large while the bias will tend to be small.
+- if the window is wide, the variance of <span class="math inline">\(\hat{f}(x_0)\)</span> will be small and the bias will be higher.</p>
+<p>Choosing the bandwidth is a bias-variance trade-off.</p>
+<ul>
+<li>Leave-one-out cross validation (LOOCV)</li>
+</ul>
+<p>For each <span class="math inline">\(i=1,\cdots,n\)</span>, compute the estimator <span class="math inline">\(\hat{f}_\lambda^{(-i)} (x)\)</span>, where <span class="math inline">\(\hat{f}_\lambda^{(-i)} (x)\)</span> is comupted without using observation <span class="math inline">\(i\)</span>. The estimated MSE is given by <span class="math display">\[\hat{\text{MSE}}(\lambda)=\frac{1}{n} \sum_i (y_i-\hat{f}_\lambda^{(-i)} (x_i))^2.\]</span></p>
+<p>[derivation needed]</p>
+</div>
+<div id="extension-and-example-local-logistic-regression" class="section level3">
+<h3><span class="header-section-number">5.2.3</span> Extension and example: Local logistic regression</h3>
+<p>We can extend the local kernel smoothing method to
+<span class="math display">\[\max \sum_{i=1}^N K_\lambda (x_0,x_i) l(y_i,x_i^T \beta(x_0)),\]</span>
+where <span class="math inline">\(l(y_i,x_i^T \beta(x_0))\)</span> is replaced by the specific log-likelihood. For example, in the local logistic regression where we consider logistic regression with a single quantitative input <span class="math inline">\(X\)</span>.
+The local log-odds at a target <span class="math inline">\(x_0\)</span> is
+<span class="math display">\[\log \frac{\mathbb{P}(Y=1|X=x_0)}{\mathbb{P}(Y=0|X=x_0)}=\alpha(x_0)+\beta(x_0)x_i.\]</span>
+The objective function that we need to maximize is adjusted as
+<span class="math display">\[\max \sum_{i=1}^N K_\lambda (x_0,x_i) [y_i \log p(x_i) + (1-y_i) \log (1-p(x_i))].\]</span></p>
+</div>
+</div>
+<div id="smoothing-spline" class="section level2">
+<h2><span class="header-section-number">5.3</span> Smoothing Spline</h2>
+<p>When fitting a function <span class="math inline">\(f(\cdot)\)</span> to a set of data, the first thing that we want is to find some function that fits the observed data well: that is, we want the residual sum of squares which measures the goodness of fit, <span class="math inline">\(RSS=\sum_{i=1}^{n} (y_i - f(x_i))^2\)</span>, to be small. If this is our only repuirement, then we can even make RSS to zero by simply interpolating all observational data (a non-linear function that passes through exactly every data point). Such flexible function would overfit the data and lead to a large variance. Therefore, we not only require the RSS to be small, but also the function to be smooth. To achieve the smoothness of the estimated function, some penalty can be added to control the variability in <span class="math inline">\(f(x)\)</span>.</p>
+<p>Considering the two requirements, we are seeking a function <span class="math inline">\(f(x)\)</span> that minimizes <span class="math display">\[\underbrace{\sum_{i=1}^{n} (y_i-f(x_i))^2}_\text{Model fit} + \lambda \underbrace{\int f&#39;&#39;(x)^2 dx}_\text{Penalty term}\]</span>
+where <span class="math inline">\(\lambda\)</span> is a nonnegative tuning parameter. The function <span class="math inline">\(f(x)\)</span> is known as a <em>smoothing spline</em>.</p>
+<ul>
+<li>Model fit: different from the general linear regression problem where the function <span class="math inline">\(f(x)\)</span> is linear and we only need to estimate the coefficients of the predictors, here we minimize the objective function with respect to <span class="math inline">\(f(x)\)</span>.</li>
+<li>Penalty term: the second term penalizes curvature in the function.</li>
+<li>Tuning parameter:
+<ul>
+<li>when <span class="math inline">\(\lambda =0\)</span> we get a wiggly non-linear function, which has a high variance and low bias;</li>
+<li>As <span class="math inline">\(\lambda\)</span> increases the estimated function will be smoother;</li>
+<li>When <span class="math inline">\(\lambda \rightarrow \infty\)</span>, <span class="math inline">\(f&#39;&#39;\)</span> will be zero everywhere which leads to a linear model <span class="math inline">\(f(x)=\beta_0+\beta_1 x\)</span>, which has a low variance but high bias.</li>
+</ul></li>
+</ul>
+<div id="computation-1" class="section level3">
+<h3><span class="header-section-number">5.3.1</span> Computation</h3>
+<p>From the perspective of functional space <span class="citation">Gu (2013)</span>, the smoothing spline is the function <span class="math inline">\(f_\lambda\)</span> that minimizes the spline functional <span class="math display">\[E[f]=\sum_{i=1}^{n} (y_i-f(x_i))^2 + \lambda \int f&#39;&#39;(x)^2 dx\]</span> in the Sobolev space <span class="math inline">\(W_2 (\mathbb{R})\)</span> of functions with square integrable second derivative: <span class="math display">\[f_\lambda = \arg \min_{f\in W_2 (\mathbb{R})} E[f].\]</span></p>
+<p>Sobolev space is an infinite-dimensional function space, where the second term is defined. It can be shown that the solution to <span class="math inline">\(\min E[f]\)</span> is an explicit, finite-dimensional, unique minimizer which is a natural cubic spline with knots at the unique values of the predictor values <span class="math inline">\(x_i\)</span>. Since the solution is a natural spline, we can write it as <span class="math inline">\(f(x)=\sum_{i=1}^n N_j (x) \theta_j\)</span>, where the <span class="math inline">\(N_j (x)\)</span> are an N-dimensional set of basis functions for representing the family of natural splines. The criterion reduces to <span class="math display">\[RSS(\theta,\lambda)=(y-N\theta)^\top (y-N\theta) + \lambda \theta^\top \Omega_N \theta,\]</span>
+where <span class="math inline">\(\{ N \}_{ij}=N_j (x_i)\)</span> and <span class="math inline">\(\{ \Omega_N \}_{jk}=\int N&#39;&#39;_j (t) N&#39;&#39;_k (t) dt\)</span>. The solution is easily seen to be <span class="math display">\[\hat{\theta} = (N^\top N + \lambda \Omega_N)^{-1} N^T y.\]</span>
+The fitted smoothing spline is given by <span class="math display">\[\hat{f} (x) = \sum_{j=1}^N N_j (x) \hat{\theta}_j.\]</span></p>
+<p>Although natural splines provide a basis for smoothing splines, it is computationally more convenient to operate in the larger space of unconstrained B-splines. We write <span class="math inline">\(f(x)=\sum_{i=1}^{N+4}B_i(x)\theta_i\)</span> (just to replace the basis functions from natural cubic splines to B-splines).</p>
+</div>
+<div id="tuning-parameter-selection" class="section level3">
+<h3><span class="header-section-number">5.3.2</span> Tuning Parameter Selection</h3>
+<p>The tuning parameter controls the tradeoff between smoothness of the estimate and fidelity to the data. In statistical terms, it controls the tradeoff between bias and variance. The optimal value of <span class="math inline">\(\lambda\)</span> has to be estimated from the data, usually by cross-validation or generalized cross-validation.</p>
+<ul>
+<li>Cross validation</li>
+<li><p>Generalized cross-validation</p>
+<p>Usually degrees of freedom refer to the number of free parameters, such as the number of coefficients fit in a polynomial or cubic spline. Although a smoothing spline has <span class="math inline">\(n\)</span> parameters and hence <span class="math inline">\(n\)</span> nominal degrees of freedom, these <span class="math inline">\(n\)</span> parameters are heavily constrained or shrunk down. We use the effective degrees of freedom as a measure of the flexibility of the smoothing spline. We can write <span class="math display">\[\hat{f}_\lambda = S_\lambda y,\]</span> where <span class="math inline">\(\hat{f}\)</span> is the solution for a given <span class="math inline">\(\lambda\)</span> and <span class="math inline">\(S_\lambda\)</span> is an <span class="math inline">\(n-\)</span>by<span class="math inline">\(-n\)</span> matrix. The effective degrees of freedom is defined as the sum of the diagonal elements of the matrix <span class="math inline">\(S_\lambda\)</span>: <span class="math display">\[df_\lambda = \sum_{i=1}^n \{S_\lambda \}_{ii}.\]</span>
+The generalized cross validation (GCV) for such linear smoother is <span class="math display">\[GCV(\hat{f})=\frac{1}{n} \sum_{i=1}^n (\frac{y_i - \hat{f}(x_i)}{1-tr (S)/n})^2.\]</span></p></li>
+</ul>
+<p>[derivation needed]</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">library</span>(splines)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">smooth1 =<span class="st"> </span><span class="kw">smooth.spline</span>(x, y, <span class="dt">df =</span> <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">smooth2 =<span class="st"> </span><span class="kw">smooth.spline</span>(x, y, <span class="dt">cv =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="kw">plot</span>(x, y, <span class="dt">cex.lab =</span> <span class="fl">1.1</span>, <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>, <span class="dt">xlab =</span> x.lab, <span class="dt">ylab =</span> y.lab, </a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">    <span class="dt">main =</span> <span class="st">&quot;Smoothing Spline (3 df)&quot;</span>, <span class="dt">bty =</span> <span class="st">&quot;l&quot;</span>)</a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="kw">lines</span>(smooth1, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;brown&quot;</span>)</a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="kw">plot</span>(x, y, <span class="dt">cex.lab =</span> <span class="fl">1.1</span>, <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>, <span class="dt">xlab =</span> x.lab, <span class="dt">ylab =</span> y.lab, </a>
+<a class="sourceLine" id="cb4-12" data-line-number="12">    <span class="dt">main =</span> <span class="st">&quot;Smoothing Spline (CV)&quot;</span>, <span class="dt">bty =</span> <span class="st">&quot;l&quot;</span>)</a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="kw">lines</span>(smooth2, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>)</a></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+<div id="extension-and-example-nonparametric-logistic-regression" class="section level3">
+<h3><span class="header-section-number">5.3.3</span> Extension and example: Nonparametric logistic regression</h3>
+<p>The smoothing spline problem we talked above is posed in a regression setting, as the model fit part is <span class="math inline">\(\sum_{i=1}^{n} (y_i-f(x_i))^2\)</span>. The technique can be extended to other problems, as long as we adjust the model fit term in the objective function to some likelihood-based formula. Here, we consider logistic regression with a single quantitative input <span class="math inline">\(X\)</span>.
+<span class="math display">\[\log \frac{\mathbb{P}(Y=1|X=x)}{\mathbb{P}(Y=0|X=x)}=f(x).\]</span>
+Our target is to fit a smooth function <span class="math inline">\(f(x)\)</span> to the logit, so that the conditional probability <span class="math inline">\(\mathbb{P}(Y=1|x)=\frac{e^{f(x)}}{1+e^{f(x)}}\)</span> is also smooth, which can be used for classification or risk measurement. In order to incorporate the smoothness penalty, the penalized log-likelihood criterion is
+<span class="math display">\[l(f;\lambda)=\sum_{i=1}^{N} [y_i \log p(x_i) + (1-y_i) \log (1-p(x_i))]-\frac{1}{2} \lambda \int \{f&#39;&#39;(t) \}^2 dt.\]</span></p>
+<p>It also can be shown that the solution to the optimization problem is the natural spline, so we can also express the function as <span class="math inline">\(f(x)=\sum_{i=1}^N N_j (x) \theta_j\)</span> where <span class="math inline">\(N\)</span> is the matrix of natural spline, or further it can be replaced by the B-spline for the same reason we have in the regression setting (approximation).</p>
+</div>
+<div id="take-home-note" class="section level3">
+<h3><span class="header-section-number">5.3.4</span> Take-home note</h3>
+<ul>
+<li>Smoothing techniques can incorporate with a variety of statistical methods. We introduced two methods:
+<ul>
+<li>Local linear regression: fit locally using some kernel function to measure the weight of each data point.
+<span class="math display">\[\max \sum_{i=1}^N K_\lambda (x_0,x_i) l(y_i,x_i^T \beta(x_0))\]</span></li>
+<li>Smoothing spline: add a penalty term in the objective function to prevent the function that needs to be estimated from not being smooth.
+<span class="math display">\[\max \sum_{i=1}^N l(x_i,y_i) -\lambda P(f)\]</span></li>
+</ul></li>
+</ul>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="variational-inference.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/uwswagclub/workshop-bookdown/edit/master/05-smoothing.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
