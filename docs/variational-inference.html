@@ -579,7 +579,7 @@ We can also define a Bayesian version of it called <code>bayes_model</code> as f
 <p><img src="bookdownproj_files/figure-html/unnamed-chunk-20-3.png" width="480" /></p>
 <p>Below is the time taken to optimize the ELBO using the VI method.</p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb48-1"><a href="variational-inference.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(vi_end<span class="op">-</span>vi_start)</span></code></pre></div>
-<pre><code>## 5.405915021896362</code></pre>
+<pre><code>## 5.5414955615997314</code></pre>
 <p>Then we can print out the estimated variational parameters (<span class="math inline">\(\boldsymbol{\omega}\)</span>), which are the mean and variance of each variational Normal distribution.</p>
 <div class="sourceCode" id="cb50"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb50-1"><a href="variational-inference.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name, value <span class="kw">in</span> pyro.get_param_store().items():</span>
 <span id="cb50-2"><a href="variational-inference.html#cb50-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(name, pyro.param(name).data.cpu().numpy())</span></code></pre></div>
@@ -631,7 +631,7 @@ We can also define a Bayesian version of it called <code>bayes_model</code> as f
 ## Number of divergences: 0</code></pre>
 <p>Below is the time taken to draw 2000 MCMC samples (including 1000 warmups). We can see MCMC is almost an order of magnitude slower than the VI.</p>
 <div class="sourceCode" id="cb55"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb55-1"><a href="variational-inference.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mc_end<span class="op">-</span>mc_start)</span></code></pre></div>
-<pre><code>## 38.20520734786987</code></pre>
+<pre><code>## 38.696908712387085</code></pre>
 <p>We can also plot the histograms of the MCMC samples of the two slopes. Compared to the histograms obtained using the VI, these don’t look much different.</p>
 <div class="sourceCode" id="cb57"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb57-1"><a href="variational-inference.html#cb57-1" aria-hidden="true" tabindex="-1"></a>mc_slope_within_africa <span class="op">=</span> mc_samples[<span class="st">&quot;bR&quot;</span>] <span class="op">+</span> mc_samples[<span class="st">&quot;bAR&quot;</span>]</span>
 <span id="cb57-2"><a href="variational-inference.html#cb57-2" aria-hidden="true" tabindex="-1"></a>mc_slope_outside_africa <span class="op">=</span> mc_samples[<span class="st">&quot;bR&quot;</span>]</span>
