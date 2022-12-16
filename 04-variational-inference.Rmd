@@ -1,6 +1,6 @@
 # Variational Inference
 
-```{r setup, include=FALSE}
+```{r, include=FALSE}
 library(knitr)
 library(ggplot2)
 library(bookdown)
@@ -226,7 +226,7 @@ We can do the same with the VI. That is, we only need to provide the model formu
 
 ```{r, include=FALSE}
 library(reticulate)
-use_virtualenv("~/projects/swag-env")
+use_virtualenv("~/swagclub/swag-env")
 ```
 
 To install pyro, simply run `pip install pyro-ppl` in your terminal. First, we import the required packages and set up some system parameters.

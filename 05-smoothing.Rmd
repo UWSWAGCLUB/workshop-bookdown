@@ -1,9 +1,6 @@
 # Smoothing Techniques
 
-```{r setup, include=FALSE}
-library(knitr)
-library(ggplot2)
-library(bookdown)
+```{r, include=FALSE}
 opts_chunk$set(echo = TRUE, warning = FALSE)
 opts_chunk$set(cache = FALSE)
 opts_chunk$set(tidy.opts=list(width.cutoff=70),tidy=TRUE)

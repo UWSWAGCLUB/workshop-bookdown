@@ -12,6 +12,11 @@ eq:approx-int
 eq:calc-elbo
 eq:max-elbo
 eq:KL-div
+eq:mix-gauss
+eq:var-dist
+eq:elbo-mix-gauss
+eq:prop-conditional
+eq:full-conds
 introduction
 chapter2
 introduction-1
@@ -41,15 +46,8 @@ variational-inference
 introduction-3
 frequentist-setting
 bayesian-setting
-references
-eq:mix-gauss
-example-1-mixture-of-gaussians
-eq:var-dist
-eq:elbo-mix-gauss
 example-mixture-of-gaussians
 coordinate-ascent-mean-field-variational-inference
-eq:prop-conditional
-eq:full-conds
 example-stochastic-variational-inference-using-pyro-in-python
 takeaways
 smoothing-techniques
@@ -67,3 +65,4 @@ computation-1
 tuning-parameter-selection
 extension-and-example-nonparametric-logistic-regression
 take-home-note
+references

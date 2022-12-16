@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 5 References | SWAG Workshops Repository</title>
-  <meta name="description" content="Chapter 5 References | SWAG Workshops Repository" />
+  <title>Chapter 6 References | SWAG Workshops Repository</title>
+  <meta name="description" content="Chapter 6 References | SWAG Workshops Repository" />
   <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 5 References | SWAG Workshops Repository" />
+  <meta property="og:title" content="Chapter 6 References | SWAG Workshops Repository" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 5 References | SWAG Workshops Repository" />
+  <meta name="twitter:title" content="Chapter 6 References | SWAG Workshops Repository" />
   
   
   
@@ -30,7 +30,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="variational-inference.html"/>
+<link rel="prev" href="smoothing-techniques.html"/>
 
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -206,8 +206,31 @@ div.csl-indent {
 <li class="chapter" data-level="4.1.1" data-path="variational-inference.html"><a href="variational-inference.html#frequentist-setting"><i class="fa fa-check"></i><b>4.1.1</b> Frequentist Setting</a></li>
 <li class="chapter" data-level="4.1.2" data-path="variational-inference.html"><a href="variational-inference.html#bayesian-setting"><i class="fa fa-check"></i><b>4.1.2</b> Bayesian Setting</a></li>
 </ul></li>
+<li class="chapter" data-level="4.2" data-path="variational-inference.html"><a href="variational-inference.html#example-mixture-of-gaussians"><i class="fa fa-check"></i><b>4.2</b> Example: Mixture of Gaussians</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="variational-inference.html"><a href="variational-inference.html#coordinate-ascent-mean-field-variational-inference"><i class="fa fa-check"></i><b>4.2.1</b> Coordinate Ascent Mean-Field Variational Inference</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>5</b> References</a></li>
+<li class="chapter" data-level="4.3" data-path="variational-inference.html"><a href="variational-inference.html#example-stochastic-variational-inference-using-pyro-in-python"><i class="fa fa-check"></i><b>4.3</b> Example: Stochastic Variational Inference using Pyro in Python</a></li>
+<li class="chapter" data-level="4.4" data-path="variational-inference.html"><a href="variational-inference.html#takeaways"><i class="fa fa-check"></i><b>4.4</b> Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="smoothing-techniques.html"><a href="smoothing-techniques.html"><i class="fa fa-check"></i><b>5</b> Smoothing Techniques</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="smoothing-techniques.html"><a href="smoothing-techniques.html#introduction-4"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
+<li class="chapter" data-level="5.2" data-path="smoothing-techniques.html"><a href="smoothing-techniques.html#kernel-smoothing-methods"><i class="fa fa-check"></i><b>5.2</b> Kernel Smoothing Methods</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="smoothing-techniques.html"><a href="smoothing-techniques.html#local-linear-regression"><i class="fa fa-check"></i><b>5.2.1</b> Local linear regression</a></li>
+<li class="chapter" data-level="5.2.2" data-path="smoothing-techniques.html"><a href="smoothing-techniques.html#tuning-parameter-bandwidth-selection"><i class="fa fa-check"></i><b>5.2.2</b> Tuning Parameter (bandwidth) Selection</a></li>
+<li class="chapter" data-level="5.2.3" data-path="smoothing-techniques.html"><a href="smoothing-techniques.html#extension-and-example-local-logistic-regression"><i class="fa fa-check"></i><b>5.2.3</b> Extension and example: Local logistic regression</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="smoothing-techniques.html"><a href="smoothing-techniques.html#smoothing-spline"><i class="fa fa-check"></i><b>5.3</b> Smoothing Spline</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="smoothing-techniques.html"><a href="smoothing-techniques.html#computation-1"><i class="fa fa-check"></i><b>5.3.1</b> Computation</a></li>
+<li class="chapter" data-level="5.3.2" data-path="smoothing-techniques.html"><a href="smoothing-techniques.html#tuning-parameter-selection"><i class="fa fa-check"></i><b>5.3.2</b> Tuning Parameter Selection</a></li>
+<li class="chapter" data-level="5.3.3" data-path="smoothing-techniques.html"><a href="smoothing-techniques.html#extension-and-example-nonparametric-logistic-regression"><i class="fa fa-check"></i><b>5.3.3</b> Extension and example: Nonparametric logistic regression</a></li>
+<li class="chapter" data-level="5.3.4" data-path="smoothing-techniques.html"><a href="smoothing-techniques.html#take-home-note"><i class="fa fa-check"></i><b>5.3.4</b> Take-home note</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>6</b> References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -227,10 +250,13 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="references" class="section level1 hasAnchor" number="5">
-<h1><span class="header-section-number">Chapter 5</span> References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="references" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">Chapter 6</span> References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 
 <div id="refs" class="references csl-bib-body hanging-indent">
+<div class="csl-entry">
+Blei, David M., Alp Kucukelbir, and Jon D. McAuliffe. 2017. <span>“Variational Inference: A Review for Statisticians.”</span> <em>Journal of the American Statistical Association</em> 112 (518): 859–77.
+</div>
 <div class="csl-entry">
 Chen, Yen-chi. 2020. <span>“A Short Note on Variational Inference.”</span> <a href="http://faculty.washington.edu/yenchic/short_note/note_VarInf.pdf" class="uri">http://faculty.washington.edu/yenchic/short_note/note_VarInf.pdf</a>.
 </div>
@@ -239,6 +265,15 @@ Efron, Bradley. 1982. <em>The Jackknife, the Bootstrap and Other Resampling Plan
 </div>
 <div class="csl-entry">
 Givens, Geof H, and Adrian E Raftery. 1996. <span>“Local Adaptive Importance Sampling for Multivariate Densities with Strong Nonlinear Relationships.”</span> <em>Journal of the American Statistical Association</em> 91 (433): 132–41.
+</div>
+<div class="csl-entry">
+Gu, Chong. 2013. <em>Smoothing Spline ANOVA Models</em>. Vol. 297. Springer.
+</div>
+<div class="csl-entry">
+Hastie, Trevor, Robert Tibshirani, Jerome H Friedman, and Jerome H Friedman. 2009. <em>The Elements of Statistical Learning: Data Mining, Inference, and Prediction</em>. Vol. 2. Springer.
+</div>
+<div class="csl-entry">
+James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani. 2013. <em>An Introduction to Statistical Learning</em>. Vol. 112. Springer.
 </div>
 <div class="csl-entry">
 Kleijn, Bas JK, and Aad W Van der Vaart. 2012. <span>“The Bernstein-von-Mises Theorem Under Misspecification.”</span> <em>Electronic Journal of Statistics</em> 6: 354–81.
@@ -271,7 +306,7 @@ West, Mike. 1993. <span>“Approximating Posterior Distributions by Mixtures.”
           </div>
         </div>
       </div>
-<a href="variational-inference.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="smoothing-techniques.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
     </div>
   </div>
@@ -303,7 +338,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/uwswagclub/workshop-bookdown/edit/master/05-references.Rmd",
+"link": "https://github.com/uwswagclub/workshop-bookdown/edit/master/06-references.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -311,7 +346,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/uwswagclub/workshop-bookdown/blob/master/05-references.Rmd",
+"link": "https://github.com/uwswagclub/workshop-bookdown/blob/master/06-references.Rmd",
 "text": null
 },
 "download": null,
