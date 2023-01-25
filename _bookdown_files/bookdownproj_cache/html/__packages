@@ -6,3 +6,16 @@ bookdown
 MASS
 reticulate
 FNN
+pacman
+tidyverse
+tibble
+tidyr
+readr
+purrr
+dplyr
+stringr
+forcats
+Matrix
+survival
+survey
+PracTools

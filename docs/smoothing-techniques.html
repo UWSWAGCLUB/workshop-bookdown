@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 5 Smoothing Techniques | SWAG Workshops Repository</title>
   <meta name="description" content="Chapter 5 Smoothing Techniques | SWAG Workshops Repository" />
-  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 5 Smoothing Techniques | SWAG Workshops Repository" />
   <meta property="og:type" content="book" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="variational-inference.html"/>
-<link rel="next" href="references.html"/>
+<link rel="next" href="analyzing-surveys-with-r.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -92,7 +92,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +105,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -230,7 +230,33 @@ div.csl-indent {
 <li class="chapter" data-level="5.3.4" data-path="smoothing-techniques.html"><a href="smoothing-techniques.html#take-home-note"><i class="fa fa-check"></i><b>5.3.4</b> Take-home note</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>6</b> References</a></li>
+<li class="chapter" data-level="6" data-path="analyzing-surveys-with-r.html"><a href="analyzing-surveys-with-r.html"><i class="fa fa-check"></i><b>6</b> Analyzing Surveys with R</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="analyzing-surveys-with-r.html"><a href="analyzing-surveys-with-r.html#acknowlegdements"><i class="fa fa-check"></i><b>6.1</b> Acknowlegdements</a></li>
+<li class="chapter" data-level="6.2" data-path="analyzing-surveys-with-r.html"><a href="analyzing-surveys-with-r.html#introduction-to-thinking-about-surveys"><i class="fa fa-check"></i><b>6.2</b> Introduction to Thinking About Surveys</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="analyzing-surveys-with-r.html"><a href="analyzing-surveys-with-r.html#total-survey-error-tse"><i class="fa fa-check"></i><b>6.2.1</b> Total Survey Error (TSE)</a></li>
+<li class="chapter" data-level="6.2.2" data-path="analyzing-surveys-with-r.html"><a href="analyzing-surveys-with-r.html#probability-vs.-non-probability-surveys"><i class="fa fa-check"></i><b>6.2.2</b> Probability vs. Non-Probability Surveys</a></li>
+<li class="chapter" data-level="6.2.3" data-path="analyzing-surveys-with-r.html"><a href="analyzing-surveys-with-r.html#design-based-vs.-model-based-inference"><i class="fa fa-check"></i><b>6.2.3</b> Design-based vs. Model-based Inference</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="analyzing-surveys-with-r.html"><a href="analyzing-surveys-with-r.html#probability-survey-without-non-response-design-based"><i class="fa fa-check"></i><b>6.3</b> Probability Survey without Non-response (design-based)</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="analyzing-surveys-with-r.html"><a href="analyzing-surveys-with-r.html#some-notation"><i class="fa fa-check"></i><b>6.3.1</b> Some notation</a></li>
+<li class="chapter" data-level="6.3.2" data-path="analyzing-surveys-with-r.html"><a href="analyzing-surveys-with-r.html#horvitz-thompson-estimator"><i class="fa fa-check"></i><b>6.3.2</b> Horvitz-Thompson Estimator</a></li>
+<li class="chapter" data-level="6.3.3" data-path="analyzing-surveys-with-r.html"><a href="analyzing-surveys-with-r.html#variance-estimation"><i class="fa fa-check"></i><b>6.3.3</b> Variance Estimation</a></li>
+<li class="chapter" data-level="6.3.4" data-path="analyzing-surveys-with-r.html"><a href="analyzing-surveys-with-r.html#simple-random-sampling-without-replacement-srswor"><i class="fa fa-check"></i><b>6.3.4</b> Simple Random Sampling Without Replacement (SRSwor)</a></li>
+<li class="chapter" data-level="6.3.5" data-path="analyzing-surveys-with-r.html"><a href="analyzing-surveys-with-r.html#stratified-simple-random-sampling-without-replacement-ssrswor"><i class="fa fa-check"></i><b>6.3.5</b> Stratified Simple Random Sampling Without Replacement (SSRSwor)</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="analyzing-surveys-with-r.html"><a href="analyzing-surveys-with-r.html#post-adjustment-model-assisted"><i class="fa fa-check"></i><b>6.4</b> Post-adjustment (model-assisted)</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="analyzing-surveys-with-r.html"><a href="analyzing-surveys-with-r.html#post-stratification"><i class="fa fa-check"></i><b>6.4.1</b> Post-stratification</a></li>
+<li class="chapter" data-level="6.4.2" data-path="analyzing-surveys-with-r.html"><a href="analyzing-surveys-with-r.html#calibration-dealing-with-multiple-auxilliary-variables"><i class="fa fa-check"></i><b>6.4.2</b> Calibration: Dealing with multiple auxilliary variables</a></li>
+<li class="chapter" data-level="6.4.3" data-path="analyzing-surveys-with-r.html"><a href="analyzing-surveys-with-r.html#what-makes-a-good-calibration-variable"><i class="fa fa-check"></i><b>6.4.3</b> What makes a good calibration variable?</a></li>
+<li class="chapter" data-level="6.4.4" data-path="analyzing-surveys-with-r.html"><a href="analyzing-surveys-with-r.html#variance-estimation-resampling"><i class="fa fa-check"></i><b>6.4.4</b> Variance Estimation: Resampling</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="analyzing-surveys-with-r.html"><a href="analyzing-surveys-with-r.html#non-probability-surveys-model-based"><i class="fa fa-check"></i><b>6.5</b> Non-probability Surveys (model-based)</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>7</b> References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -264,29 +290,35 @@ div.csl-indent {
 <div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="smoothing-techniques.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
 <span id="cb58-2"><a href="smoothing-techniques.html#cb58-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> Boston<span class="sc">$</span>medv</span>
 <span id="cb58-3"><a href="smoothing-techniques.html#cb58-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> Boston<span class="sc">$</span>lstat</span>
-<span id="cb58-4"><a href="smoothing-techniques.html#cb58-4" aria-hidden="true" tabindex="-1"></a>y.lab <span class="ot">=</span> <span class="st">&quot;Median Property Value&quot;</span></span>
-<span id="cb58-5"><a href="smoothing-techniques.html#cb58-5" aria-hidden="true" tabindex="-1"></a>x.lab <span class="ot">=</span> <span class="st">&quot;Lower Status (%)&quot;</span></span>
-<span id="cb58-6"><a href="smoothing-techniques.html#cb58-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">cex.lab =</span> <span class="fl">1.1</span>, <span class="at">col =</span> <span class="st">&quot;darkgrey&quot;</span>, <span class="at">xlab =</span> x.lab, <span class="at">ylab =</span> y.lab,</span>
-<span id="cb58-7"><a href="smoothing-techniques.html#cb58-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">bty =</span> <span class="st">&quot;l&quot;</span>)</span></code></pre></div>
+<span id="cb58-4"><a href="smoothing-techniques.html#cb58-4" aria-hidden="true" tabindex="-1"></a>y.lab <span class="ot">=</span> <span class="st">&#39;Median Property Value&#39;</span></span>
+<span id="cb58-5"><a href="smoothing-techniques.html#cb58-5" aria-hidden="true" tabindex="-1"></a>x.lab <span class="ot">=</span> <span class="st">&#39;Lower Status (%)&#39;</span></span>
+<span id="cb58-6"><a href="smoothing-techniques.html#cb58-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">cex.lab =</span> <span class="fl">1.1</span>, <span class="at">col=</span><span class="st">&quot;darkgrey&quot;</span>, <span class="at">xlab =</span> x.lab, <span class="at">ylab =</span> y.lab,</span>
+<span id="cb58-7"><a href="smoothing-techniques.html#cb58-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">bty =</span> <span class="st">&#39;l&#39;</span>)</span></code></pre></div>
 <p><img src="bookdownproj_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
 <div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="smoothing-techniques.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(splines)</span>
 <span id="cb59-2"><a href="smoothing-techniques.html#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FNN)</span>
 <span id="cb59-3"><a href="smoothing-techniques.html#cb59-3" aria-hidden="true" tabindex="-1"></a>xrange <span class="ot">&lt;-</span> <span class="fu">extendrange</span>(x)</span>
 <span id="cb59-4"><a href="smoothing-techniques.html#cb59-4" aria-hidden="true" tabindex="-1"></a>Xorder <span class="ot">&lt;-</span> <span class="fu">order</span>(x)</span>
-<span id="cb59-5"><a href="smoothing-techniques.html#cb59-5" aria-hidden="true" tabindex="-1"></a>xnew <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(xrange), <span class="fu">max</span>(xrange), <span class="at">length.out =</span> <span class="dv">500</span>)</span>
+<span id="cb59-5"><a href="smoothing-techniques.html#cb59-5" aria-hidden="true" tabindex="-1"></a>xnew <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(xrange), <span class="fu">max</span>(xrange), <span class="at">length.out=</span><span class="dv">500</span>)</span>
 <span id="cb59-6"><a href="smoothing-techniques.html#cb59-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb59-7"><a href="smoothing-techniques.html#cb59-7" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">knn.reg</span>(x, <span class="at">y =</span> y, <span class="at">k =</span> <span class="dv">5</span>)</span>
-<span id="cb59-8"><a href="smoothing-techniques.html#cb59-8" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> <span class="fu">bs</span>(x, <span class="at">degree =</span> <span class="dv">3</span>, <span class="at">df =</span> <span class="dv">4</span>))</span>
-<span id="cb59-9"><a href="smoothing-techniques.html#cb59-9" aria-hidden="true" tabindex="-1"></a>ypred2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit2, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> xnew))</span>
+<span id="cb59-7"><a href="smoothing-techniques.html#cb59-7" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">knn.reg</span>(x, <span class="at">y=</span>y, <span class="at">k=</span><span class="dv">5</span>)</span>
+<span id="cb59-8"><a href="smoothing-techniques.html#cb59-8" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> <span class="fu">bs</span>(x, <span class="at">degree=</span> <span class="dv">3</span>, <span class="at">df=</span><span class="dv">4</span>))</span>
+<span id="cb59-9"><a href="smoothing-techniques.html#cb59-9" aria-hidden="true" tabindex="-1"></a>ypred2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit2,<span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">x=</span>xnew))</span>
 <span id="cb59-10"><a href="smoothing-techniques.html#cb59-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb59-11"><a href="smoothing-techniques.html#cb59-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">col =</span> <span class="st">&quot;grey80&quot;</span>, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">cex =</span> <span class="fl">0.5</span>, <span class="at">main =</span> <span class="st">&quot;Fits with different </span><span class="sc">\&quot;</span><span class="st">smoothness</span><span class="sc">\&quot;</span><span class="st">&quot;</span>,</span>
-<span id="cb59-12"><a href="smoothing-techniques.html#cb59-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> x.lab, <span class="at">ylab =</span> y.lab)</span>
-<span id="cb59-13"><a href="smoothing-techniques.html#cb59-13" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x[Xorder], fit1<span class="sc">$</span>pred[Xorder], <span class="at">col =</span> <span class="fu">adjustcolor</span>(<span class="st">&quot;steelblue&quot;</span>, <span class="fl">0.5</span>),</span>
-<span id="cb59-14"><a href="smoothing-techniques.html#cb59-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb59-15"><a href="smoothing-techniques.html#cb59-15" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(xnew, ypred2, <span class="at">col =</span> <span class="st">&quot;darkgreen&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb59-16"><a href="smoothing-techniques.html#cb59-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb59-17"><a href="smoothing-techniques.html#cb59-17" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="fu">max</span>(xrange) <span class="sc">-</span> <span class="dv">15</span>, <span class="fu">max</span>(<span class="fu">extendrange</span>(y)), <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;5 nearest neighbours&quot;</span>,</span>
-<span id="cb59-18"><a href="smoothing-techniques.html#cb59-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;B-spline df=4&quot;</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;steelblue&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>))</span></code></pre></div>
+<span id="cb59-11"><a href="smoothing-techniques.html#cb59-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,y, </span>
+<span id="cb59-12"><a href="smoothing-techniques.html#cb59-12" aria-hidden="true" tabindex="-1"></a>     <span class="at">col=</span><span class="st">&quot;grey80&quot;</span>, <span class="at">pch=</span><span class="dv">19</span>, <span class="at">cex=</span><span class="fl">0.5</span>,</span>
+<span id="cb59-13"><a href="smoothing-techniques.html#cb59-13" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Fits with different </span><span class="sc">\&quot;</span><span class="st">smoothness</span><span class="sc">\&quot;</span><span class="st">&quot;</span>,</span>
+<span id="cb59-14"><a href="smoothing-techniques.html#cb59-14" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> x.lab, <span class="at">ylab =</span> y.lab)</span>
+<span id="cb59-15"><a href="smoothing-techniques.html#cb59-15" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x[Xorder], fit1<span class="sc">$</span>pred[Xorder], </span>
+<span id="cb59-16"><a href="smoothing-techniques.html#cb59-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">col=</span><span class="fu">adjustcolor</span>(<span class="st">&quot;steelblue&quot;</span>, <span class="fl">0.5</span>),</span>
+<span id="cb59-17"><a href="smoothing-techniques.html#cb59-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb59-18"><a href="smoothing-techniques.html#cb59-18" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(xnew, ypred2, <span class="at">col=</span><span class="st">&quot;darkgreen&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb59-19"><a href="smoothing-techniques.html#cb59-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-20"><a href="smoothing-techniques.html#cb59-20" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="fu">max</span>(xrange)<span class="sc">-</span><span class="dv">15</span>, <span class="fu">max</span>(<span class="fu">extendrange</span>(y)),</span>
+<span id="cb59-21"><a href="smoothing-techniques.html#cb59-21" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend=</span><span class="fu">c</span>(<span class="st">&quot;5 nearest neighbours&quot;</span>,<span class="st">&quot;B-spline df=4&quot;</span>),</span>
+<span id="cb59-22"><a href="smoothing-techniques.html#cb59-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">lwd=</span><span class="dv">2</span>,</span>
+<span id="cb59-23"><a href="smoothing-techniques.html#cb59-23" aria-hidden="true" tabindex="-1"></a>       <span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;steelblue&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>)</span>
+<span id="cb59-24"><a href="smoothing-techniques.html#cb59-24" aria-hidden="true" tabindex="-1"></a>       )</span></code></pre></div>
 <p><img src="bookdownproj_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
 </div>
 </div>
@@ -332,17 +364,23 @@ which is a OLS optimization
 <li>Degree can be 0, 1, or 2. The default is a local quadratic.</li>
 <li>Up to 4 predictors.</li>
 </ul>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="smoothing-techniques.html#cb60-1" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">=</span> <span class="fu">loess</span>(y <span class="sc">~</span> x, <span class="at">span =</span> <span class="fl">0.05</span>)</span>
-<span id="cb60-2"><a href="smoothing-techniques.html#cb60-2" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">=</span> <span class="fu">loess</span>(y <span class="sc">~</span> x, <span class="at">span =</span> <span class="fl">0.3</span>)</span>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="smoothing-techniques.html#cb60-1" aria-hidden="true" tabindex="-1"></a>fit1<span class="ot">=</span><span class="fu">loess</span> (y<span class="sc">~</span>x,<span class="at">span =</span>.<span class="dv">05</span>)</span>
+<span id="cb60-2"><a href="smoothing-techniques.html#cb60-2" aria-hidden="true" tabindex="-1"></a>fit2<span class="ot">=</span><span class="fu">loess</span> (y<span class="sc">~</span>x,<span class="at">span =</span>.<span class="dv">3</span>)</span>
 <span id="cb60-3"><a href="smoothing-techniques.html#cb60-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb60-4"><a href="smoothing-techniques.html#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">col =</span> <span class="st">&quot;grey80&quot;</span>, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">cex =</span> <span class="fl">0.5</span>, <span class="at">main =</span> <span class="st">&quot;loess with different spans&quot;</span>,</span>
-<span id="cb60-5"><a href="smoothing-techniques.html#cb60-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> x.lab, <span class="at">ylab =</span> y.lab)</span>
-<span id="cb60-6"><a href="smoothing-techniques.html#cb60-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x[Xorder], <span class="fu">predict</span>(fit1, x[Xorder]), <span class="at">col =</span> <span class="fu">adjustcolor</span>(<span class="st">&quot;steelblue&quot;</span>,</span>
-<span id="cb60-7"><a href="smoothing-techniques.html#cb60-7" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.5</span>), <span class="at">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb60-8"><a href="smoothing-techniques.html#cb60-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x[Xorder], <span class="fu">predict</span>(fit2, x[Xorder]), <span class="at">col =</span> <span class="st">&quot;darkgreen&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb60-9"><a href="smoothing-techniques.html#cb60-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb60-10"><a href="smoothing-techniques.html#cb60-10" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="fu">max</span>(xrange) <span class="sc">-</span> <span class="dv">15</span>, <span class="fu">max</span>(<span class="fu">extendrange</span>(y)), <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;span=0.05&quot;</span>, <span class="st">&quot;span=0.3&quot;</span>),</span>
-<span id="cb60-11"><a href="smoothing-techniques.html#cb60-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;steelblue&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>))</span></code></pre></div>
+<span id="cb60-4"><a href="smoothing-techniques.html#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,y, </span>
+<span id="cb60-5"><a href="smoothing-techniques.html#cb60-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">col=</span><span class="st">&quot;grey80&quot;</span>, <span class="at">pch=</span><span class="dv">19</span>, <span class="at">cex=</span><span class="fl">0.5</span>,</span>
+<span id="cb60-6"><a href="smoothing-techniques.html#cb60-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;loess with different spans&quot;</span>,</span>
+<span id="cb60-7"><a href="smoothing-techniques.html#cb60-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> x.lab, <span class="at">ylab =</span> y.lab)</span>
+<span id="cb60-8"><a href="smoothing-techniques.html#cb60-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x[Xorder], <span class="fu">predict</span>(fit1,x[Xorder]), </span>
+<span id="cb60-9"><a href="smoothing-techniques.html#cb60-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">col=</span><span class="fu">adjustcolor</span>(<span class="st">&quot;steelblue&quot;</span>, <span class="fl">0.5</span>),</span>
+<span id="cb60-10"><a href="smoothing-techniques.html#cb60-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb60-11"><a href="smoothing-techniques.html#cb60-11" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x[Xorder], <span class="fu">predict</span>(fit2,x[Xorder]), <span class="at">col=</span><span class="st">&quot;darkgreen&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb60-12"><a href="smoothing-techniques.html#cb60-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-13"><a href="smoothing-techniques.html#cb60-13" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="fu">max</span>(xrange)<span class="sc">-</span><span class="dv">15</span>, <span class="fu">max</span>(<span class="fu">extendrange</span>(y)),</span>
+<span id="cb60-14"><a href="smoothing-techniques.html#cb60-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend=</span><span class="fu">c</span>(<span class="st">&quot;span=0.05&quot;</span>,<span class="st">&quot;span=0.3&quot;</span>),</span>
+<span id="cb60-15"><a href="smoothing-techniques.html#cb60-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">lwd=</span><span class="dv">2</span>,</span>
+<span id="cb60-16"><a href="smoothing-techniques.html#cb60-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;steelblue&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>)</span>
+<span id="cb60-17"><a href="smoothing-techniques.html#cb60-17" aria-hidden="true" tabindex="-1"></a>       )</span></code></pre></div>
 <p><img src="bookdownproj_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
 </div>
 <div id="bias-and-vairance" class="section level4 hasAnchor" number="5.2.1.3">
@@ -416,13 +454,13 @@ The generalized cross validation (GCV) for such linear smoother is <span class="
 <span id="cb61-3"><a href="smoothing-techniques.html#cb61-3" aria-hidden="true" tabindex="-1"></a>smooth1 <span class="ot">=</span> <span class="fu">smooth.spline</span>(x, y, <span class="at">df =</span> <span class="dv">3</span>)</span>
 <span id="cb61-4"><a href="smoothing-techniques.html#cb61-4" aria-hidden="true" tabindex="-1"></a>smooth2 <span class="ot">=</span> <span class="fu">smooth.spline</span>(x, y, <span class="at">cv =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb61-5"><a href="smoothing-techniques.html#cb61-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-6"><a href="smoothing-techniques.html#cb61-6" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb61-7"><a href="smoothing-techniques.html#cb61-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">cex.lab =</span> <span class="fl">1.1</span>, <span class="at">col =</span> <span class="st">&quot;darkgrey&quot;</span>, <span class="at">xlab =</span> x.lab, <span class="at">ylab =</span> y.lab,</span>
-<span id="cb61-8"><a href="smoothing-techniques.html#cb61-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="st">&quot;Smoothing Spline (3 df)&quot;</span>, <span class="at">bty =</span> <span class="st">&quot;l&quot;</span>)</span>
+<span id="cb61-6"><a href="smoothing-techniques.html#cb61-6" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb61-7"><a href="smoothing-techniques.html#cb61-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">cex.lab =</span> <span class="fl">1.1</span>, <span class="at">col=</span><span class="st">&quot;darkgrey&quot;</span>, <span class="at">xlab =</span> x.lab, <span class="at">ylab =</span> y.lab, </span>
+<span id="cb61-8"><a href="smoothing-techniques.html#cb61-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Smoothing Spline (3 df)&quot;</span>, <span class="at">bty =</span> <span class="st">&#39;l&#39;</span>)</span>
 <span id="cb61-9"><a href="smoothing-techniques.html#cb61-9" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(smooth1, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;brown&quot;</span>)</span>
 <span id="cb61-10"><a href="smoothing-techniques.html#cb61-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-11"><a href="smoothing-techniques.html#cb61-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">cex.lab =</span> <span class="fl">1.1</span>, <span class="at">col =</span> <span class="st">&quot;darkgrey&quot;</span>, <span class="at">xlab =</span> x.lab, <span class="at">ylab =</span> y.lab,</span>
-<span id="cb61-12"><a href="smoothing-techniques.html#cb61-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="st">&quot;Smoothing Spline (CV)&quot;</span>, <span class="at">bty =</span> <span class="st">&quot;l&quot;</span>)</span>
+<span id="cb61-11"><a href="smoothing-techniques.html#cb61-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">cex.lab =</span> <span class="fl">1.1</span>, <span class="at">col=</span><span class="st">&quot;darkgrey&quot;</span>, <span class="at">xlab =</span> x.lab, <span class="at">ylab =</span> y.lab, </span>
+<span id="cb61-12"><a href="smoothing-techniques.html#cb61-12" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Smoothing Spline (CV)&quot;</span>, <span class="at">bty =</span> <span class="st">&#39;l&#39;</span>)</span>
 <span id="cb61-13"><a href="smoothing-techniques.html#cb61-13" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(smooth2, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;darkorange&quot;</span>)</span></code></pre></div>
 <p><img src="bookdownproj_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
 </div>
@@ -455,7 +493,7 @@ Our target is to fit a smooth function <span class="math inline">\(f(x)\)</span>
         </div>
       </div>
 <a href="variational-inference.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="analyzing-surveys-with-r.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
