@@ -8,6 +8,18 @@ bibliography: references.bib
 
 # Introduction
 
-Welcome to the Github repository for the Statistical Workshops and Applications Group (SWAG)! Each workshop will be given its own chapter in this document, where the content for the workshop will be shared. These workshops will be more interactive than presentations or lectures -- and each workshop will typically be accompanied by relevant R code. For the Fall 2022 term, we have planned four workshops spanning several topics: sampling-resampling methods (Oct. 6), the Bernstein-von Mises theorem (Oct. 19), variational inference (Nov. 10), and smoothing techniques (Dec. 1).
+Welcome to the Github repository for the Statistical Workshops and Applications Group (SWAG)! Each workshop will be given its own chapter in this document, where the content for the workshop will be shared. These workshops will be more interactive than presentations or lectures -- and each workshop will typically be accompanied by relevant R code. We plan to host one workshop per month on a Thursday 4-5pm at M3 4206. The time and date will be emailed to all statistics and actuarial science grad students in advance. If you are not a SAS grad student and would like to attend a workshop, feel free to contact one of the SWAG organizers (Augustine, Luke, Meixi, and Yiran). You can find our contact info [here](https://uwaterloo.ca/statistics-and-actuarial-science/about/people/group/58).
+
+Below is the list of past workshops:
+
+- Sampling-resampling methods (Oct 6, 2022)
+
+- The Bernstein-von Mises theorem (Oct 19, 2022)
+
+- Variational inference (Nov 10, 2022)
+
+- Smoothing techniques (Dec 1, 2022)
+
+- Analyzing surveys with R (Jan 26, 2022)
 
 
