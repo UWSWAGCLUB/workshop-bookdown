@@ -19,6 +19,6 @@ Below is the list of past workshops:
 
 - Smoothing techniques (Dec 1, 2022)
 
-- Analyzing surveys with R (Jan 26, 2022)
+- Analyzing surveys with R (Jan 26, 2023)
 
 
