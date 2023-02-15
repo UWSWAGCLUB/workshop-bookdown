@@ -327,7 +327,7 @@ div.csl-indent {
 <div id="assumptions" class="section level3 hasAnchor" number="7.1.3">
 <h3><span class="header-section-number">7.1.3</span> Assumptions<a href="introduction-to-causal-inference.html#assumptions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li><strong>Strongly Ignorable Treatment Assignment (SITA).</strong> The treatment indicator (<span class="math inline">\(T\)</span>) and the response variables (<span class="math inline">\(Y_{1i}\)</span>, <span class="math inline">\(Y_{0i}\)</span>) are independent given the set of covariates (<span class="math inline">\(X\)</span>); <span class="math inline">\((Y_{1}, Y_{0}) \perp T\mid X\)</span>.</li>
+<li><strong>Strongly Ignorable Treatment Assignment (SITA).</strong> The treatment indicator (<span class="math inline">\(T\)</span>) and the response variables (<span class="math inline">\(Y_{1}\)</span>, <span class="math inline">\(Y_{0}\)</span>) are independent given the set of covariates (<span class="math inline">\(X\)</span>); <span class="math inline">\((Y_{1}, Y_{0}) \perp T\mid X\)</span>.</li>
 <li><strong>Stable Unit Treatment Value Assumption (SUTVA).</strong> Each subject’s potential outcomes are not influenced by the actual treatment status of other subjects; <span class="math inline">\((Y_{1i}, Y_{0i}) \perp T_j\)</span> for <span class="math inline">\(i\neq j\)</span>.</li>
 <li><strong>Positvity.</strong> <span class="math inline">\(0&lt;P(T=1\mid X=\boldsymbol{x})&lt;1\)</span> for any possible value <span class="math inline">\(\boldsymbol{x}\)</span>.</li>
 </ul>
@@ -392,7 +392,7 @@ where individuals have similar, but not identical, values of <span class="math i
 <li>Estimate the average treatment effect within each subclass as in a randomized study and take the average of the estimated values across all the subclasses; mathematically, the estimate for the average treatment effect is given by
 <span class="math display">\[
   \hat{\theta}_{\mathrm{S}}=\frac{1}{K}\sum_{
-  k=1}^{K}\left(\frac{\sum_{i\in S_k} Y_{1i }T_i}{\sum_{i\in S_k} T_i}-\frac{\sum_{i\in S_k} Y_{0i }(1-T_i)}{\sum_{i\in S_k} (1-T_i)}\right)\, ,
+  k=1}^{K}\left(\frac{\sum_{i\in S_k} Y_{1i}T_i}{\sum_{i\in S_k} T_i}-\frac{\sum_{i\in S_k} Y_{0i}(1-T_i)}{\sum_{i\in S_k} (1-T_i)}\right)\, ,
 \]</span>
 where <span class="math inline">\(S_k\)</span> means the <span class="math inline">\(k\)</span>-th subclass.</li>
 </ul>

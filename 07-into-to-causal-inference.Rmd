@@ -53,7 +53,7 @@ The *individual-level* causal effect for subject $i$: $Y_{1i}-Y_{0i}$
 
 ### Assumptions
 
-- **Strongly Ignorable Treatment Assignment (SITA).** The treatment indicator ($T$) and the response variables ($Y_{1i}$, $Y_{0i}$) are independent given the set of covariates ($X$); $(Y_{1}, Y_{0}) \perp T\mid X$.
+- **Strongly Ignorable Treatment Assignment (SITA).** The treatment indicator ($T$) and the response variables ($Y_{1}$, $Y_{0}$) are independent given the set of covariates ($X$); $(Y_{1}, Y_{0}) \perp T\mid X$.
 - **Stable Unit Treatment Value Assumption (SUTVA).** Each subject's potential outcomes are not influenced by the actual treatment status of other subjects; $(Y_{1i}, Y_{0i}) \perp T_j$ for $i\neq j$.
 - **Positvity.** $0<P(T=1\mid X=\boldsymbol{x})<1$ for any possible value $\boldsymbol{x}$. 
 
@@ -122,7 +122,7 @@ where individuals have similar, but not identical, values of $\tau$, in each str
 - Estimate the average treatment effect within each subclass as in a randomized study and take the average of the estimated values across all the subclasses; mathematically, the estimate for the average treatment effect is given by
 \[
     \hat{\theta}_{\mathrm{S}}=\frac{1}{K}\sum_{
-    k=1}^{K}\left(\frac{\sum_{i\in S_k} Y_{1i }T_i}{\sum_{i\in S_k} T_i}-\frac{\sum_{i\in S_k} Y_{0i }(1-T_i)}{\sum_{i\in S_k} (1-T_i)}\right)\, ,
+    k=1}^{K}\left(\frac{\sum_{i\in S_k} Y_{1i}T_i}{\sum_{i\in S_k} T_i}-\frac{\sum_{i\in S_k} Y_{0i}(1-T_i)}{\sum_{i\in S_k} (1-T_i)}\right)\, ,
 \]
 where $S_k$ means the $k$-th subclass. 
 
