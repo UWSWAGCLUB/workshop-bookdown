@@ -83,4 +83,15 @@ calibration-dealing-with-multiple-auxilliary-variables
 what-makes-a-good-calibration-variable
 variance-estimation-resampling
 non-probability-surveys-model-based
+introduction-to-causal-inference
+basic-concepts
+notation
+causal-effect
+assumptions
+propensity-score
+commonly-used-methods
+matching
+stratification
+inverse-probability-weighting
+doubly-robust-estimation
 references
