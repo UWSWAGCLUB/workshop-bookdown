@@ -1,0 +1,335 @@
+# Pooled p-values
+
+```{r, include=FALSE}
+library(knitr)
+library(ggplot2)
+library(bookdown)
+opts_chunk$set(echo = TRUE, warning = FALSE)
+opts_chunk$set(cache = FALSE)
+opts_chunk$set(tidy.opts=list(width.cutoff=70),tidy=TRUE)
+```
+
+\newpage
+\setstretch{1.05}
+
+*Chris Salahub*
+
+## A motivating example
+
+Let's say we have collected a bunch of genetic data and would like to identify which genes are related to some observed trait. We'll start by defining some terms to make describing things easier.
+
+- **DNA**: genetic information that is passed between generations and is stored in several big molecules made up of many small molecules called nucleotides
+- **genome**: all the DNA of an organism
+- **gene**: a segment of DNA that gives the blueprint for a particular protein
+- **chromosomes**: one of the several big molecules making up the genome
+- **marker**: a sequence of nucleotides measured at a known position in DNA
+- **sex**: the creation of an organism in a new generation by recombining DNA from two organisms in the previous generation
+- **recombination**: when DNA is changed slightly by segments of DNA literally crossing each other and switching or chromosomes being inherited independently, pictorially: ![Recombination (from https://www.genome.gov/genetics-glossary/homologous-recombination)](figs/Homologous-recombination.jpg){width=100%}
+- **centiMorgans**: an additive measure of distance on DNA, for two markers which have probability $q$ of being separated during sex the distance in centiMorgans is $d = 50 \ln \frac{1}{1 - 2q}$
+
+So, when we talk about genetic data, we mean **markers** at known positions on **chromosomes** which ideally span the whole **genome** of a sample of organisms. We pair this data with a physical measurement - in humans examples include height, eye colour, hair colour, or the presence of a disease - to determine how much physical variation can be explained by genetic variation.
+
+Physical traits that are linked to genetics are either Mendelian or non-Mendelian (you can guess which came first). Mendelian traits have variation explained by one (or very few) gene(s), take eye colour which is mostly down to the gene *OCA2*. Non-Mendelian traits, like height, have variation which cannot be attributed to one (or a handful of) genetic region(s) alone.
+
+To identify which measured markers are related to a physical trait, a host of significance tests are typically computed to assay the impact of each. While this is not optimal compared to a linear model, it is frequently the only option for genetic studies which collect hundred of thousands of markers for only a few dozen individuals. Difficulty fitting a model practically means we must filter these markers first.
+
+Before even pointing our finger at a subset of genes, however, we might want to save time by asking whether there is anything interesting happening *at all* in this collection of tests. That is where pooled $p$-values come in.
+
+### Some "real" data
+
+Our ideal data set would involve humans. Genomics mostly strives to better understand the genetic sources of human diseases and traits to help create better medicine and understand ourselves more fully. Unfortunately, human data is pretty hard to come by ethically, and mice data is a lot easier to find. The code below pulls some that is freely available from [Mouse Genome Informatics](https://www.informatics.jax.org/).
+
+```{r}
+## this script provides a means of downloading mouse genomic data from the
+## mouse genome database (MGD), an online repository of data on mouse
+## genetics
+## all the data is stored in text files at
+mgiUrl <- "https://www.informatics.jax.org/downloads/reports/"
+## we'll be looking at data from
+mgiPName <- "MGI_JAX_BSB_Panel.rpt"
+## and for reference we'll also need the marker lists in    
+mgiMNames <- c("MRK_List1.rpt", "MRK_List2.rpt")
+
+## this function reads in MGI text files, which are basically organized
+## as a tab-separated data frame with extra information
+readMGIrpt <- function(file) {
+    raw <- scan(file, what = character(), sep = "\n") # most basic R input
+    leg <- which(raw == "Legend:") # identify the legend rows
+    lenHead <- leg + 4 # the +4 is from inspection of the legends
+    if (length(leg) == 0) { # separate legend
+        leg <- which(grepl("^CHR", raw))[1]
+        lenHead <- leg
+    }
+    desc <- paste(raw[1:lenHead], collapse = "\n") # data description
+    dat <- raw[(lenHead+1):length(raw)] # actual data
+    ## each row in the data is associated with a reference, the study
+    ## or paper that characterized or collected the corresponding
+    ## observation, we want to separate these
+    refPos <- regexec("\\tJ\\:[0-9]+(?:, J\\:[0-9]+){0,4}", dat)
+    refs <- sapply(regmatches(dat, refPos), # extract references
+                   function(el) {
+                       if (length(el) == 0) {
+                           ""
+                       } else gsub("\\t", "", el)})
+    data <- unlist(regmatches(dat, refPos, invert = TRUE)) # remove refs
+    mat <- do.call(rbind, strsplit(data[data != ""], "\\t")) # regularize
+    rwnms <- mat[1, -(1:3)] # animal numbers/ids
+    colnms <- mat[-1, 3] # symbol field
+    colDesc <- mat[-1, 1:3] # symbol details
+    colnames(colDesc) <- c("chr", "mgiid", "symbol") # informative names
+    data <- t(mat[-1,-(1:3)]) # observed values
+    rownames(data) <- rwnms # final data formatting
+    colnames(data) <- colnms
+    list(summary = desc, # return everything in a big list
+         markers = data.frame(colDesc, ref = refs[-1]),
+         data = as.data.frame(data))
+}
+
+## this function looks at the marker reference data and processes it into
+## a form easier for future analysis
+readMGIlists <- function(fileList = paste0(mgiUrl, mgiMNames)) {
+    lists <- lapply(fileList, scan, # similar input to above
+                    what = character(), sep = "\n")
+    lists <- lapply(lists, gsub,  # replace end of line tabs with periods
+                    pattern = "\t$", replacement= "\t.")
+    splits <- lapply(lists, strsplit, split = "\t") # split by tabs
+    colnms <- splits[[1]][[1]] # column names
+    data <- do.call(rbind, # covert into one big matrix
+                    lapply(splits, function(splt) do.call(rbind, splt[-1])))
+    colnames(data) <- colnms
+    as.data.frame(data)
+}
+
+## using indices and a reference table, process centiMorgan positions
+processcMs <- function(inds, tab) {
+    sel <- tab[inds] # take indices from table
+    sel[grepl("syntenic", sel)] <- "Inf"
+    suppressWarnings(as.numeric(sel)) # warnings by design
+}
+
+## this function goes through a processed panel from the above functions
+## and drops the measurements that have un
+filterPanelBycM <- function(panel, locs) {
+    locOrd <- order(locs) # order position
+    toKeep <- is.finite(locs[locOrd]) # drop NAs and Infs
+    outMrk <- data.frame(panel$markers[locOrd[toKeep],],
+                         cMs = locs[locOrd[toKeep]])
+    outMrk <- outMrk[order(outMrk$chr),] # order chromosome
+    list(summary = panel$summary,
+         markers = outMrk, data = panel$data[, outMrk$symbol])
+}
+
+## pull the marker reference
+mgiMarkers <- readMGIlists() # descriptions of all markers
+
+## pull the panel
+mgiPanel <- readMGIrpt(paste0(mgiUrl, mgiPName))
+
+## match the marker names back to the marker reference
+mgiPanel.mrkr <- match(names(mgiPanel$data),
+                        mgiMarkers$`Marker Symbol`)
+## get cM positions
+mgiPanel.cMs <- processcMs(mgiPanel.mrkr, 
+                           tab = mgiMarkers$`cM Position`)
+## Infs indicate markers localized to a chromosome but without a
+## known cM position, while NAs indicate markers missing from the
+## reference file or marked as unknown there
+
+## filter the panels by markers with known positions
+mgiFiltered <- filterPanelBycM(mgiPanel, mgiPanel.cMs)
+## and convert the data to numeric values
+mgiFiltered$data <- as.data.frame(lapply(mgiFiltered$data,
+                           function(mrkr) as.numeric(mrkr== "b")))
+
+## remove intermediate data
+rm(list = c("mgiMarkers", "mgiPanel.cMs", "mgiPanel.mrkr",
+            "mgiPanel"))
+
+summary(mgiFiltered)
+dim(mgiFiltered$data)
+```
+
+In the end, after reading and cleaning the data, we have 94 mice each measured at 1598 marker locations. We are still in the unfortunate position of lacking physical measurements for any of the 94 mice on this panel, but can still generate pseudo $p$-values. For Mendelian traits, we can pick a marker and generate a trait based solely on its value, while non-Mendelian traits will require the selection of numerous locations which may not contribute equally.
+
+For now, let's keep this as simple as possible by ensuring independence. Chromosomes assort independently, so if we take one marker from each chromosome we should have independent markers.
+
+```{r}
+## match in this context will give the index of the first marker on
+## each chromosome
+mgiIndep <- mgiFiltered$data[,match(c(1:19, "X"), 
+                                   mgiFiltered$markers$chr)]
+## inspect dependence structure
+image(cor(mgiIndep))
+```
+
+To simulate a Mendelian trait, we'll simply add noise to the first marker. For non-Mendelian inheritance, let's just take the average of all markers and add noise.
+
+```{r}
+set.seed(2314)
+traitMendel <- mgiIndep[,1] + rnorm(94, sd = 0.3)
+plot(density(traitMendel)) # what mendelian traits look like
+
+traitNonMend <- apply(mgiIndep[,1:20], 1, mean) + rnorm(94, sd = 0.3)
+plot(density(traitNonMend)) # what non-mendelian traits look like
+```
+
+Finally, we can compute $p$-values for each marker and the traits based on the correlation between them.
+
+```{r}
+## based on the mendelian trait
+(pMendel <- apply(mgiIndep, 2, 
+                 function(col) cor.test(traitMendel, col)$p.value))
+
+## based on the non-mendelian trait
+(pnonMendel <- apply(mgiIndep, 2, 
+                    function(col) cor.test(traitNonMend, col)$p.value))
+```
+
+```{r}
+## some null cases
+pNull <- replicate(1000, 
+                   apply(mgiIndep, 2,
+                         function(col) cor.test(runif(94), col)$p.value))
+head(t(pNull))
+```
+
+## Pooling $p$-values
+
+Whether inheritance is Mendelian, non-Mendelian, or something else, our selection of markers tested against a trait gives a collection of $M=20$ $p$-values from 20 hypothesis tests, and we'd like to know if further investigation is warranted for any of them. Directly, we want to test the null hypothesis
+$$H_0 = \cap_{i = 1}^M H_{0i}$$
+where $H_{0i}$ is the hypothesis of "no association" the $i$th marker. Another way of thinking about this is by considering the null distributions of our $M$ $p$-values $p_1, \dots, p_M$ if there is nothing going on. In this case, we'd expect
+$$H_0 = p_1, p_2, \dots, p_M \overset{\mathrm{iid}}{\sim} U$$
+where $U = Unif(0,1)$. The basic idea of pooled $p$-values is to think of a function that takes $M$ $p$-values as an argument and returns a $p$-value that behaves like a univariate $p$-value for a test of $H_0$. There are two kinds both based on the null distributions of $\mathbf{p} = p_1, \dots, p_M$.
+
+The first kind uses $p_{(k)}$, the $k$th order statistic of $\mathbf{p}$. Under $H_0$, the probability that $p_{(k)}$ is less than or equal to $q$ is the probability that $k$ or more uniform $p$-values less than $q$. In a formula, that is
+$$F_{(k)}(q) = P(p_{(k)} \leq q) = \sum_{l = k}^M q^l (1 - q)^{M - l}.$$
+Therefore, $F_{(k)}(p_{(k)}) \sim U$ and we have our first pooled $p$-value $g_{(k)}(\mathbf{p}) = F_{(k)}(p_{(k)})$. One example of this is from @tippett1931methods, which uses $p_{(1)}$ to obtain
+$$g_{Tip}(\mathbf{p}) = 1 - (1 - p_{(1)})^M,$$
+the exact version of the commonly used approximation $Mp_{(1)}$ known as the Bonferroni correction.
+
+The second kind of pooled $p$-value makes use of quantile transformations. For a continuous random variable $X$ with cumulative distribution function (CDF) $F$ and quantile function $F^{-1}$, $F^{-1}(U) = X$. If $X$ is known to have a CDF $F_M$ under summation, the quantities
+$$g(\mathbf{p}) = 1 - F_M \left ( \sum_{i = 1}^M F^{-1}(1 - p_i) \right )$$
+and
+$$g(\mathbf{p}) = F_M \left ( \sum_{i = 1}^M F^{-1}(p_i) \right )$$
+will both behave exactly like a univariate $p$-value. Obvious choices for $X$ are the normal distribution and gamma distribution because both of these distributions are closed under summation. The majority of proposed pooled $p$-values follow the first of these quantile transformation methods, including $g_{Fis}$ of @fisher1932statistical (using the $\chi^2_2$ distribution) and $g_{Sto}$ of @stoufferetal1949american (using the $N(0,1)$ distribution). Let's code all of these up:
+
+```{r}
+## the order statistic function
+gord <- function(p, k) {
+  pk <- sort(p, decreasing = FALSE)[k] # kth order statistic
+  1 - pbinom(k - 1, length(p), pk)
+}
+
+## the quantile transformation function
+gquant <- function(p, finv, fm) {
+  1 - fm(sum(finv(1-p)))
+}
+
+## make particular instances
+gtip <- function(p) gord(p, 1)
+gfis <- function(p) gquant(p, finv = function(p) qchisq(p, 2),
+                           fm = function(s) pchisq(s, 2*length(p)))
+gsto <- function(p) gquant(p, finv = qnorm,
+                           fm = function(s) pnorm(s, sd = sqrt(length(p))))
+
+## store together in a list
+pools <- list(tippett = gtip, fisher = gfis, stouffer = gsto)
+```
+
+We can now compute the pooled $p$-values of our earlier Mendelian and non-Mendelian cases:
+
+```{r}
+(poolMendel <- lapply(pools, function(f) f(pMendel)))
+
+(poolNonMend <- lapply(pools, function(f) f(pnonMendel)))
+```
+
+All methods agree for the first set of $p$-values (not too surprising given that the first $p$-value is less than $1 \times 10^{-27}$), but the non-Mendelian case leads to some interesting differences. Let's look at the two sets of $p$-values again:
+
+```{r}
+rbind("Mendel" = round(pMendel, 2),
+      "Non-Mendel" = round(pnonMendel, 2))
+```
+When only one marker is responsible for the variation in the trait, a single $p$-value is highly significant. In the case of many responsible markers the $p$-values are not so obviously significant, with the smallest one barely less than 0.05. Rather, this case has a greater number of small $p$-values than we would expect by chance if all are truly uniform and independent, a fact more easily seen by viewing a histogram of the two sets of $p$-values.
+
+```{r, figures-side, fig.show = "hold", out.width = "50%"}
+hist(pMendel, breaks = seq(0, 1, by = 0.2), ylim = c(0,12))
+hist(pnonMendel, breaks = seq(0, 1, by = 0.2), ylim = c(0,12))
+```
+
+Though the proof is beyond the scope of this workshop, it turns out the ordering of $g_{Tip}$, $g_{Fis}$, and $g_{Sto}$ for the non-Mendelian case reflects a deeper concept. Broadly, *any* pooled $p$-value is sensitive to either a large number of weakly significant $p$-values or a small number of strongly significant $p$-values. There is a fundamental trade-off between these two cases for any pooled $p$-value, which we can visualize crudely using the mean and minimum values of each simulated null sample in `pNull`. The following plot shows the pooled $p$-value for each method by the mean of the sample, meant to represent the evidence spread broadly. Point sizes for each mean value are scaled by the minimum $p$-value, meant to represent concentrated evidence in one test.
+
+```{r}
+## compute medians for each sample
+pNullMean <- apply(t(pNull), 1, mean)
+## and the minimum
+pNullMin <- apply(t(pNull), 1, min)
+## as well as each pooled p-value
+pNullPools <- apply(t(pNull), 1, 
+                    function(row) sapply(pools, 
+                                         function(f) f(row)))
+
+## plot the pooled p-value by mean of sample
+plot(pNullMean, pNullPools["fisher",], pch = 16, ylab = "Pooled p-value",
+     cex = pNullMin*4 + 0.3,
+     xlab = "Mean of p-value sample", col = adjustcolor("firebrick", 0.3))
+points(pNullMean, pNullPools["stouffer",], pch = 16, 
+       cex = pNullMin*4 + 0.3,
+       col = adjustcolor("steelblue", 0.3))
+points(pNullMean, pNullPools["tippett",], pch = 16, 
+       cex = pNullMin*4 + 0.3,
+       col = adjustcolor("seagreen", 0.3))
+legend(x = "topleft", 
+       col = adjustcolor(c("firebrick", "steelblue", 
+                                      "seagreen"), 0.3),
+       legend = c(expression(g[Fis]), expression(g[Sto]), 
+                  expression(g[Tip])),
+       pch = 16)
+```
+
+Note how $g_{Sto}$ is increasing almost monotonically in the mean, with large and small points spread evenly throughout the line for each mean value. $g_{Fis}$, as suggested by its position giving a $p$-value between $g_{Sto}$ and $g_{Tip}$, follows this line somewhat, but is somewhat sensitive to the minimum. The large points, indicating samples with large minimum values, tend to have a larger $p$-value than the $g_{Sto}$ line while the small points, samples with small minimum values, tend to have a smaller $p$-value. $g_{Tip}$ barely follows the line at all, the only relationship we can see in the green points is between the size of the point and its $y$-value.
+
+All of this to say:
+
+- $g_{Sto}$ is not sensitive to the minimum, it follows the overall evidence spread among the $p$-values
+- $g_{Fis}$ balances sensitivity to the minimum and overall spread of $p$-values
+- $g_{Tip}$ is not sensitive to the overall spread of evidence, it only responds to the minimum
+
+Of course, these examples all assume independence of the $p$-values. In the case of dependence, the idea of what "spread" evidence means is a lot less clear. Are multiple small $p$-values an indication of multiple independent contributing variables, or simply an artifact of correlations between them?
+
+## Adjusting for dependence
+
+A comprehensive overview of the methods used to adjust for dependence can be found in the companion paper to the `poolr` package, @cinarviechtbauer2022poolr. It should come as no surprise that the above functions have been implemented in this package alongside the adjustments. We'll take a brief aside to familiarize ourselves with them. Instead of using the functions we defined previously, we can take
+
+```{r}
+library(poolr)
+## the naming is more convenient than ours
+fisher(pMendel, adjust = "none")
+stouffer(pMendel, adjust = "none") # more accurate for small p-values
+tippett(pMendel, adjust = "none") 
+
+## non-Mendelian case
+fisher(pnonMendel, adjust = "none")
+stouffer(pnonMendel, adjust = "none")
+tippett(pnonMendel, adjust = "none") 
+```
+
+We might immediately notice that this is more accurate for the small $p$-value occurring in the Mendelian example and has some slightly different values for the non-Mendelian example. This is a direct result of the way `gquant` is defined, we can achieve the same result as `poolr` by using the `lower.tail` argument rather than subtracting values from 1. Computational statistics is not quite the same as mathematical statistics (making all of our lives harder).
+
+```{r}
+pnorm(sum(qnorm(pMendel, lower.tail = FALSE)), sd = sqrt(20),
+      lower.tail = FALSE)
+```
+In any case, the ordering with these more accurate $p$-values mirrors the non-Mendelian case. When evidence is concentrated in one test $g_{Tip} < g_{Fis} < g_{Sto}$ while when evidence is spread $g_{Tip} > g_{Fis} > g_{Sto}$.
+
+### The wrong way
+
+```{r}
+
+```
+
+### A better way
+
+```{r}
+
+```
