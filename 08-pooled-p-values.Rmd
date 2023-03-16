@@ -155,7 +155,7 @@ In the end, after reading and cleaning the data, we have 94 mice each measured a
 
 For now, let's keep this as simple as possible by ensuring independence and equal contributions of each marker. Chromosomes assort independently, so if we take one marker from each chromosome we should have independent markers.
 
-```{r}
+```{r, fig.asp = 1}
 ## match in this context will give the index of the first marker on
 ## each chromosome
 mgiIndep <- mgiFiltered$data[,match(c(1:19, "X"), 
@@ -333,7 +333,7 @@ In any case, the ordering with these more accurate $p$-values is identical to th
 
 With that brief exploration out of the way, we can define some correlated data using our filtered panel from before. Let's take a random sample of markers on chromosome 1.
 
-```{r}
+```{r, fig.asp = 1}
 set.seed(124093)
 inds <- sort(sample(which(mgiFiltered$markers$chr == "1"), 20))
 mgiDep <- mgiFiltered$data[,inds] # select sampled inds
