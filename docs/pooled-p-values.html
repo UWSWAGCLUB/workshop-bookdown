@@ -523,7 +523,7 @@ will both behave exactly like a univariate <span class="math inline">\(p\)</span
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="pooled-p-values.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="do">## the order statistic function</span></span>
 <span id="cb14-2"><a href="pooled-p-values.html#cb14-2" aria-hidden="true" tabindex="-1"></a>gord <span class="ot">&lt;-</span> <span class="cf">function</span>(p, k) {</span>
 <span id="cb14-3"><a href="pooled-p-values.html#cb14-3" aria-hidden="true" tabindex="-1"></a>    pk <span class="ot">&lt;-</span> <span class="fu">sort</span>(p, <span class="at">decreasing =</span> <span class="cn">FALSE</span>)[k]  <span class="co"># kth order statistic</span></span>
-<span id="cb14-4"><a href="pooled-p-values.html#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span> <span class="sc">-</span> <span class="fu">pbinom</span>(k, <span class="fu">length</span>(p), pk)</span>
+<span id="cb14-4"><a href="pooled-p-values.html#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span> <span class="sc">-</span> <span class="fu">pbinom</span>(k <span class="sc">-</span> <span class="dv">1</span>, <span class="fu">length</span>(p), pk)</span>
 <span id="cb14-5"><a href="pooled-p-values.html#cb14-5" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb14-6"><a href="pooled-p-values.html#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-7"><a href="pooled-p-values.html#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="do">## the quantile transformation function</span></span>
@@ -551,7 +551,7 @@ will both behave exactly like a univariate <span class="math inline">\(p\)</span
 ## [1] 0</code></pre>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="pooled-p-values.html#cb17-1" aria-hidden="true" tabindex="-1"></a>(poolNonMend <span class="ot">&lt;-</span> <span class="fu">lapply</span>(pools, <span class="cf">function</span>(f) <span class="fu">f</span>(pnonMendel)))</span></code></pre></div>
 <pre><code>## $tippett
-## [1] 0.2025844
+## [1] 0.5739556
 ## 
 ## $fisher
 ## [1] 0.01703636
@@ -604,41 +604,205 @@ will both behave exactly like a univariate <span class="math inline">\(p\)</span
 </div>
 <div id="adjusting-for-dependence" class="section level2 hasAnchor" number="8.3">
 <h2><span class="header-section-number">8.3</span> Adjusting for dependence<a href="pooled-p-values.html#adjusting-for-dependence" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>A comprehensive overview of the methods used to adjust for dependence can be found in the companion paper to the <code>poolr</code> package, <span class="citation">Cinar and Viechtbauer (2022)</span>. It should come as no surprise that the above functions have been implemented in this package alongside the adjustments. So, instead of using the functions we wrote above, we can write</p>
+<p>A comprehensive overview of the methods used to adjust for dependence can be found in the companion paper to the <code>poolr</code> package, <span class="citation">Cinar and Viechtbauer (2022)</span>. It should come as no surprise that the above functions have been implemented in this package alongside the adjustments. We’ll take a brief aside to familiarize ourselves with them. Instead of using the functions we defined previously, we can take</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="pooled-p-values.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(poolr)</span>
 <span id="cb23-2"><a href="pooled-p-values.html#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="do">## the naming is more convenient than ours</span></span>
-<span id="cb23-3"><a href="pooled-p-values.html#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Mendelian p-values</span><span class="sc">\n\n</span><span class="st">&quot;</span>)</span></code></pre></div>
-<pre><code>## Mendelian p-values</code></pre>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="pooled-p-values.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fisher</span>(pMendel, <span class="at">adjust =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<span id="cb23-3"><a href="pooled-p-values.html#cb23-3" aria-hidden="true" tabindex="-1"></a>(pfMend <span class="ot">&lt;-</span> <span class="fu">fisher</span>(pMendel, <span class="at">adjust =</span> <span class="st">&quot;none&quot;</span>))</span></code></pre></div>
 <pre><code>## combined p-values with:      Fisher&#39;s method
 ## number of p-values combined: 20 
 ## test statistic:              161.118 ~ chi-square(df = 40) 
 ## adjustment:                  none 
 ## combined p-value:            1.817574e-16</code></pre>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="pooled-p-values.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;-------</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
-<pre><code>## -------</code></pre>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="pooled-p-values.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stouffer</span>(pMendel, <span class="at">adjust =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="pooled-p-values.html#cb25-1" aria-hidden="true" tabindex="-1"></a>(psMend <span class="ot">&lt;-</span> <span class="fu">stouffer</span>(pMendel, <span class="at">adjust =</span> <span class="st">&quot;none&quot;</span>))  <span class="co"># more accurate for small p-values</span></span></code></pre></div>
 <pre><code>## combined p-values with:      Stouffer&#39;s method
 ## number of p-values combined: 20 
 ## test statistic:              2.894 ~ N(0,1) 
 ## adjustment:                  none 
 ## combined p-value:            0.00190034</code></pre>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="pooled-p-values.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;-------</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
-<pre><code>## -------</code></pre>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="pooled-p-values.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tippett</span>(pMendel, <span class="at">adjust =</span> <span class="st">&quot;none&quot;</span>)  <span class="co"># more accurate for small p-values</span></span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="pooled-p-values.html#cb27-1" aria-hidden="true" tabindex="-1"></a>(ptMend <span class="ot">&lt;-</span> <span class="fu">tippett</span>(pMendel, <span class="at">adjust =</span> <span class="st">&quot;none&quot;</span>))</span></code></pre></div>
 <pre><code>## combined p-values with:      Tippett&#39;s method
 ## number of p-values combined: 20 
 ## minimum p-value:             0 
 ## adjustment:                  none 
 ## combined p-value:            0</code></pre>
-<p>We might immediately notice that this is more accurate for the small <span class="math inline">\(p\)</span>-value occurring in the Mendelian example. This is a direct result of the way <code>gquant</code> is defined, we can achieve the same result as <code>poolr</code> by using the <code>lower.tail</code> argument rather than subtracting values from 1. Computational statistics is not quite the same as mathematical statistics!</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="pooled-p-values.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="fu">sum</span>(<span class="fu">qnorm</span>(pMendel, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)), <span class="at">sd =</span> <span class="fu">sqrt</span>(<span class="dv">20</span>), <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="pooled-p-values.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="do">## non-Mendelian case</span></span>
+<span id="cb29-2"><a href="pooled-p-values.html#cb29-2" aria-hidden="true" tabindex="-1"></a>(pfNM <span class="ot">&lt;-</span> <span class="fu">fisher</span>(pnonMendel, <span class="at">adjust =</span> <span class="st">&quot;none&quot;</span>))</span></code></pre></div>
+<pre><code>## combined p-values with:      Fisher&#39;s method
+## number of p-values combined: 20 
+## test statistic:              61.208 ~ chi-square(df = 40) 
+## adjustment:                  none 
+## combined p-value:            0.01703636</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="pooled-p-values.html#cb31-1" aria-hidden="true" tabindex="-1"></a>(psNM <span class="ot">&lt;-</span> <span class="fu">stouffer</span>(pnonMendel, <span class="at">adjust =</span> <span class="st">&quot;none&quot;</span>))</span></code></pre></div>
+<pre><code>## combined p-values with:      Stouffer&#39;s method
+## number of p-values combined: 20 
+## test statistic:              2.562 ~ N(0,1) 
+## adjustment:                  none 
+## combined p-value:            0.005196858</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="pooled-p-values.html#cb33-1" aria-hidden="true" tabindex="-1"></a>(ptNM <span class="ot">&lt;-</span> <span class="fu">tippett</span>(pnonMendel, <span class="at">adjust =</span> <span class="st">&quot;none&quot;</span>))</span></code></pre></div>
+<pre><code>## combined p-values with:      Tippett&#39;s method
+## number of p-values combined: 20 
+## minimum p-value:             0.042 
+## adjustment:                  none 
+## combined p-value:            0.5739556</code></pre>
+<p>We might immediately notice that this is more accurate for the small <span class="math inline">\(p\)</span>-value occurring in the Mendelian example and has some slightly different values for the non-Mendelian example. This is a direct result of the way <code>gquant</code> is defined, we can achieve the same result as <code>poolr</code> by using the <code>lower.tail</code> argument rather than subtracting values from 1. Computational statistics is not quite the same as mathematical statistics (making all of our lives harder).</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="pooled-p-values.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="do">## our function gave a zero for gsto and the mendelian data, can we</span></span>
+<span id="cb35-2"><a href="pooled-p-values.html#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="do">## recreate poolr&#39;s 0.0019?</span></span>
+<span id="cb35-3"><a href="pooled-p-values.html#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="fu">sum</span>(<span class="fu">qnorm</span>(pMendel, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>))<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">20</span>), <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## [1] 0.00190034</code></pre>
+<p>In any case, the ordering with these more accurate <span class="math inline">\(p\)</span>-values mirrors the non-Mendelian case. When evidence is concentrated in one test <span class="math inline">\(g_{Tip} &lt; g_{Fis} &lt; g_{Sto}\)</span> while when evidence is spread <span class="math inline">\(g_{Tip} &gt; g_{Fis} &gt; g_{Sto}\)</span>.</p>
+<p>With that very brief exploration out of the way, we can define some correlated data using our filtered panel from before. Let’s take a random sample of markers on chromosome 1.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="pooled-p-values.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">124093</span>)</span>
+<span id="cb37-2"><a href="pooled-p-values.html#cb37-2" aria-hidden="true" tabindex="-1"></a>inds <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">sample</span>(<span class="fu">which</span>(mgiFiltered<span class="sc">$</span>markers<span class="sc">$</span>chr <span class="sc">==</span> <span class="st">&quot;1&quot;</span>), <span class="dv">20</span>))</span>
+<span id="cb37-3"><a href="pooled-p-values.html#cb37-3" aria-hidden="true" tabindex="-1"></a>mgiDep <span class="ot">&lt;-</span> mgiFiltered<span class="sc">$</span>data[, inds]  <span class="co"># select sampled inds</span></span>
+<span id="cb37-4"><a href="pooled-p-values.html#cb37-4" aria-hidden="true" tabindex="-1"></a>mgiDepCors <span class="ot">&lt;-</span> <span class="fu">cor</span>(mgiDep)  <span class="co"># important for later</span></span>
+<span id="cb37-5"><a href="pooled-p-values.html#cb37-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-6"><a href="pooled-p-values.html#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="do">## image correlations between these</span></span>
+<span id="cb37-7"><a href="pooled-p-values.html#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="fu">image</span>(mgiDepCors)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <div id="the-wrong-way" class="section level3 hasAnchor" number="8.3.1">
 <h3><span class="header-section-number">8.3.1</span> The wrong way<a href="pooled-p-values.html#the-wrong-way" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>If we check the first few lines of code for any of the <code>poolr</code> pooling functions, take <code>fisher</code>, we’ll see several options for adjustment:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="pooled-p-values.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(fisher, <span class="dv">7</span>)</span></code></pre></div>
+<pre><code>##                                                                      
+## 1 function (p, adjust = &quot;none&quot;, R, m, size = 10000, threshold,       
+## 2     side = 2, batchsize, nearpd = TRUE, ...)                       
+## 3 {                                                                  
+## 4     p &lt;- .check.p(p)                                               
+## 5     k &lt;- length(p)                                                 
+## 6     adjust &lt;- match.arg(adjust, c(&quot;none&quot;, &quot;nyholt&quot;, &quot;liji&quot;, &quot;gao&quot;, 
+## 7         &quot;galwey&quot;, &quot;empirical&quot;, &quot;generalized&quot;))</code></pre>
+<p>The first four of these after “none” are all based on the concept of <em>effective number of tests</em>. Basically, these compute the eigenvalues of the correlation matrix between the tests used to generate <span class="math inline">\(\mathbf{p}\)</span> and use some function of these eigenvalues to estimate an effective number of independent tests. Much like in principal components analysis (PCA), this assumes that most of the information in <span class="math inline">\(M\)</span> <span class="math inline">\(p\)</span>-values can be summarized by a smaller number of tests, <span class="math inline">\(m\)</span>. Unlike PCA, however, these methods do not select the important tests, rather they just take the entirely ad-hoc
+<span class="math display">\[g_{adj}(\mathbf{p}) = 1 - F_M \left ( \frac{m}{M} \sum_{i = 1}^M F^{-1}(1 - p_i) \right )\]</span>
+instead of
+<span class="math display">\[g_{adj}(\mathbf{p}) = 1 - F_M \left ( \sum_{i = 1}^M F^{-1}(1 - p_i) \right ).\]</span> Let’s explore the result.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="pooled-p-values.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="do">## start by generating traits as before</span></span>
+<span id="cb40-2"><a href="pooled-p-values.html#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2314</span>)</span>
+<span id="cb40-3"><a href="pooled-p-values.html#cb40-3" aria-hidden="true" tabindex="-1"></a>depMendel <span class="ot">&lt;-</span> mgiDep[, <span class="dv">1</span>] <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">94</span>, <span class="at">sd =</span> <span class="fl">0.3</span>)</span>
+<span id="cb40-4"><a href="pooled-p-values.html#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(depMendel))</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="pooled-p-values.html#cb41-1" aria-hidden="true" tabindex="-1"></a>depNonMend <span class="ot">&lt;-</span> <span class="fu">apply</span>(mgiDep[, <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>], <span class="dv">1</span>, mean) <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">94</span>, <span class="at">sd =</span> <span class="fl">0.3</span>)</span>
+<span id="cb41-2"><a href="pooled-p-values.html#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(depNonMend))</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-15-2.png" width="672" /></p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="pooled-p-values.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="do">## these look basically the same as before, despite the correlations</span></span>
+<span id="cb42-2"><a href="pooled-p-values.html#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="do">## what about the p-values?</span></span>
+<span id="cb42-3"><a href="pooled-p-values.html#cb42-3" aria-hidden="true" tabindex="-1"></a>(pMendelDep <span class="ot">&lt;-</span> <span class="fu">apply</span>(mgiDep, <span class="dv">2</span>, <span class="cf">function</span>(col) <span class="fu">cor.test</span>(depMendel, col)<span class="sc">$</span>p.value))</span></code></pre></div>
+<pre><code>##     D1Mit475     D1Mit412     D1Mit245     D1Mit248     D1Mit214     D1Mit303 
+## 8.140813e-28 1.429891e-08 1.429891e-08 1.340364e-06 3.717356e-03 6.113978e-03 
+##     D1Mit480     D1Mit325     D1Mit180      D1Mit81     D1Mit305     D1Mit188 
+## 6.113978e-03 2.076697e-02 9.091619e-01 4.944939e-01 3.151411e-01 1.821606e-01 
+##     D1Mit218        Cxcr4     D1Mit445     D1Mit346         Fmn2     D1Mit404 
+## 1.681507e-01 4.848012e-01 2.527444e-01 3.308191e-01 3.921758e-01 6.029271e-01 
+##     D1Mit273      D1Mit37 
+## 4.992006e-01 5.305738e-01</code></pre>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="pooled-p-values.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="do">## based on the non-mendelian trait</span></span>
+<span id="cb44-2"><a href="pooled-p-values.html#cb44-2" aria-hidden="true" tabindex="-1"></a>(pNonMenDep <span class="ot">&lt;-</span> <span class="fu">apply</span>(mgiDep, <span class="dv">2</span>, <span class="cf">function</span>(col) <span class="fu">cor.test</span>(depNonMend, col)<span class="sc">$</span>p.value))</span></code></pre></div>
+<pre><code>##     D1Mit475     D1Mit412     D1Mit245     D1Mit248     D1Mit214     D1Mit303 
+## 7.098574e-02 4.859396e-05 4.859396e-05 3.599978e-05 1.312435e-07 1.308804e-07 
+##     D1Mit480     D1Mit325     D1Mit180      D1Mit81     D1Mit305     D1Mit188 
+## 1.308804e-07 3.882606e-08 1.643775e-10 4.334330e-10 6.486238e-10 4.387799e-10 
+##     D1Mit218        Cxcr4     D1Mit445     D1Mit346         Fmn2     D1Mit404 
+## 1.551436e-09 1.711769e-08 4.041306e-11 6.675577e-10 3.787253e-06 1.401357e-06 
+##     D1Mit273      D1Mit37 
+## 8.044158e-06 4.581290e-05</code></pre>
+<p>Dependence between the tests pulls the <span class="math inline">\(p\)</span>-values down universally. While in the previous case only a handful of tests would lead to rejection at the canonical <span class="math inline">\(\alpha = 0.05\)</span>, almost every test is rejected in both cases here. If we did not account for this known correlation, our pooled <span class="math inline">\(p\)</span>-values will be universally smaller as a result and we will reject <span class="math inline">\(H_0\)</span> far more often than we should. Do the adjustments make a difference?</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="pooled-p-values.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="do">## trying all effective test adjustments on both data sets</span></span>
+<span id="cb46-2"><a href="pooled-p-values.html#cb46-2" aria-hidden="true" tabindex="-1"></a>adjustments <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">none =</span> <span class="st">&quot;none&quot;</span>, <span class="at">nyholt =</span> <span class="st">&quot;nyholt&quot;</span>, <span class="at">liji =</span> <span class="st">&quot;liji&quot;</span>, <span class="at">gao =</span> <span class="st">&quot;gao&quot;</span>,</span>
+<span id="cb46-3"><a href="pooled-p-values.html#cb46-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">galwey =</span> <span class="st">&quot;galwey&quot;</span>)</span>
+<span id="cb46-4"><a href="pooled-p-values.html#cb46-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-5"><a href="pooled-p-values.html#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="do">## having to suppress warnings is always a good sign...</span></span>
+<span id="cb46-6"><a href="pooled-p-values.html#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressWarnings</span>(adjMenFis <span class="ot">&lt;-</span> <span class="fu">sapply</span>(adjustments, <span class="cf">function</span>(a) <span class="fu">fisher</span>(<span class="at">p =</span> pMendelDep,</span>
+<span id="cb46-7"><a href="pooled-p-values.html#cb46-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">adjust =</span> a, <span class="at">R =</span> mgiDepCors)))</span>
+<span id="cb46-8"><a href="pooled-p-values.html#cb46-8" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressWarnings</span>(adjMenTip <span class="ot">&lt;-</span> <span class="fu">sapply</span>(adjustments, <span class="cf">function</span>(a) <span class="fu">tippett</span>(<span class="at">p =</span> pMendelDep,</span>
+<span id="cb46-9"><a href="pooled-p-values.html#cb46-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">adjust =</span> a, <span class="at">R =</span> mgiDepCors)))</span>
+<span id="cb46-10"><a href="pooled-p-values.html#cb46-10" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressWarnings</span>(adjMenSto <span class="ot">&lt;-</span> <span class="fu">sapply</span>(adjustments, <span class="cf">function</span>(a) <span class="fu">stouffer</span>(<span class="at">p =</span> pMendelDep,</span>
+<span id="cb46-11"><a href="pooled-p-values.html#cb46-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">adjust =</span> a, <span class="at">R =</span> mgiDepCors)))</span>
+<span id="cb46-12"><a href="pooled-p-values.html#cb46-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-13"><a href="pooled-p-values.html#cb46-13" aria-hidden="true" tabindex="-1"></a><span class="do">## compare p-values between methods</span></span>
+<span id="cb46-14"><a href="pooled-p-values.html#cb46-14" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(<span class="at">Tippett =</span> adjMenTip[<span class="st">&quot;p&quot;</span>, ], <span class="at">Fisher =</span> adjMenFis[<span class="st">&quot;p&quot;</span>, ], <span class="at">Stouffer =</span> adjMenSto[<span class="st">&quot;p&quot;</span>,</span>
+<span id="cb46-15"><a href="pooled-p-values.html#cb46-15" aria-hidden="true" tabindex="-1"></a>    ])</span></code></pre></div>
+<pre><code>##          none         nyholt       liji         gao          galwey      
+## Tippett  0            0            0            0            0           
+## Fisher   6.087399e-39 5.897589e-28 4.394485e-15 5.897589e-28 4.394485e-15
+## Stouffer 3.720353e-18 2.969156e-13 1.766807e-07 2.969156e-13 1.766807e-07</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="pooled-p-values.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="do">## and &#39;effective number of tests&#39;</span></span>
+<span id="cb48-2"><a href="pooled-p-values.html#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(<span class="at">Tippett =</span> adjMenTip[<span class="st">&quot;m&quot;</span>, ], <span class="at">Fisher =</span> adjMenFis[<span class="st">&quot;m&quot;</span>, ], <span class="at">Stouffer =</span> adjMenSto[<span class="st">&quot;m&quot;</span>,</span>
+<span id="cb48-3"><a href="pooled-p-values.html#cb48-3" aria-hidden="true" tabindex="-1"></a>    ])</span></code></pre></div>
+<pre><code>##          none nyholt liji gao galwey
+## Tippett  NULL 14     7    14  7     
+## Fisher   NULL 14     7    14  7     
+## Stouffer NULL 14     7    14  7</code></pre>
+<p>These adjustments definitely help reduce our problem, every single <span class="math inline">\(p\)</span>-value increased considerably, but they disagree considerably on the effective number of tests. It’s worth noting that the effective number of tests here has nothing to do with our Mendelian generation of traits, it looks at the correlations alone. This makes its interpretation difficult, to say the least. Perhaps the non-Mendelian case will fare better.</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="pooled-p-values.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressWarnings</span>(adjNMFis <span class="ot">&lt;-</span> <span class="fu">sapply</span>(adjustments, <span class="cf">function</span>(a) <span class="fu">fisher</span>(<span class="at">p =</span> pNonMenDep,</span>
+<span id="cb50-2"><a href="pooled-p-values.html#cb50-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">adjust =</span> a, <span class="at">R =</span> mgiDepCors)))</span>
+<span id="cb50-3"><a href="pooled-p-values.html#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressWarnings</span>(adjNMTip <span class="ot">&lt;-</span> <span class="fu">sapply</span>(adjustments, <span class="cf">function</span>(a) <span class="fu">tippett</span>(<span class="at">p =</span> pNonMenDep,</span>
+<span id="cb50-4"><a href="pooled-p-values.html#cb50-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">adjust =</span> a, <span class="at">R =</span> mgiDepCors)))</span>
+<span id="cb50-5"><a href="pooled-p-values.html#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressWarnings</span>(adjNMSto <span class="ot">&lt;-</span> <span class="fu">sapply</span>(adjustments, <span class="cf">function</span>(a) <span class="fu">stouffer</span>(<span class="at">p =</span> pNonMenDep,</span>
+<span id="cb50-6"><a href="pooled-p-values.html#cb50-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">adjust =</span> a, <span class="at">R =</span> mgiDepCors)))</span>
+<span id="cb50-7"><a href="pooled-p-values.html#cb50-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-8"><a href="pooled-p-values.html#cb50-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-9"><a href="pooled-p-values.html#cb50-9" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(<span class="at">Tippett =</span> adjNMTip[<span class="st">&quot;p&quot;</span>, ], <span class="at">Fisher =</span> adjNMFis[<span class="st">&quot;p&quot;</span>, ], <span class="at">Stouffer =</span> adjNMSto[<span class="st">&quot;p&quot;</span>,</span>
+<span id="cb50-10"><a href="pooled-p-values.html#cb50-10" aria-hidden="true" tabindex="-1"></a>    ])</span></code></pre></div>
+<pre><code>##          none          nyholt       liji         gao          galwey      
+## Tippett  8.082601e-10  5.657821e-10 2.82891e-10  5.657821e-10 2.82891e-10 
+## Fisher   3.856394e-107 8.31352e-76  3.4097e-39   8.31352e-76  3.4097e-39  
+## Stouffer 3.515608e-111 1.715434e-78 2.692654e-40 1.715434e-78 2.692654e-40</code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="pooled-p-values.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(<span class="at">Tippett =</span> adjNMTip[<span class="st">&quot;m&quot;</span>, ], <span class="at">Fisher =</span> adjNMFis[<span class="st">&quot;m&quot;</span>, ], <span class="at">Stouffer =</span> adjNMSto[<span class="st">&quot;m&quot;</span>,</span>
+<span id="cb52-2"><a href="pooled-p-values.html#cb52-2" aria-hidden="true" tabindex="-1"></a>    ])</span></code></pre></div>
+<pre><code>##          none nyholt liji gao galwey
+## Tippett  NULL 14     7    14  7     
+## Fisher   NULL 14     7    14  7     
+## Stouffer NULL 14     7    14  7</code></pre>
+<p>As the correlation structure is identical, the effective number of tests have not changed at all. However, the much smaller <span class="math inline">\(p\)</span>-values across the board in the non-Mendelian case lead to much smaller pooled <span class="math inline">\(p\)</span>-values, even with adjustment. Using the correlation between markers as a proxy for correlation between tests is somewhat unfair (though it is exactly what the original proposals suggest), but even under more favourable assumptions these adjustments fail.</p>
+<p>Consider, for example, the case where <span class="math inline">\(l\)</span> of the <span class="math inline">\(M\)</span> <span class="math inline">\(p\)</span>-values are identical, or nearly so. If we denote the independent tests with <span class="math inline">\(x_1, \dots, x_{k - l}\)</span> and the dependent tests with <span class="math inline">\(y_1, \dots, y_l\)</span>, we can write</p>
+<p><span class="math display">\[\tilde{X}^2 = \frac{m}{M} X^2 = \frac{m}{M} \left ( \sum_{i = 1}^{M-l} x_i + \sum_{j = 1}^l y_j \right ).\]</span></p>
+<p>Supposing that we correctly identify that <span class="math inline">\(m = M - l + 1\)</span> and letting <span class="math inline">\(y^*\)</span> represent the single unique value taken by <span class="math inline">\(y_1, \dots, y_l\)</span> gives</p>
+<p><span class="math display">\[\frac{M - l + 1}{M} \left ( \sum_{i=1}^{M-l} x_i + l y^* \right ).\]</span></p>
+<p>Now, if <span class="math inline">\(x_i \sim \chi^2_{(2)}\)</span> and <span class="math inline">\(y^* \sim \chi^2_{(2)}\)</span> all independently and identically (We’re using <span class="math inline">\(g_{Fis}\)</span>), this sum is not generally <span class="math inline">\(\chi^2\)</span> distributed. The same is true for the rescaled statistic of Stouffer’s method. Why these theoretically invalid methods with unclear interpretations were included in <code>poolr</code> is unclear, but they probably shouldn’t be used.</p>
 </div>
 <div id="a-better-way" class="section level3 hasAnchor" number="8.3.2">
 <h3><span class="header-section-number">8.3.2</span> A better way<a href="pooled-p-values.html#a-better-way" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Instead, we’re better off relying on good old-fashioned simulation and normal approximations, as these are both at least asymptotically valid. The <code>"empirical"</code> and <code>"generalized"</code> methods offer these two options, respectively.</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="pooled-p-values.html#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="do">## the valid adjustment methods</span></span>
+<span id="cb54-2"><a href="pooled-p-values.html#cb54-2" aria-hidden="true" tabindex="-1"></a>adjustments <span class="ot">&lt;-</span> <span class="fu">c</span>(adjustments, <span class="at">empirical =</span> <span class="st">&quot;empirical&quot;</span>, <span class="at">generalized =</span> <span class="st">&quot;generalized&quot;</span>)</span>
+<span id="cb54-3"><a href="pooled-p-values.html#cb54-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-4"><a href="pooled-p-values.html#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="do">## compare the resulting p-values</span></span>
+<span id="cb54-5"><a href="pooled-p-values.html#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressWarnings</span>(adjMenFis <span class="ot">&lt;-</span> <span class="fu">sapply</span>(adjustments, <span class="cf">function</span>(a) <span class="fu">fisher</span>(<span class="at">p =</span> pMendelDep,</span>
+<span id="cb54-6"><a href="pooled-p-values.html#cb54-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">adjust =</span> a, <span class="at">R =</span> mgiDepCors)))</span>
+<span id="cb54-7"><a href="pooled-p-values.html#cb54-7" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressWarnings</span>(adjMenTip <span class="ot">&lt;-</span> <span class="fu">sapply</span>(adjustments[<span class="sc">-</span><span class="fu">length</span>(adjustments)],</span>
+<span id="cb54-8"><a href="pooled-p-values.html#cb54-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">function</span>(a) <span class="fu">tippett</span>(<span class="at">p =</span> pMendelDep, <span class="at">adjust =</span> a, <span class="at">R =</span> mgiDepCors)))</span>
+<span id="cb54-9"><a href="pooled-p-values.html#cb54-9" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressWarnings</span>(adjMenSto <span class="ot">&lt;-</span> <span class="fu">sapply</span>(adjustments, <span class="cf">function</span>(a) <span class="fu">stouffer</span>(<span class="at">p =</span> pMendelDep,</span>
+<span id="cb54-10"><a href="pooled-p-values.html#cb54-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">adjust =</span> a, <span class="at">R =</span> mgiDepCors)))</span>
+<span id="cb54-11"><a href="pooled-p-values.html#cb54-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-12"><a href="pooled-p-values.html#cb54-12" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(<span class="at">Fisher =</span> adjMenFis[<span class="st">&quot;p&quot;</span>, ], <span class="at">Tippett =</span> <span class="fu">c</span>(adjMenTip[<span class="st">&quot;p&quot;</span>, ], <span class="cn">NA</span>), <span class="at">Stouffer =</span> <span class="fu">c</span>(adjMenSto[<span class="st">&quot;p&quot;</span>,</span>
+<span id="cb54-13"><a href="pooled-p-values.html#cb54-13" aria-hidden="true" tabindex="-1"></a>    ]))</span></code></pre></div>
+<pre><code>##          none         nyholt       liji         gao          galwey      
+## Fisher   6.087399e-39 5.897589e-28 4.394485e-15 5.897589e-28 4.394485e-15
+## Tippett  0            0            0            0            0           
+## Stouffer 3.720353e-18 2.969156e-13 1.766807e-07 2.969156e-13 1.766807e-07
+##          empirical  generalized 
+## Fisher   9.999e-05  6.338611e-19
+## Tippett  9.999e-05  NA          
+## Stouffer 0.00089991 0.001863063</code></pre>
+<p>For the Mendelian case, we can see the highly inflated significance is reduced more by the empirical and generalized methods, which produce <span class="math inline">\(p\)</span>-values similar to the independent case. This is a bit deceptive for the empirical version, as it is based on simulation and so can’t report <span class="math inline">\(p\)</span>-values less than <span class="math inline">\(1/n_r\)</span> where <span class="math inline">\(n_r\)</span> is the number of repetitions. For the generalized method, at least, that the <span class="math inline">\(p\)</span>-value for Stouffer is closer to the independent case suggests this combination is accounting for dependence more successfully. As the generation method is identical for the independent and dependent case, we might expect close <span class="math inline">\(p\)</span>-values.</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="pooled-p-values.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="do">## compare the resulting p-values</span></span>
+<span id="cb56-2"><a href="pooled-p-values.html#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressWarnings</span>(adjNMFis <span class="ot">&lt;-</span> <span class="fu">sapply</span>(adjustments, <span class="cf">function</span>(a) <span class="fu">fisher</span>(<span class="at">p =</span> pNonMenDep,</span>
+<span id="cb56-3"><a href="pooled-p-values.html#cb56-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">adjust =</span> a, <span class="at">R =</span> mgiDepCors)))</span>
+<span id="cb56-4"><a href="pooled-p-values.html#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressWarnings</span>(adjNMTip <span class="ot">&lt;-</span> <span class="fu">sapply</span>(adjustments[<span class="sc">-</span><span class="fu">length</span>(adjustments)],</span>
+<span id="cb56-5"><a href="pooled-p-values.html#cb56-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">function</span>(a) <span class="fu">tippett</span>(<span class="at">p =</span> pNonMenDep, <span class="at">adjust =</span> a, <span class="at">R =</span> mgiDepCors)))</span>
+<span id="cb56-6"><a href="pooled-p-values.html#cb56-6" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressWarnings</span>(adjNMSto <span class="ot">&lt;-</span> <span class="fu">sapply</span>(adjustments, <span class="cf">function</span>(a) <span class="fu">stouffer</span>(<span class="at">p =</span> pNonMenDep,</span>
+<span id="cb56-7"><a href="pooled-p-values.html#cb56-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">adjust =</span> a, <span class="at">R =</span> mgiDepCors)))</span>
+<span id="cb56-8"><a href="pooled-p-values.html#cb56-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-9"><a href="pooled-p-values.html#cb56-9" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(<span class="at">Fisher =</span> adjNMFis[<span class="st">&quot;p&quot;</span>, ], <span class="at">Tippett =</span> <span class="fu">c</span>(adjNMTip[<span class="st">&quot;p&quot;</span>, ], <span class="cn">NA</span>), <span class="at">Stouffer =</span> <span class="fu">c</span>(adjNMSto[<span class="st">&quot;p&quot;</span>,</span>
+<span id="cb56-10"><a href="pooled-p-values.html#cb56-10" aria-hidden="true" tabindex="-1"></a>    ]))</span></code></pre></div>
+<pre><code>##          none          nyholt       liji         gao          galwey      
+## Fisher   3.856394e-107 8.31352e-76  3.4097e-39   8.31352e-76  3.4097e-39  
+## Tippett  8.082601e-10  5.657821e-10 2.82891e-10  5.657821e-10 2.82891e-10 
+## Stouffer 3.515608e-111 1.715434e-78 2.692654e-40 1.715434e-78 2.692654e-40
+##          empirical generalized 
+## Fisher   9.999e-05 4.233807e-50
+## Tippett  9.999e-05 NA          
+## Stouffer 9.999e-05 2.36726e-14</code></pre>
+<p>Of course, the drawback of the empirical method in particular is that is does not capture the tail behaviour of these methods well. The same <span class="math inline">\(p\)</span>-value is repeated for all methods across both the Mendelian and non-Mendelian cases based purely on the number of simulated repetitions performed. Unfortunately, increasing the number of repetitions defeats the purpose of pooled <span class="math inline">\(p\)</span>-values, as it increases the computational burden.</p>
 
 </div>
 </div>

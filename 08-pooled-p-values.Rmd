@@ -304,32 +304,164 @@ A comprehensive overview of the methods used to adjust for dependence can be fou
 ```{r}
 library(poolr)
 ## the naming is more convenient than ours
-fisher(pMendel, adjust = "none")
-stouffer(pMendel, adjust = "none") # more accurate for small p-values
-tippett(pMendel, adjust = "none") 
+(pfMend <- fisher(pMendel, adjust = "none"))
+(psMend <- stouffer(pMendel, adjust = "none")) # more accurate for small p-values
+(ptMend <- tippett(pMendel, adjust = "none"))
 
 ## non-Mendelian case
-fisher(pnonMendel, adjust = "none")
-stouffer(pnonMendel, adjust = "none")
-tippett(pnonMendel, adjust = "none") 
+(pfNM <- fisher(pnonMendel, adjust = "none"))
+(psNM <- stouffer(pnonMendel, adjust = "none"))
+(ptNM <- tippett(pnonMendel, adjust = "none"))
 ```
 
 We might immediately notice that this is more accurate for the small $p$-value occurring in the Mendelian example and has some slightly different values for the non-Mendelian example. This is a direct result of the way `gquant` is defined, we can achieve the same result as `poolr` by using the `lower.tail` argument rather than subtracting values from 1. Computational statistics is not quite the same as mathematical statistics (making all of our lives harder).
 
 ```{r}
-pnorm(sum(qnorm(pMendel, lower.tail = FALSE)), sd = sqrt(20),
+## our function gave a zero for gsto and the mendelian data, can we
+## recreate poolr's 0.0019?
+pnorm(sum(qnorm(pMendel, lower.tail = FALSE))/sqrt(20), 
       lower.tail = FALSE)
 ```
 In any case, the ordering with these more accurate $p$-values mirrors the non-Mendelian case. When evidence is concentrated in one test $g_{Tip} < g_{Fis} < g_{Sto}$ while when evidence is spread $g_{Tip} > g_{Fis} > g_{Sto}$.
 
-### The wrong way
+With that very brief exploration out of the way, we can define some correlated data using our filtered panel from before. Let's take a random sample of markers on chromosome 1.
 
 ```{r}
+set.seed(124093)
+inds <- sort(sample(which(mgiFiltered$markers$chr == "1"), 20))
+mgiDep <- mgiFiltered$data[,inds] # select sampled inds
+mgiDepCors <- cor(mgiDep) # important for later
 
+## image correlations between these
+image(mgiDepCors)
 ```
+
+
+### The wrong way
+
+If we check the first few lines of code for any of the `poolr` pooling functions, take `fisher`, we'll see several options for adjustment:
+
+```{r}
+head(fisher, 7)
+```
+The first four of these after "none" are all based on the concept of *effective number of tests*. Basically, these compute the eigenvalues of the correlation matrix between the tests used to generate $\mathbf{p}$ and use some function of these eigenvalues to estimate an effective number of independent tests. Much like in principal components analysis (PCA), this assumes that most of the information in $M$ $p$-values can be summarized by a smaller number of tests, $m$. Unlike PCA, however, these methods do not select the important tests, rather they just take the entirely ad-hoc
+$$g_{adj}(\mathbf{p}) = 1 - F_M \left ( \frac{m}{M} \sum_{i = 1}^M F^{-1}(1 - p_i) \right )$$
+instead of
+$$g_{adj}(\mathbf{p}) = 1 - F_M \left ( \sum_{i = 1}^M F^{-1}(1 - p_i) \right ).$$ Let's explore the result.
+
+```{r}
+## start by generating traits as before
+set.seed(2314)
+depMendel <- mgiDep[,1] + rnorm(94, sd = 0.3)
+plot(density(depMendel))
+
+depNonMend <- apply(mgiDep[,1:20], 1, mean) + rnorm(94, sd = 0.3)
+plot(density(depNonMend))
+
+## these look basically the same as before, despite the correlations
+## what about the p-values?
+(pMendelDep <- apply(mgiDep, 2, 
+                     function(col) cor.test(depMendel, col)$p.value))
+
+## based on the non-mendelian trait
+(pNonMenDep <- apply(mgiDep, 2, 
+                     function(col) cor.test(depNonMend, col)$p.value))
+```
+Dependence between the tests pulls the $p$-values down universally. While in the previous case only a handful of tests would lead to rejection at the canonical $\alpha = 0.05$, almost every test is rejected in both cases here. If we did not account for this known correlation, our pooled $p$-values will be universally smaller as a result and we will reject $H_0$ far more often than we should. Do the adjustments make a difference?
+
+```{r}
+## trying all effective test adjustments on both data sets
+adjustments <- c(none = "none", nyholt = "nyholt", liji = "liji",
+                 gao = "gao", galwey = "galwey")
+
+## having to suppress warnings is always a good sign...
+suppressWarnings(adjMenFis <- sapply(adjustments,
+                    function(a) fisher(p = pMendelDep, adjust = a, 
+                                       R = mgiDepCors)))
+suppressWarnings(adjMenTip <- sapply(adjustments,
+                    function(a) tippett(p = pMendelDep, adjust = a, 
+                                        R = mgiDepCors)))
+suppressWarnings(adjMenSto <- sapply(adjustments,
+                    function(a) stouffer(p = pMendelDep, adjust = a, 
+                                         R = mgiDepCors)))
+
+## compare p-values between methods
+rbind(Tippett = adjMenTip["p",], Fisher = adjMenFis["p",], Stouffer = adjMenSto["p",])
+
+## and "effective number of tests"
+rbind(Tippett = adjMenTip["m",], Fisher = adjMenFis["m",], Stouffer = adjMenSto["m",])
+```
+These adjustments definitely help reduce our problem, every single $p$-value increased considerably, but they disagree considerably on the effective number of tests. It's worth noting that the effective number of tests here has nothing to do with our Mendelian generation of traits, it looks at the correlations alone. This makes its interpretation difficult, to say the least. Perhaps the non-Mendelian case will fare better.
+
+```{r}
+suppressWarnings(adjNMFis <- sapply(adjustments,
+                    function(a) fisher(p = pNonMenDep, adjust = a, 
+                                       R = mgiDepCors)))
+suppressWarnings(adjNMTip <- sapply(adjustments,
+                    function(a) tippett(p = pNonMenDep, adjust = a, 
+                                        R = mgiDepCors)))
+suppressWarnings(adjNMSto <- sapply(adjustments,
+                    function(a) stouffer(p = pNonMenDep, adjust = a, 
+                                         R = mgiDepCors)))
+
+
+rbind(Tippett = adjNMTip["p",], Fisher = adjNMFis["p",], Stouffer = adjNMSto["p",])
+
+
+rbind(Tippett = adjNMTip["m",], Fisher = adjNMFis["m",], Stouffer = adjNMSto["m",])
+```
+As the correlation structure is identical, the effective number of tests have not changed at all. However, the much smaller $p$-values across the board in the non-Mendelian case lead to much smaller pooled $p$-values, even with adjustment. Using the correlation between markers as a proxy for correlation between tests is somewhat unfair (though it is exactly what the original proposals suggest), but even under more favourable assumptions these adjustments fail.
+
+Consider, for example, the case where $l$ of the $M$ $p$-values are identical, or nearly so. If we denote the independent tests with $x_1, \dots, x_{k - l}$ and the dependent tests with $y_1, \dots, y_l$, we can write
+
+$$\tilde{X}^2 = \frac{m}{M} X^2 = \frac{m}{M} \left ( \sum_{i = 1}^{M-l} x_i + \sum_{j = 1}^l y_j \right ).$$
+
+Supposing that we correctly identify that $m = M - l + 1$ and letting $y^*$ represent the single unique value taken by $y_1, \dots, y_l$ gives
+
+$$\frac{M - l + 1}{M} \left ( \sum_{i=1}^{M-l} x_i + l y^* \right ).$$
+
+Now, if $x_i \sim \chi^2_{(2)}$ and $y^* \sim \chi^2_{(2)}$ all independently and identically (We're using $g_{Fis}$), this sum is not generally $\chi^2$ distributed. The same is true for the rescaled statistic of Stouffer's method. Why these theoretically invalid methods with unclear interpretations were included in `poolr` is unclear, but they probably shouldn't be used.
 
 ### A better way
 
-```{r}
+Instead, we're better off relying on good old-fashioned simulation and normal approximations, as these are both at least asymptotically valid. The `"empirical"` and `"generalized"` methods offer these two options, respectively.
 
+```{r}
+## the valid adjustment methods
+adjustments <- c(adjustments, empirical = "empirical", 
+                 generalized = "generalized")
+
+## compare the resulting p-values
+suppressWarnings(adjMenFis <- sapply(adjustments,
+                    function(a) fisher(p = pMendelDep, adjust = a, 
+                                       R = mgiDepCors)))
+suppressWarnings(adjMenTip <- sapply(adjustments[-length(adjustments)],
+                    function(a) tippett(p = pMendelDep, adjust = a, 
+                                       R = mgiDepCors)))
+suppressWarnings(adjMenSto <- sapply(adjustments,
+                    function(a) stouffer(p = pMendelDep, adjust = a, 
+                                       R = mgiDepCors)))
+
+rbind(Fisher = adjMenFis["p", ], Tippett = c(adjMenTip["p", ], NA),
+      Stouffer = c(adjMenSto["p", ]))
 ```
+
+For the Mendelian case, we can see the highly inflated significance is reduced more by the empirical and generalized methods, which produce $p$-values similar to the independent case. This is a bit deceptive for the empirical version, as it is based on simulation and so can't report $p$-values less than $1/n_r$ where $n_r$ is the number of repetitions. For the generalized method, at least, that the $p$-value for Stouffer is closer to the independent case suggests this combination is accounting for dependence more successfully. As the generation method is identical for the independent and dependent case, we might expect close $p$-values.
+
+```{r}
+## compare the resulting p-values
+suppressWarnings(adjNMFis <- sapply(adjustments,
+                    function(a) fisher(p = pNonMenDep, adjust = a, 
+                                       R = mgiDepCors)))
+suppressWarnings(adjNMTip <- sapply(adjustments[-length(adjustments)],
+                    function(a) tippett(p = pNonMenDep, adjust = a, 
+                                       R = mgiDepCors)))
+suppressWarnings(adjNMSto <- sapply(adjustments,
+                    function(a) stouffer(p = pNonMenDep, adjust = a, 
+                                       R = mgiDepCors)))
+
+rbind(Fisher = adjNMFis["p", ], Tippett = c(adjNMTip["p", ], NA),
+      Stouffer = c(adjNMSto["p", ]))
+```
+
+Of course, the drawback of the empirical method in particular is that is does not capture the tail behaviour of these methods well. The same $p$-value is repeated for all methods across both the Mendelian and non-Mendelian cases based purely on the number of simulated repetitions performed. Unfortunately, increasing the number of repetitions defeats the purpose of pooled $p$-values, as it increases the computational burden.
