@@ -356,7 +356,7 @@ $$g_{adj}(\mathbf{p}) = 1 - F_M \left ( \frac{m}{M} \sum_{i = 1}^M F^{-1}(1 - p_
 instead of
 $$g_{adj}(\mathbf{p}) = 1 - F_M \left ( \sum_{i = 1}^M F^{-1}(1 - p_i) \right ).$$ Let's explore the result.
 
-```{r}
+```{r, fig.show = "hold", out.width = "50%"}
 ## start by generating traits as before
 set.seed(2314)
 depMendel <- mgiDep[,1] + rnorm(94, sd = 0.3)
