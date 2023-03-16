@@ -1,13 +1,6 @@
 # Variational Inference
 
-```{r, include=FALSE}
-library(knitr)
-library(ggplot2)
-library(bookdown)
-opts_chunk$set(echo = TRUE, warning = FALSE)
-opts_chunk$set(cache = FALSE)
-opts_chunk$set(tidy.opts=list(width.cutoff=70),tidy=TRUE)
-```
+
 
 \newpage
 \setstretch{1.05}
@@ -224,13 +217,11 @@ As we have seen in the previous example, to use CAVI, we need to compute (and co
 
 We can do the same with the VI. That is, we only need to provide the model formulation, and then let the software do the tedious derivation for us. However, there does not exist an automatic and versatile R package for VI. Therefore, we will look at [Pyro](https://pyro.ai/), a probabilistic programming language (PPL) written in Python, which is a very convenient interface for implementing VI for complex models. Note that Pyro is supported by the popular deep learning framework Pytorch on the backend, so models written in Pyro can be easily extended to incorporate neural network architectures. We will go over a simpler example provided by the Pyro team itself. All the following code is in Python and originally provided [here](https://pyro.ai/examples/intro_long.html#Example:-Geography-and-national-income).
 
-```{r, include=FALSE}
-library(reticulate)
-use_virtualenv("~/swagclub/swag-env")
-```
+
 
 To install pyro, simply run `pip install pyro-ppl` in your terminal. First, we import the required packages and set up some system parameters.
-```{python}
+
+```python
 import os
 import logging
 import time
@@ -258,7 +249,8 @@ The dataset we will look at in this example studies the relationship between geo
 - Predictor `cont_africa`: Whether the nation is in Africa.
 
 The following plots show the relationships between log GDP and ruggedness index for Non-African nations and African nations, respectively.
-```{python}
+
+```python
 DATA_URL = "https://d2hg8soec8ck9v.cloudfront.net/datasets/rugged_data.csv"
 data = pd.read_csv(DATA_URL, encoding="ISO-8859-1")
 df = data[["cont_africa", "rugged", "rgdppc_2000"]]
@@ -285,12 +277,15 @@ ax[1].set(xlabel="Terrain Ruggedness Index",
 plt.show()
 ```
 
+![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png)
+
 A simple model to capture the relationship is 
 \[Y = \alpha + \beta_aX_a + \beta_rX_r + \beta_{ar} X_aX_r +\epsilon, \ \ \epsilon\sim\mathcal{N}(0,\sigma^2)\]
 where $Y$ is the log GDP, $X_a$ is an indicator for whether the nation is in Africa, $X_r$ is the ruggedness index, and $\epsilon$ is the noise term.
 
 This model is defined as `freq_model` in the following, where the parameters and the observations are specified using `pyro.param` and `pyro.sample`, respectively. A cool feature of Pyro is that its `render_model()` function allows us to visualize the model.
-```{python}
+
+```python
 def freq_model(is_cont_africa, ruggedness, log_gdp=None):
     a = pyro.param("a", lambda: torch.randn(()))
     b_a = pyro.param("bA", lambda: torch.randn(()))
@@ -306,9 +301,15 @@ def freq_model(is_cont_africa, ruggedness, log_gdp=None):
 pyro.render_model(freq_model, model_args=(is_cont_africa, ruggedness, log_gdp), 
                   render_distributions=True, render_params=True, filename="freq_model.png");
 ```
+
+```
+## /home/m372chen/swagclub/swag-env/lib/python3.10/site-packages/torch/cuda/__init__.py:497: UserWarning: Can't initialize NVML
+##   warnings.warn("Can't initialize NVML")
+```
 ![](freq_model.png){width=70%}
 We can also define a Bayesian version of it called `bayes_model` as follows. This model simply replaces `pyro.param` with `pyro.sample`, so that the parameters are viewed as random variables following some (prior) distributions. Similarly, we call `render_model()` to visualize it. Between the Bayesian model and the frequentist model, we will use the former for demonstration here.
-```{python}
+
+```python
 def bayes_model(is_cont_africa, ruggedness, log_gdp=None):
     a = pyro.sample("a", dist.Normal(0., 10.))
     b_a = pyro.sample("bA", dist.Normal(0., 1.))
@@ -336,7 +337,8 @@ In the context of Pyro, the variational distribution is called a "guide". To spe
 - $q(\beta_{ar}\mid \mu_{\beta_{ar}}, \sigma^2_{\beta_{ar}}) = \mathcal{N}(\mu_{\beta_{ar}}, \sigma^2_{\beta_{ar}})$
 
 - $q(\sigma^2\mid \mu_\sigma, \sigma^2_\sigma) = \mathcal{N}(\mu_\sigma, \sigma^2_\sigma)$
-```{python}
+
+```python
 def custom_guide(is_cont_africa, ruggedness, log_gdp=None):
     a_loc = pyro.param('a_loc', lambda: torch.tensor(0.))
     a_scale = pyro.param('a_scale', lambda: torch.tensor(1.),
@@ -369,7 +371,8 @@ To implement variational inference in Pyro, we use its stochastic variational in
 - Optimizer: Any optimizer can do, but a popular choice is the Adam optimizer given by `pyro.optim.Adam()`. Adam is a gradient-based optimization algorithm that computes adaptive learning rates for different parameters.
 
 The plot below shows the ELBO loss (negative ELBO) as a function of the step index. We see that the optimization procedure has converged after about 500 steps.
-```{python}
+
+```python
 pyro.clear_param_store()
 
 auto_guide = pyro.infer.autoguide.AutoNormal(bayes_model)
@@ -384,6 +387,22 @@ for step in range(1000):
     losses.append(loss)
     if step % 100 == 0:
         logging.info("Elbo loss: {}".format(loss))
+```
+
+```
+## Elbo loss: 694.9404839277267
+## Elbo loss: 524.3822101950645
+## Elbo loss: 475.668176651001
+## Elbo loss: 399.99088364839554
+## Elbo loss: 315.23277366161346
+## Elbo loss: 254.76771301031113
+## Elbo loss: 248.237025141716
+## Elbo loss: 248.42669039964676
+## Elbo loss: 248.46450036764145
+## Elbo loss: 257.41463327407837
+```
+
+```python
 vi_end = time.time()
 
 plt.figure(figsize=(5, 2))
@@ -393,15 +412,36 @@ plt.ylabel("ELBO loss")
 plt.show()
 ```
 
+![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-3.png)
+
 Below is the time taken to optimize the ELBO using the VI method.
-```{python}
+
+```python
 print(vi_end-vi_start)
 ```
 
+```
+## 5.156867742538452
+```
+
 Then we can print out the estimated variational parameters ($\boldsymbol{\omega}$), which are the mean and variance of each variational Normal distribution.
-```{python}
+
+```python
 for name, value in pyro.get_param_store().items():
     print(name, pyro.param(name).data.cpu().numpy())
+```
+
+```
+## AutoNormal.locs.a 9.173145
+## AutoNormal.scales.a 0.07036691
+## AutoNormal.locs.bA -1.847466
+## AutoNormal.scales.bA 0.14070092
+## AutoNormal.locs.bR -0.1903212
+## AutoNormal.scales.bR 0.044044245
+## AutoNormal.locs.bAR 0.35599768
+## AutoNormal.scales.bAR 0.07937442
+## AutoNormal.locs.sigma -2.205863
+## AutoNormal.scales.sigma 0.06052672
 ```
 
 Given the variational parameters, we can now sample from the variational distributions of the parameters of interest. The variational distributions can be treated as approximated posterior distributions of these parameters. In particular, we can look at the slopes (log GDP versus ruggedness index) for Non-African nations and African nations.
@@ -411,7 +451,8 @@ Given the variational parameters, we can now sample from the variational distrib
 - African nations: slope = $\beta_r+\beta_{ar}$
 
 We will take 800 samples from $q(\beta_{r}\mid \hat{\mu}_{\beta_{r}}, \hat{\sigma}^2_{\beta_{r}})$ and $q(\beta_{ar}\mid \hat{\mu}_{\beta_{ar}}, \hat{\sigma}^2_{\beta_{ar}})$. The histograms of the samples are plotted side-by-side below.
-```{python}
+
+```python
 with pyro.plate("samples", 800, dim=-1):
     samples = auto_guide(is_cont_africa, ruggedness)
 
@@ -426,8 +467,11 @@ plt.legend()
 plt.show()
 ```
 
+![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11-5.png)
+
 Finally, we can compare the VI to MCMC (NUTS, to be specific).
-```{python}
+
+```python
 from pyro.infer import MCMC, NUTS
 mcmc = MCMC(NUTS(bayes_model), num_samples=1000, warmup_steps=1000, disable_progbar=True)
 mc_start = time.time()
@@ -437,13 +481,31 @@ mc_samples = mcmc.get_samples()
 mcmc.summary()
 ```
 
+```
+## 
+##                 mean       std    median      5.0%     95.0%     n_eff     r_hat
+##          a      9.19      0.14      9.19      8.95      9.42    537.96      1.00
+##         bA     -1.86      0.23     -1.86     -2.22     -1.48    497.48      1.00
+##        bAR      0.36      0.13      0.36      0.12      0.55    563.94      1.00
+##         bR     -0.19      0.08     -0.19     -0.31     -0.05    507.07      1.00
+##      sigma      0.95      0.05      0.95      0.86      1.03    648.89      1.00
+## 
+## Number of divergences: 0
+```
+
 Below is the time taken to draw 2000 MCMC samples (including 1000 warmups). We can see MCMC is almost an order of magnitude slower than the VI.
-```{python}
+
+```python
 print(mc_end-mc_start)
 ```
 
+```
+## 37.0686891078949
+```
+
 We can also plot the histograms of the MCMC samples of the two slopes. Compared to the histograms obtained using the VI, these don't look much different. 
-```{python}
+
+```python
 mc_slope_within_africa = mc_samples["bR"] + mc_samples["bAR"]
 mc_slope_outside_africa = mc_samples["bR"]
 
@@ -455,6 +517,8 @@ plt.xlabel("Slope of regression line")
 plt.legend()
 plt.show()
 ```
+
+![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-7.png)
 
 ## Takeaways
 

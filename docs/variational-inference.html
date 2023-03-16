@@ -532,7 +532,10 @@ Note that <span class="math inline">\(\mathbb{E}[a ; b]\)</span> specifies the q
 <span id="cb41-22"><a href="variational-inference.html#cb41-22" aria-hidden="true" tabindex="-1"></a>          ylabel<span class="op">=</span><span class="st">&quot;log GDP (2000)&quot;</span>,</span>
 <span id="cb41-23"><a href="variational-inference.html#cb41-23" aria-hidden="true" tabindex="-1"></a>          title<span class="op">=</span><span class="st">&quot;African Nations&quot;</span>)</span>
 <span id="cb41-24"><a href="variational-inference.html#cb41-24" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-16-1.png" width="1152" /></p>
+<div class="figure">
+<img src="figure/unnamed-chunk-4-1.png" alt="" />
+<p class="caption">plot of chunk unnamed-chunk-4</p>
+</div>
 <p>A simple model to capture the relationship is
 <span class="math display">\[Y = \alpha + \beta_aX_a + \beta_rX_r + \beta_{ar} X_aX_r +\epsilon, \ \ \epsilon\sim\mathcal{N}(0,\sigma^2)\]</span>
 where <span class="math inline">\(Y\)</span> is the log GDP, <span class="math inline">\(X_a\)</span> is an indicator for whether the nation is in Africa, <span class="math inline">\(X_r\)</span> is the ruggedness index, and <span class="math inline">\(\epsilon\)</span> is the noise term.</p>
@@ -551,21 +554,23 @@ where <span class="math inline">\(Y\)</span> is the log GDP, <span class="math i
 <span id="cb42-12"><a href="variational-inference.html#cb42-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-13"><a href="variational-inference.html#cb42-13" aria-hidden="true" tabindex="-1"></a>pyro.render_model(freq_model, model_args<span class="op">=</span>(is_cont_africa, ruggedness, log_gdp), </span>
 <span id="cb42-14"><a href="variational-inference.html#cb42-14" aria-hidden="true" tabindex="-1"></a>                  render_distributions<span class="op">=</span><span class="va">True</span>, render_params<span class="op">=</span><span class="va">True</span>, filename<span class="op">=</span><span class="st">&quot;freq_model.png&quot;</span>)<span class="op">;</span></span></code></pre></div>
+<pre><code>## /home/m372chen/swagclub/swag-env/lib/python3.10/site-packages/torch/cuda/__init__.py:497: UserWarning: Can&#39;t initialize NVML
+##   warnings.warn(&quot;Can&#39;t initialize NVML&quot;)</code></pre>
 <p><img src="freq_model.png" style="width:70.0%" />
 We can also define a Bayesian version of it called <code>bayes_model</code> as follows. This model simply replaces <code>pyro.param</code> with <code>pyro.sample</code>, so that the parameters are viewed as random variables following some (prior) distributions. Similarly, we call <code>render_model()</code> to visualize it. Between the Bayesian model and the frequentist model, we will use the former for demonstration here.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb43-1"><a href="variational-inference.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> bayes_model(is_cont_africa, ruggedness, log_gdp<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb43-2"><a href="variational-inference.html#cb43-2" aria-hidden="true" tabindex="-1"></a>    a <span class="op">=</span> pyro.sample(<span class="st">&quot;a&quot;</span>, dist.Normal(<span class="fl">0.</span>, <span class="fl">10.</span>))</span>
-<span id="cb43-3"><a href="variational-inference.html#cb43-3" aria-hidden="true" tabindex="-1"></a>    b_a <span class="op">=</span> pyro.sample(<span class="st">&quot;bA&quot;</span>, dist.Normal(<span class="fl">0.</span>, <span class="fl">1.</span>))</span>
-<span id="cb43-4"><a href="variational-inference.html#cb43-4" aria-hidden="true" tabindex="-1"></a>    b_r <span class="op">=</span> pyro.sample(<span class="st">&quot;bR&quot;</span>, dist.Normal(<span class="fl">0.</span>, <span class="fl">1.</span>))</span>
-<span id="cb43-5"><a href="variational-inference.html#cb43-5" aria-hidden="true" tabindex="-1"></a>    b_ar <span class="op">=</span> pyro.sample(<span class="st">&quot;bAR&quot;</span>, dist.Normal(<span class="fl">0.</span>, <span class="fl">1.</span>))</span>
-<span id="cb43-6"><a href="variational-inference.html#cb43-6" aria-hidden="true" tabindex="-1"></a>    sigma <span class="op">=</span> pyro.sample(<span class="st">&quot;sigma&quot;</span>, dist.Uniform(<span class="fl">0.</span>, <span class="fl">10.</span>))</span>
-<span id="cb43-7"><a href="variational-inference.html#cb43-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-8"><a href="variational-inference.html#cb43-8" aria-hidden="true" tabindex="-1"></a>    mean <span class="op">=</span> a <span class="op">+</span> b_a <span class="op">*</span> is_cont_africa <span class="op">+</span> b_r <span class="op">*</span> ruggedness <span class="op">+</span> b_ar <span class="op">*</span> is_cont_africa <span class="op">*</span> ruggedness</span>
-<span id="cb43-9"><a href="variational-inference.html#cb43-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-10"><a href="variational-inference.html#cb43-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> pyro.plate(<span class="st">&quot;data&quot;</span>, <span class="bu">len</span>(ruggedness)):</span>
-<span id="cb43-11"><a href="variational-inference.html#cb43-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> pyro.sample(<span class="st">&quot;obs&quot;</span>, dist.Normal(mean, sigma), obs<span class="op">=</span>log_gdp)</span>
-<span id="cb43-12"><a href="variational-inference.html#cb43-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-13"><a href="variational-inference.html#cb43-13" aria-hidden="true" tabindex="-1"></a>pyro.render_model(bayes_model, model_args<span class="op">=</span>(is_cont_africa, ruggedness, log_gdp), render_distributions<span class="op">=</span><span class="va">True</span>, filename<span class="op">=</span><span class="st">&quot;bayes_model.png&quot;</span>)<span class="op">;</span></span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb44-1"><a href="variational-inference.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> bayes_model(is_cont_africa, ruggedness, log_gdp<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb44-2"><a href="variational-inference.html#cb44-2" aria-hidden="true" tabindex="-1"></a>    a <span class="op">=</span> pyro.sample(<span class="st">&quot;a&quot;</span>, dist.Normal(<span class="fl">0.</span>, <span class="fl">10.</span>))</span>
+<span id="cb44-3"><a href="variational-inference.html#cb44-3" aria-hidden="true" tabindex="-1"></a>    b_a <span class="op">=</span> pyro.sample(<span class="st">&quot;bA&quot;</span>, dist.Normal(<span class="fl">0.</span>, <span class="fl">1.</span>))</span>
+<span id="cb44-4"><a href="variational-inference.html#cb44-4" aria-hidden="true" tabindex="-1"></a>    b_r <span class="op">=</span> pyro.sample(<span class="st">&quot;bR&quot;</span>, dist.Normal(<span class="fl">0.</span>, <span class="fl">1.</span>))</span>
+<span id="cb44-5"><a href="variational-inference.html#cb44-5" aria-hidden="true" tabindex="-1"></a>    b_ar <span class="op">=</span> pyro.sample(<span class="st">&quot;bAR&quot;</span>, dist.Normal(<span class="fl">0.</span>, <span class="fl">1.</span>))</span>
+<span id="cb44-6"><a href="variational-inference.html#cb44-6" aria-hidden="true" tabindex="-1"></a>    sigma <span class="op">=</span> pyro.sample(<span class="st">&quot;sigma&quot;</span>, dist.Uniform(<span class="fl">0.</span>, <span class="fl">10.</span>))</span>
+<span id="cb44-7"><a href="variational-inference.html#cb44-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-8"><a href="variational-inference.html#cb44-8" aria-hidden="true" tabindex="-1"></a>    mean <span class="op">=</span> a <span class="op">+</span> b_a <span class="op">*</span> is_cont_africa <span class="op">+</span> b_r <span class="op">*</span> ruggedness <span class="op">+</span> b_ar <span class="op">*</span> is_cont_africa <span class="op">*</span> ruggedness</span>
+<span id="cb44-9"><a href="variational-inference.html#cb44-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-10"><a href="variational-inference.html#cb44-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> pyro.plate(<span class="st">&quot;data&quot;</span>, <span class="bu">len</span>(ruggedness)):</span>
+<span id="cb44-11"><a href="variational-inference.html#cb44-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> pyro.sample(<span class="st">&quot;obs&quot;</span>, dist.Normal(mean, sigma), obs<span class="op">=</span>log_gdp)</span>
+<span id="cb44-12"><a href="variational-inference.html#cb44-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-13"><a href="variational-inference.html#cb44-13" aria-hidden="true" tabindex="-1"></a>pyro.render_model(bayes_model, model_args<span class="op">=</span>(is_cont_africa, ruggedness, log_gdp), render_distributions<span class="op">=</span><span class="va">True</span>, filename<span class="op">=</span><span class="st">&quot;bayes_model.png&quot;</span>)<span class="op">;</span></span></code></pre></div>
 <p><img src="bayes_model.png" style="width:70.0%" /></p>
 <p>In the context of Pyro, the variational distribution is called a “guide”. To specify the variational family we want, we need to define a guide program as follows. The code is very similar to that of the model. The custom guide we define below uses mean-field variational inference, i.e., all parameters have independent variational distributions in the form of Gaussian.</p>
 <ul>
@@ -575,23 +580,23 @@ We can also define a Bayesian version of it called <code>bayes_model</code> as f
 <li><p><span class="math inline">\(q(\beta_{ar}\mid \mu_{\beta_{ar}}, \sigma^2_{\beta_{ar}}) = \mathcal{N}(\mu_{\beta_{ar}}, \sigma^2_{\beta_{ar}})\)</span></p></li>
 <li><p><span class="math inline">\(q(\sigma^2\mid \mu_\sigma, \sigma^2_\sigma) = \mathcal{N}(\mu_\sigma, \sigma^2_\sigma)\)</span></p></li>
 </ul>
-<div class="sourceCode" id="cb44"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb44-1"><a href="variational-inference.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> custom_guide(is_cont_africa, ruggedness, log_gdp<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb44-2"><a href="variational-inference.html#cb44-2" aria-hidden="true" tabindex="-1"></a>    a_loc <span class="op">=</span> pyro.param(<span class="st">&#39;a_loc&#39;</span>, <span class="kw">lambda</span>: torch.tensor(<span class="fl">0.</span>))</span>
-<span id="cb44-3"><a href="variational-inference.html#cb44-3" aria-hidden="true" tabindex="-1"></a>    a_scale <span class="op">=</span> pyro.param(<span class="st">&#39;a_scale&#39;</span>, <span class="kw">lambda</span>: torch.tensor(<span class="fl">1.</span>),</span>
-<span id="cb44-4"><a href="variational-inference.html#cb44-4" aria-hidden="true" tabindex="-1"></a>                         constraint<span class="op">=</span>constraints.positive)</span>
-<span id="cb44-5"><a href="variational-inference.html#cb44-5" aria-hidden="true" tabindex="-1"></a>    sigma_loc <span class="op">=</span> pyro.param(<span class="st">&#39;sigma_loc&#39;</span>, <span class="kw">lambda</span>: torch.tensor(<span class="fl">1.</span>),</span>
-<span id="cb44-6"><a href="variational-inference.html#cb44-6" aria-hidden="true" tabindex="-1"></a>                             constraint<span class="op">=</span>constraints.positive)</span>
-<span id="cb44-7"><a href="variational-inference.html#cb44-7" aria-hidden="true" tabindex="-1"></a>    weights_loc <span class="op">=</span> pyro.param(<span class="st">&#39;weights_loc&#39;</span>, <span class="kw">lambda</span>: torch.randn(<span class="dv">3</span>))</span>
-<span id="cb44-8"><a href="variational-inference.html#cb44-8" aria-hidden="true" tabindex="-1"></a>    weights_scale <span class="op">=</span> pyro.param(<span class="st">&#39;weights_scale&#39;</span>, <span class="kw">lambda</span>: torch.ones(<span class="dv">3</span>),</span>
-<span id="cb44-9"><a href="variational-inference.html#cb44-9" aria-hidden="true" tabindex="-1"></a>                               constraint<span class="op">=</span>constraints.positive)</span>
-<span id="cb44-10"><a href="variational-inference.html#cb44-10" aria-hidden="true" tabindex="-1"></a>    a <span class="op">=</span> pyro.sample(<span class="st">&quot;a&quot;</span>, dist.Normal(a_loc, a_scale))</span>
-<span id="cb44-11"><a href="variational-inference.html#cb44-11" aria-hidden="true" tabindex="-1"></a>    b_a <span class="op">=</span> pyro.sample(<span class="st">&quot;bA&quot;</span>, dist.Normal(weights_loc[<span class="dv">0</span>], weights_scale[<span class="dv">0</span>]))</span>
-<span id="cb44-12"><a href="variational-inference.html#cb44-12" aria-hidden="true" tabindex="-1"></a>    b_r <span class="op">=</span> pyro.sample(<span class="st">&quot;bR&quot;</span>, dist.Normal(weights_loc[<span class="dv">1</span>], weights_scale[<span class="dv">1</span>]))</span>
-<span id="cb44-13"><a href="variational-inference.html#cb44-13" aria-hidden="true" tabindex="-1"></a>    b_ar <span class="op">=</span> pyro.sample(<span class="st">&quot;bAR&quot;</span>, dist.Normal(weights_loc[<span class="dv">2</span>], weights_scale[<span class="dv">2</span>]))</span>
-<span id="cb44-14"><a href="variational-inference.html#cb44-14" aria-hidden="true" tabindex="-1"></a>    sigma <span class="op">=</span> pyro.sample(<span class="st">&quot;sigma&quot;</span>, dist.Normal(sigma_loc, torch.tensor(<span class="fl">0.05</span>)))</span>
-<span id="cb44-15"><a href="variational-inference.html#cb44-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {<span class="st">&quot;a&quot;</span>: a, <span class="st">&quot;b_a&quot;</span>: b_a, <span class="st">&quot;b_r&quot;</span>: b_r, <span class="st">&quot;b_ar&quot;</span>: b_ar, <span class="st">&quot;sigma&quot;</span>: sigma}</span>
-<span id="cb44-16"><a href="variational-inference.html#cb44-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-17"><a href="variational-inference.html#cb44-17" aria-hidden="true" tabindex="-1"></a>pyro.render_model(custom_guide, model_args<span class="op">=</span>(is_cont_africa, ruggedness, log_gdp), render_params<span class="op">=</span><span class="va">True</span>, filename<span class="op">=</span><span class="st">&quot;custom_guide.png&quot;</span>)<span class="op">;</span></span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb45-1"><a href="variational-inference.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> custom_guide(is_cont_africa, ruggedness, log_gdp<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb45-2"><a href="variational-inference.html#cb45-2" aria-hidden="true" tabindex="-1"></a>    a_loc <span class="op">=</span> pyro.param(<span class="st">&#39;a_loc&#39;</span>, <span class="kw">lambda</span>: torch.tensor(<span class="fl">0.</span>))</span>
+<span id="cb45-3"><a href="variational-inference.html#cb45-3" aria-hidden="true" tabindex="-1"></a>    a_scale <span class="op">=</span> pyro.param(<span class="st">&#39;a_scale&#39;</span>, <span class="kw">lambda</span>: torch.tensor(<span class="fl">1.</span>),</span>
+<span id="cb45-4"><a href="variational-inference.html#cb45-4" aria-hidden="true" tabindex="-1"></a>                         constraint<span class="op">=</span>constraints.positive)</span>
+<span id="cb45-5"><a href="variational-inference.html#cb45-5" aria-hidden="true" tabindex="-1"></a>    sigma_loc <span class="op">=</span> pyro.param(<span class="st">&#39;sigma_loc&#39;</span>, <span class="kw">lambda</span>: torch.tensor(<span class="fl">1.</span>),</span>
+<span id="cb45-6"><a href="variational-inference.html#cb45-6" aria-hidden="true" tabindex="-1"></a>                             constraint<span class="op">=</span>constraints.positive)</span>
+<span id="cb45-7"><a href="variational-inference.html#cb45-7" aria-hidden="true" tabindex="-1"></a>    weights_loc <span class="op">=</span> pyro.param(<span class="st">&#39;weights_loc&#39;</span>, <span class="kw">lambda</span>: torch.randn(<span class="dv">3</span>))</span>
+<span id="cb45-8"><a href="variational-inference.html#cb45-8" aria-hidden="true" tabindex="-1"></a>    weights_scale <span class="op">=</span> pyro.param(<span class="st">&#39;weights_scale&#39;</span>, <span class="kw">lambda</span>: torch.ones(<span class="dv">3</span>),</span>
+<span id="cb45-9"><a href="variational-inference.html#cb45-9" aria-hidden="true" tabindex="-1"></a>                               constraint<span class="op">=</span>constraints.positive)</span>
+<span id="cb45-10"><a href="variational-inference.html#cb45-10" aria-hidden="true" tabindex="-1"></a>    a <span class="op">=</span> pyro.sample(<span class="st">&quot;a&quot;</span>, dist.Normal(a_loc, a_scale))</span>
+<span id="cb45-11"><a href="variational-inference.html#cb45-11" aria-hidden="true" tabindex="-1"></a>    b_a <span class="op">=</span> pyro.sample(<span class="st">&quot;bA&quot;</span>, dist.Normal(weights_loc[<span class="dv">0</span>], weights_scale[<span class="dv">0</span>]))</span>
+<span id="cb45-12"><a href="variational-inference.html#cb45-12" aria-hidden="true" tabindex="-1"></a>    b_r <span class="op">=</span> pyro.sample(<span class="st">&quot;bR&quot;</span>, dist.Normal(weights_loc[<span class="dv">1</span>], weights_scale[<span class="dv">1</span>]))</span>
+<span id="cb45-13"><a href="variational-inference.html#cb45-13" aria-hidden="true" tabindex="-1"></a>    b_ar <span class="op">=</span> pyro.sample(<span class="st">&quot;bAR&quot;</span>, dist.Normal(weights_loc[<span class="dv">2</span>], weights_scale[<span class="dv">2</span>]))</span>
+<span id="cb45-14"><a href="variational-inference.html#cb45-14" aria-hidden="true" tabindex="-1"></a>    sigma <span class="op">=</span> pyro.sample(<span class="st">&quot;sigma&quot;</span>, dist.Normal(sigma_loc, torch.tensor(<span class="fl">0.05</span>)))</span>
+<span id="cb45-15"><a href="variational-inference.html#cb45-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {<span class="st">&quot;a&quot;</span>: a, <span class="st">&quot;b_a&quot;</span>: b_a, <span class="st">&quot;b_r&quot;</span>: b_r, <span class="st">&quot;b_ar&quot;</span>: b_ar, <span class="st">&quot;sigma&quot;</span>: sigma}</span>
+<span id="cb45-16"><a href="variational-inference.html#cb45-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-17"><a href="variational-inference.html#cb45-17" aria-hidden="true" tabindex="-1"></a>pyro.render_model(custom_guide, model_args<span class="op">=</span>(is_cont_africa, ruggedness, log_gdp), render_params<span class="op">=</span><span class="va">True</span>, filename<span class="op">=</span><span class="st">&quot;custom_guide.png&quot;</span>)<span class="op">;</span></span></code></pre></div>
 <p><img src="custom_guide.png" style="width:70.0%" /></p>
 <p>To implement variational inference in Pyro, we use its stochastic variational inference functionality <code>pyro.infer.SVI()</code>, which takes in four arguments:</p>
 <ul>
@@ -601,20 +606,20 @@ We can also define a Bayesian version of it called <code>bayes_model</code> as f
 <li><p>Optimizer: Any optimizer can do, but a popular choice is the Adam optimizer given by <code>pyro.optim.Adam()</code>. Adam is a gradient-based optimization algorithm that computes adaptive learning rates for different parameters.</p></li>
 </ul>
 <p>The plot below shows the ELBO loss (negative ELBO) as a function of the step index. We see that the optimization procedure has converged after about 500 steps.</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb45-1"><a href="variational-inference.html#cb45-1" aria-hidden="true" tabindex="-1"></a>pyro.clear_param_store()</span>
-<span id="cb45-2"><a href="variational-inference.html#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-3"><a href="variational-inference.html#cb45-3" aria-hidden="true" tabindex="-1"></a>auto_guide <span class="op">=</span> pyro.infer.autoguide.AutoNormal(bayes_model)</span>
-<span id="cb45-4"><a href="variational-inference.html#cb45-4" aria-hidden="true" tabindex="-1"></a>adam <span class="op">=</span> pyro.optim.Adam({<span class="st">&quot;lr&quot;</span>: <span class="fl">0.02</span>}) </span>
-<span id="cb45-5"><a href="variational-inference.html#cb45-5" aria-hidden="true" tabindex="-1"></a>elbo <span class="op">=</span> pyro.infer.Trace_ELBO()</span>
-<span id="cb45-6"><a href="variational-inference.html#cb45-6" aria-hidden="true" tabindex="-1"></a>svi <span class="op">=</span> pyro.infer.SVI(bayes_model, auto_guide, adam, elbo)</span>
-<span id="cb45-7"><a href="variational-inference.html#cb45-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-8"><a href="variational-inference.html#cb45-8" aria-hidden="true" tabindex="-1"></a>losses <span class="op">=</span> []</span>
-<span id="cb45-9"><a href="variational-inference.html#cb45-9" aria-hidden="true" tabindex="-1"></a>vi_start <span class="op">=</span> time.time()</span>
-<span id="cb45-10"><a href="variational-inference.html#cb45-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> step <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1000</span>):  </span>
-<span id="cb45-11"><a href="variational-inference.html#cb45-11" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> svi.step(is_cont_africa, ruggedness, log_gdp)</span>
-<span id="cb45-12"><a href="variational-inference.html#cb45-12" aria-hidden="true" tabindex="-1"></a>    losses.append(loss)</span>
-<span id="cb45-13"><a href="variational-inference.html#cb45-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> step <span class="op">%</span> <span class="dv">100</span> <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb45-14"><a href="variational-inference.html#cb45-14" aria-hidden="true" tabindex="-1"></a>        logging.info(<span class="st">&quot;Elbo loss: </span><span class="sc">{}</span><span class="st">&quot;</span>.<span class="bu">format</span>(loss))</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb46-1"><a href="variational-inference.html#cb46-1" aria-hidden="true" tabindex="-1"></a>pyro.clear_param_store()</span>
+<span id="cb46-2"><a href="variational-inference.html#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-3"><a href="variational-inference.html#cb46-3" aria-hidden="true" tabindex="-1"></a>auto_guide <span class="op">=</span> pyro.infer.autoguide.AutoNormal(bayes_model)</span>
+<span id="cb46-4"><a href="variational-inference.html#cb46-4" aria-hidden="true" tabindex="-1"></a>adam <span class="op">=</span> pyro.optim.Adam({<span class="st">&quot;lr&quot;</span>: <span class="fl">0.02</span>}) </span>
+<span id="cb46-5"><a href="variational-inference.html#cb46-5" aria-hidden="true" tabindex="-1"></a>elbo <span class="op">=</span> pyro.infer.Trace_ELBO()</span>
+<span id="cb46-6"><a href="variational-inference.html#cb46-6" aria-hidden="true" tabindex="-1"></a>svi <span class="op">=</span> pyro.infer.SVI(bayes_model, auto_guide, adam, elbo)</span>
+<span id="cb46-7"><a href="variational-inference.html#cb46-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-8"><a href="variational-inference.html#cb46-8" aria-hidden="true" tabindex="-1"></a>losses <span class="op">=</span> []</span>
+<span id="cb46-9"><a href="variational-inference.html#cb46-9" aria-hidden="true" tabindex="-1"></a>vi_start <span class="op">=</span> time.time()</span>
+<span id="cb46-10"><a href="variational-inference.html#cb46-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> step <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1000</span>):  </span>
+<span id="cb46-11"><a href="variational-inference.html#cb46-11" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> svi.step(is_cont_africa, ruggedness, log_gdp)</span>
+<span id="cb46-12"><a href="variational-inference.html#cb46-12" aria-hidden="true" tabindex="-1"></a>    losses.append(loss)</span>
+<span id="cb46-13"><a href="variational-inference.html#cb46-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> step <span class="op">%</span> <span class="dv">100</span> <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb46-14"><a href="variational-inference.html#cb46-14" aria-hidden="true" tabindex="-1"></a>        logging.info(<span class="st">&quot;Elbo loss: </span><span class="sc">{}</span><span class="st">&quot;</span>.<span class="bu">format</span>(loss))</span></code></pre></div>
 <pre><code>## Elbo loss: 694.9404839277267
 ## Elbo loss: 524.3822101950645
 ## Elbo loss: 475.668176651001
@@ -625,20 +630,23 @@ We can also define a Bayesian version of it called <code>bayes_model</code> as f
 ## Elbo loss: 248.42669039964676
 ## Elbo loss: 248.46450036764145
 ## Elbo loss: 257.41463327407837</code></pre>
-<div class="sourceCode" id="cb47"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb47-1"><a href="variational-inference.html#cb47-1" aria-hidden="true" tabindex="-1"></a>vi_end <span class="op">=</span> time.time()</span>
-<span id="cb47-2"><a href="variational-inference.html#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-3"><a href="variational-inference.html#cb47-3" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">2</span>))</span>
-<span id="cb47-4"><a href="variational-inference.html#cb47-4" aria-hidden="true" tabindex="-1"></a>plt.plot(losses)</span>
-<span id="cb47-5"><a href="variational-inference.html#cb47-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;SVI step&quot;</span>)</span>
-<span id="cb47-6"><a href="variational-inference.html#cb47-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&quot;ELBO loss&quot;</span>)</span>
-<span id="cb47-7"><a href="variational-inference.html#cb47-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-20-3.png" width="480" /></p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb48-1"><a href="variational-inference.html#cb48-1" aria-hidden="true" tabindex="-1"></a>vi_end <span class="op">=</span> time.time()</span>
+<span id="cb48-2"><a href="variational-inference.html#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-3"><a href="variational-inference.html#cb48-3" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">2</span>))</span>
+<span id="cb48-4"><a href="variational-inference.html#cb48-4" aria-hidden="true" tabindex="-1"></a>plt.plot(losses)</span>
+<span id="cb48-5"><a href="variational-inference.html#cb48-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;SVI step&quot;</span>)</span>
+<span id="cb48-6"><a href="variational-inference.html#cb48-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&quot;ELBO loss&quot;</span>)</span>
+<span id="cb48-7"><a href="variational-inference.html#cb48-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<div class="figure">
+<img src="figure/unnamed-chunk-8-3.png" alt="" />
+<p class="caption">plot of chunk unnamed-chunk-8</p>
+</div>
 <p>Below is the time taken to optimize the ELBO using the VI method.</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb48-1"><a href="variational-inference.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(vi_end<span class="op">-</span>vi_start)</span></code></pre></div>
-<pre><code>## 5.5414955615997314</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb49-1"><a href="variational-inference.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(vi_end<span class="op">-</span>vi_start)</span></code></pre></div>
+<pre><code>## 5.156867742538452</code></pre>
 <p>Then we can print out the estimated variational parameters (<span class="math inline">\(\boldsymbol{\omega}\)</span>), which are the mean and variance of each variational Normal distribution.</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb50-1"><a href="variational-inference.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name, value <span class="kw">in</span> pyro.get_param_store().items():</span>
-<span id="cb50-2"><a href="variational-inference.html#cb50-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(name, pyro.param(name).data.cpu().numpy())</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb51-1"><a href="variational-inference.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name, value <span class="kw">in</span> pyro.get_param_store().items():</span>
+<span id="cb51-2"><a href="variational-inference.html#cb51-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(name, pyro.param(name).data.cpu().numpy())</span></code></pre></div>
 <pre><code>## AutoNormal.locs.a 9.173145
 ## AutoNormal.scales.a 0.07036691
 ## AutoNormal.locs.bA -1.847466
@@ -655,27 +663,30 @@ We can also define a Bayesian version of it called <code>bayes_model</code> as f
 <li><p>African nations: slope = <span class="math inline">\(\beta_r+\beta_{ar}\)</span></p></li>
 </ul>
 <p>We will take 800 samples from <span class="math inline">\(q(\beta_{r}\mid \hat{\mu}_{\beta_{r}}, \hat{\sigma}^2_{\beta_{r}})\)</span> and <span class="math inline">\(q(\beta_{ar}\mid \hat{\mu}_{\beta_{ar}}, \hat{\sigma}^2_{\beta_{ar}})\)</span>. The histograms of the samples are plotted side-by-side below.</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb52-1"><a href="variational-inference.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> pyro.plate(<span class="st">&quot;samples&quot;</span>, <span class="dv">800</span>, dim<span class="op">=-</span><span class="dv">1</span>):</span>
-<span id="cb52-2"><a href="variational-inference.html#cb52-2" aria-hidden="true" tabindex="-1"></a>    samples <span class="op">=</span> auto_guide(is_cont_africa, ruggedness)</span>
-<span id="cb52-3"><a href="variational-inference.html#cb52-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-4"><a href="variational-inference.html#cb52-4" aria-hidden="true" tabindex="-1"></a>gamma_within_africa <span class="op">=</span> samples[<span class="st">&quot;bR&quot;</span>] <span class="op">+</span> samples[<span class="st">&quot;bAR&quot;</span>]</span>
-<span id="cb52-5"><a href="variational-inference.html#cb52-5" aria-hidden="true" tabindex="-1"></a>gamma_outside_africa <span class="op">=</span> samples[<span class="st">&quot;bR&quot;</span>]</span>
-<span id="cb52-6"><a href="variational-inference.html#cb52-6" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb52-7"><a href="variational-inference.html#cb52-7" aria-hidden="true" tabindex="-1"></a>plt.hist(gamma_within_africa.detach().numpy(), label<span class="op">=</span><span class="st">&quot;Arican nations&quot;</span>)<span class="op">;</span></span>
-<span id="cb52-8"><a href="variational-inference.html#cb52-8" aria-hidden="true" tabindex="-1"></a>plt.hist(gamma_outside_africa.detach().numpy(), label<span class="op">=</span><span class="st">&quot;Non-Arican nations&quot;</span>)<span class="op">;</span></span>
-<span id="cb52-9"><a href="variational-inference.html#cb52-9" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">&quot;Density of Slope : log(GDP) vs. Terrain Ruggedness&quot;</span>)<span class="op">;</span></span>
-<span id="cb52-10"><a href="variational-inference.html#cb52-10" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;Slope of regression line&quot;</span>)</span>
-<span id="cb52-11"><a href="variational-inference.html#cb52-11" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb52-12"><a href="variational-inference.html#cb52-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-23-5.png" width="960" /></p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb53-1"><a href="variational-inference.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> pyro.plate(<span class="st">&quot;samples&quot;</span>, <span class="dv">800</span>, dim<span class="op">=-</span><span class="dv">1</span>):</span>
+<span id="cb53-2"><a href="variational-inference.html#cb53-2" aria-hidden="true" tabindex="-1"></a>    samples <span class="op">=</span> auto_guide(is_cont_africa, ruggedness)</span>
+<span id="cb53-3"><a href="variational-inference.html#cb53-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-4"><a href="variational-inference.html#cb53-4" aria-hidden="true" tabindex="-1"></a>gamma_within_africa <span class="op">=</span> samples[<span class="st">&quot;bR&quot;</span>] <span class="op">+</span> samples[<span class="st">&quot;bAR&quot;</span>]</span>
+<span id="cb53-5"><a href="variational-inference.html#cb53-5" aria-hidden="true" tabindex="-1"></a>gamma_outside_africa <span class="op">=</span> samples[<span class="st">&quot;bR&quot;</span>]</span>
+<span id="cb53-6"><a href="variational-inference.html#cb53-6" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb53-7"><a href="variational-inference.html#cb53-7" aria-hidden="true" tabindex="-1"></a>plt.hist(gamma_within_africa.detach().numpy(), label<span class="op">=</span><span class="st">&quot;Arican nations&quot;</span>)<span class="op">;</span></span>
+<span id="cb53-8"><a href="variational-inference.html#cb53-8" aria-hidden="true" tabindex="-1"></a>plt.hist(gamma_outside_africa.detach().numpy(), label<span class="op">=</span><span class="st">&quot;Non-Arican nations&quot;</span>)<span class="op">;</span></span>
+<span id="cb53-9"><a href="variational-inference.html#cb53-9" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">&quot;Density of Slope : log(GDP) vs. Terrain Ruggedness&quot;</span>)<span class="op">;</span></span>
+<span id="cb53-10"><a href="variational-inference.html#cb53-10" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;Slope of regression line&quot;</span>)</span>
+<span id="cb53-11"><a href="variational-inference.html#cb53-11" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb53-12"><a href="variational-inference.html#cb53-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<div class="figure">
+<img src="figure/unnamed-chunk-11-5.png" alt="" />
+<p class="caption">plot of chunk unnamed-chunk-11</p>
+</div>
 <p>Finally, we can compare the VI to MCMC (NUTS, to be specific).</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb53-1"><a href="variational-inference.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyro.infer <span class="im">import</span> MCMC, NUTS</span>
-<span id="cb53-2"><a href="variational-inference.html#cb53-2" aria-hidden="true" tabindex="-1"></a>mcmc <span class="op">=</span> MCMC(NUTS(bayes_model), num_samples<span class="op">=</span><span class="dv">1000</span>, warmup_steps<span class="op">=</span><span class="dv">1000</span>, disable_progbar<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb53-3"><a href="variational-inference.html#cb53-3" aria-hidden="true" tabindex="-1"></a>mc_start <span class="op">=</span> time.time()</span>
-<span id="cb53-4"><a href="variational-inference.html#cb53-4" aria-hidden="true" tabindex="-1"></a>mcmc.run(is_cont_africa, ruggedness, log_gdp)</span>
-<span id="cb53-5"><a href="variational-inference.html#cb53-5" aria-hidden="true" tabindex="-1"></a>mc_end <span class="op">=</span> time.time()</span>
-<span id="cb53-6"><a href="variational-inference.html#cb53-6" aria-hidden="true" tabindex="-1"></a>mc_samples <span class="op">=</span> mcmc.get_samples()</span>
-<span id="cb53-7"><a href="variational-inference.html#cb53-7" aria-hidden="true" tabindex="-1"></a>mcmc.summary()</span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb54-1"><a href="variational-inference.html#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyro.infer <span class="im">import</span> MCMC, NUTS</span>
+<span id="cb54-2"><a href="variational-inference.html#cb54-2" aria-hidden="true" tabindex="-1"></a>mcmc <span class="op">=</span> MCMC(NUTS(bayes_model), num_samples<span class="op">=</span><span class="dv">1000</span>, warmup_steps<span class="op">=</span><span class="dv">1000</span>, disable_progbar<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb54-3"><a href="variational-inference.html#cb54-3" aria-hidden="true" tabindex="-1"></a>mc_start <span class="op">=</span> time.time()</span>
+<span id="cb54-4"><a href="variational-inference.html#cb54-4" aria-hidden="true" tabindex="-1"></a>mcmc.run(is_cont_africa, ruggedness, log_gdp)</span>
+<span id="cb54-5"><a href="variational-inference.html#cb54-5" aria-hidden="true" tabindex="-1"></a>mc_end <span class="op">=</span> time.time()</span>
+<span id="cb54-6"><a href="variational-inference.html#cb54-6" aria-hidden="true" tabindex="-1"></a>mc_samples <span class="op">=</span> mcmc.get_samples()</span>
+<span id="cb54-7"><a href="variational-inference.html#cb54-7" aria-hidden="true" tabindex="-1"></a>mcmc.summary()</span></code></pre></div>
 <pre><code>## 
 ##                 mean       std    median      5.0%     95.0%     n_eff     r_hat
 ##          a      9.19      0.14      9.19      8.95      9.42    537.96      1.00
@@ -686,20 +697,23 @@ We can also define a Bayesian version of it called <code>bayes_model</code> as f
 ## 
 ## Number of divergences: 0</code></pre>
 <p>Below is the time taken to draw 2000 MCMC samples (including 1000 warmups). We can see MCMC is almost an order of magnitude slower than the VI.</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb55-1"><a href="variational-inference.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mc_end<span class="op">-</span>mc_start)</span></code></pre></div>
-<pre><code>## 38.696908712387085</code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb56-1"><a href="variational-inference.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mc_end<span class="op">-</span>mc_start)</span></code></pre></div>
+<pre><code>## 37.0686891078949</code></pre>
 <p>We can also plot the histograms of the MCMC samples of the two slopes. Compared to the histograms obtained using the VI, these don’t look much different.</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb57-1"><a href="variational-inference.html#cb57-1" aria-hidden="true" tabindex="-1"></a>mc_slope_within_africa <span class="op">=</span> mc_samples[<span class="st">&quot;bR&quot;</span>] <span class="op">+</span> mc_samples[<span class="st">&quot;bAR&quot;</span>]</span>
-<span id="cb57-2"><a href="variational-inference.html#cb57-2" aria-hidden="true" tabindex="-1"></a>mc_slope_outside_africa <span class="op">=</span> mc_samples[<span class="st">&quot;bR&quot;</span>]</span>
-<span id="cb57-3"><a href="variational-inference.html#cb57-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-4"><a href="variational-inference.html#cb57-4" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb57-5"><a href="variational-inference.html#cb57-5" aria-hidden="true" tabindex="-1"></a>plt.hist(mc_slope_within_africa.detach().numpy(), label<span class="op">=</span><span class="st">&quot;Arican nations&quot;</span>)<span class="op">;</span></span>
-<span id="cb57-6"><a href="variational-inference.html#cb57-6" aria-hidden="true" tabindex="-1"></a>plt.hist(mc_slope_outside_africa.detach().numpy(), label<span class="op">=</span><span class="st">&quot;Non-Arican nations&quot;</span>)<span class="op">;</span></span>
-<span id="cb57-7"><a href="variational-inference.html#cb57-7" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">&quot;MCMC Estimated Density of Slope : log(GDP) vs. Terrain Ruggedness&quot;</span>)<span class="op">;</span></span>
-<span id="cb57-8"><a href="variational-inference.html#cb57-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;Slope of regression line&quot;</span>)</span>
-<span id="cb57-9"><a href="variational-inference.html#cb57-9" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb57-10"><a href="variational-inference.html#cb57-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-26-7.png" width="960" /></p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb58-1"><a href="variational-inference.html#cb58-1" aria-hidden="true" tabindex="-1"></a>mc_slope_within_africa <span class="op">=</span> mc_samples[<span class="st">&quot;bR&quot;</span>] <span class="op">+</span> mc_samples[<span class="st">&quot;bAR&quot;</span>]</span>
+<span id="cb58-2"><a href="variational-inference.html#cb58-2" aria-hidden="true" tabindex="-1"></a>mc_slope_outside_africa <span class="op">=</span> mc_samples[<span class="st">&quot;bR&quot;</span>]</span>
+<span id="cb58-3"><a href="variational-inference.html#cb58-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-4"><a href="variational-inference.html#cb58-4" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb58-5"><a href="variational-inference.html#cb58-5" aria-hidden="true" tabindex="-1"></a>plt.hist(mc_slope_within_africa.detach().numpy(), label<span class="op">=</span><span class="st">&quot;Arican nations&quot;</span>)<span class="op">;</span></span>
+<span id="cb58-6"><a href="variational-inference.html#cb58-6" aria-hidden="true" tabindex="-1"></a>plt.hist(mc_slope_outside_africa.detach().numpy(), label<span class="op">=</span><span class="st">&quot;Non-Arican nations&quot;</span>)<span class="op">;</span></span>
+<span id="cb58-7"><a href="variational-inference.html#cb58-7" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">&quot;MCMC Estimated Density of Slope : log(GDP) vs. Terrain Ruggedness&quot;</span>)<span class="op">;</span></span>
+<span id="cb58-8"><a href="variational-inference.html#cb58-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;Slope of regression line&quot;</span>)</span>
+<span id="cb58-9"><a href="variational-inference.html#cb58-9" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb58-10"><a href="variational-inference.html#cb58-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<div class="figure">
+<img src="figure/unnamed-chunk-14-7.png" alt="" />
+<p class="caption">plot of chunk unnamed-chunk-14</p>
+</div>
 </div>
 <div id="takeaways" class="section level2 hasAnchor" number="4.4">
 <h2><span class="header-section-number">4.4</span> Takeaways<a href="variational-inference.html#takeaways" class="anchor-section" aria-label="Anchor link to header"></a></h2>
