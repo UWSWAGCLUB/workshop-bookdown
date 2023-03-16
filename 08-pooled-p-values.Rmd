@@ -14,24 +14,26 @@ opts_chunk$set(tidy.opts=list(width.cutoff=70),tidy=TRUE)
 
 *Chris Salahub*
 
+When presented with a large number of $p$-values from a large number of tests, we occasionally want to be lazy. Rather than fitting a big model or working very hard to try and make sense of each value individually in context, we'd like to have a quick means of telling whether the $p$-values are worth looking at more closely.
+
 ## A motivating example
 
-Let's say we have collected a bunch of genetic data and would like to identify which genes are related to some observed trait. We'll start by defining some terms to make describing things easier.
+Let's say, for example, we've collected a bunch of genetic data and would like to identify which genes are related to a physical trait. We'll start by defining some terms to make description easier.
 
 - **DNA**: genetic information that is passed between generations and is stored in several big molecules made up of many small molecules called nucleotides
 - **genome**: all the DNA of an organism
 - **gene**: a segment of DNA that gives the blueprint for a particular protein
 - **chromosomes**: one of the several big molecules making up the genome
-- **marker**: a sequence of nucleotides measured at a known position in DNA
+- **marker**: a segment of DNA measured at a known position
 - **sex**: the creation of an organism in a new generation by recombining DNA from two organisms in the previous generation
-- **recombination**: when DNA is changed slightly by segments of DNA literally crossing each other and switching or chromosomes being inherited independently, pictorially: ![Recombination (from https://www.genome.gov/genetics-glossary/homologous-recombination)](figs/Homologous-recombination.jpg){width=100%}
+- **recombination**: when DNA is changed slightly between generations by segments of DNA literally crossing each other and switching or chromosomes being inherited independently, pictorially: ![Recombination (from https://www.genome.gov/genetics-glossary/homologous-recombination)](figs/Homologous-recombination.jpg){width=100%}
 - **centiMorgans**: an additive measure of distance on DNA, for two markers which have probability $q$ of being separated during sex the distance in centiMorgans is $d = 50 \ln \frac{1}{1 - 2q}$
 
 So, when we talk about genetic data, we mean **markers** at known positions on **chromosomes** which ideally span the whole **genome** of a sample of organisms. We pair this data with a physical measurement - in humans examples include height, eye colour, hair colour, or the presence of a disease - to determine how much physical variation can be explained by genetic variation.
 
-Physical traits that are linked to genetics are either Mendelian or non-Mendelian (you can guess which came first). Mendelian traits have variation explained by one (or very few) gene(s), take eye colour which is mostly down to the gene *OCA2*. Non-Mendelian traits, like height, have variation which cannot be attributed to one (or a handful of) genetic region(s) alone.
+Physical traits that are linked to genetics are either Mendelian or non-Mendelian (you can guess which came first). Mendelian traits have variation explained by one (or very few) gene(s), take eye colour in humans which is mostly down to the gene *OCA2*. Non-Mendelian traits, like height, have variation which cannot be attributed to one (or a handful of) genetic region(s) alone.
 
-To identify which measured markers are related to a physical trait, a host of significance tests are typically computed to assay the impact of each. While this is not optimal compared to a linear model, it is frequently the only option for genetic studies which collect hundred of thousands of markers for only a few dozen individuals. Difficulty fitting a model practically means we must filter these markers first.
+To identify which measured markers are related to a physical trait, a host of significance tests are typically computed to assay the impact of each. While this is not the best way to do this, a linear model would do much better, it is frequently the only option for genetic studies which collect hundred of thousands of markers for only a few dozen individuals. Difficulty fitting a model practically means we must filter these markers first.
 
 Before even pointing our finger at a subset of genes, however, we might want to save time by asking whether there is anything interesting happening *at all* in this collection of tests. That is where pooled $p$-values come in.
 
@@ -40,9 +42,8 @@ Before even pointing our finger at a subset of genes, however, we might want to 
 Our ideal data set would involve humans. Genomics mostly strives to better understand the genetic sources of human diseases and traits to help create better medicine and understand ourselves more fully. Unfortunately, human data is pretty hard to come by ethically, and mice data is a lot easier to find. The code below pulls some that is freely available from [Mouse Genome Informatics](https://www.informatics.jax.org/).
 
 ```{r}
-## this script provides a means of downloading mouse genomic data from the
-## mouse genome database (MGD), an online repository of data on mouse
-## genetics
+## this script downloads mouse genomic data from the mouse genome 
+## database (MGD), an online repository of data on mouse genetics
 ## all the data is stored in text files at
 mgiUrl <- "https://www.informatics.jax.org/downloads/reports/"
 ## we'll be looking at data from
@@ -51,7 +52,7 @@ mgiPName <- "MGI_JAX_BSB_Panel.rpt"
 mgiMNames <- c("MRK_List1.rpt", "MRK_List2.rpt")
 
 ## this function reads in MGI text files, which are basically organized
-## as a tab-separated data frame with extra information
+## as a tab-separated table with extra information
 readMGIrpt <- function(file) {
     raw <- scan(file, what = character(), sep = "\n") # most basic R input
     leg <- which(raw == "Legend:") # identify the legend rows
@@ -95,7 +96,8 @@ readMGIlists <- function(fileList = paste0(mgiUrl, mgiMNames)) {
     splits <- lapply(lists, strsplit, split = "\t") # split by tabs
     colnms <- splits[[1]][[1]] # column names
     data <- do.call(rbind, # covert into one big matrix
-                    lapply(splits, function(splt) do.call(rbind, splt[-1])))
+                    lapply(splits, 
+                           function(splt) do.call(rbind, splt[-1])))
     colnames(data) <- colnms
     as.data.frame(data)
 }
@@ -108,7 +110,7 @@ processcMs <- function(inds, tab) {
 }
 
 ## this function goes through a processed panel from the above functions
-## and drops the measurements that have un
+## and drops the measurements that are NA or Inf
 filterPanelBycM <- function(panel, locs) {
     locOrd <- order(locs) # order position
     toKeep <- is.finite(locs[locOrd]) # drop NAs and Infs
@@ -149,9 +151,9 @@ summary(mgiFiltered)
 dim(mgiFiltered$data)
 ```
 
-In the end, after reading and cleaning the data, we have 94 mice each measured at 1598 marker locations. We are still in the unfortunate position of lacking physical measurements for any of the 94 mice on this panel, but can still generate pseudo $p$-values. For Mendelian traits, we can pick a marker and generate a trait based solely on its value, while non-Mendelian traits will require the selection of numerous locations which may not contribute equally.
+In the end, after reading and cleaning the data, we have 94 mice each measured at 1598 marker locations. We are still in the unfortunate position of lacking physical measurements for any of the 94 mice on this panel, but we won't let that stop our workshop! To mimic Mendelian traits, we can pick a marker and generate a trait based solely on its value, while mimicking non-Mendelian traits requires the selection of numerous locations which may not contribute equally.
 
-For now, let's keep this as simple as possible by ensuring independence. Chromosomes assort independently, so if we take one marker from each chromosome we should have independent markers.
+For now, let's keep this as simple as possible by ensuring independence and equal contributions of each marker. Chromosomes assort independently, so if we take one marker from each chromosome we should have independent markers.
 
 ```{r}
 ## match in this context will give the index of the first marker on
@@ -162,9 +164,9 @@ mgiIndep <- mgiFiltered$data[,match(c(1:19, "X"),
 image(cor(mgiIndep))
 ```
 
-To simulate a Mendelian trait, we'll simply add noise to the first marker. For non-Mendelian inheritance, let's just take the average of all markers and add noise.
+To simulate a Mendelian trait, we'll simply add noise to the first marker. For non-Mendelian inheritance, let's take the average of all markers and add noise.
 
-```{r}
+```{r, fig.show = "hold", out.width = "50%"}
 set.seed(2314)
 traitMendel <- mgiIndep[,1] + rnorm(94, sd = 0.3)
 plot(density(traitMendel)) # what mendelian traits look like
@@ -178,18 +180,23 @@ Finally, we can compute $p$-values for each marker and the traits based on the c
 ```{r}
 ## based on the mendelian trait
 (pMendel <- apply(mgiIndep, 2, 
-                 function(col) cor.test(traitMendel, col)$p.value))
+                 function(col) cor.test(traitMendel, col,
+                                        method = "kendall")$p.value))
 
 ## based on the non-mendelian trait
 (pnonMendel <- apply(mgiIndep, 2, 
-                    function(col) cor.test(traitNonMend, col)$p.value))
+                    function(col) cor.test(traitNonMend, col,
+                                           method = "kendall")$p.value))
 ```
 
 ```{r}
 ## some null cases
 pNull <- replicate(1000, 
                    apply(mgiIndep, 2,
-                         function(col) cor.test(runif(94), col)$p.value))
+                         function(col) {
+                           cor.test(runif(94), col,
+                                    method = "kendall")$p.value
+                           }))
 head(t(pNull))
 ```
 
@@ -244,7 +251,7 @@ We can now compute the pooled $p$-values of our earlier Mendelian and non-Mendel
 (poolNonMend <- lapply(pools, function(f) f(pnonMendel)))
 ```
 
-All methods agree for the first set of $p$-values (not too surprising given that the first $p$-value is less than $1 \times 10^{-27}$), but the non-Mendelian case leads to some interesting differences. Let's look at the two sets of $p$-values again:
+All methods lead to rejection at $\alpha = 0.05$ for the for the first set of $p$-values (not too surprising given that the first $p$-value is less than $1 \times 10^{-15}$), but the non-Mendelian case leads to some interesting differences. Let's look at the two sets of $p$-values again:
 
 ```{r}
 rbind("Mendel" = round(pMendel, 2),
@@ -252,12 +259,12 @@ rbind("Mendel" = round(pMendel, 2),
 ```
 When only one marker is responsible for the variation in the trait, a single $p$-value is highly significant. In the case of many responsible markers the $p$-values are not so obviously significant, with the smallest one barely less than 0.05. Rather, this case has a greater number of small $p$-values than we would expect by chance if all are truly uniform and independent, a fact more easily seen by viewing a histogram of the two sets of $p$-values.
 
-```{r, figures-side, fig.show = "hold", out.width = "50%"}
-hist(pMendel, breaks = seq(0, 1, by = 0.2), ylim = c(0,12))
-hist(pnonMendel, breaks = seq(0, 1, by = 0.2), ylim = c(0,12))
+```{r, fig.show = "hold", out.width = "50%"}
+hist(pMendel, breaks = seq(0, 1, by = 0.2), ylim = c(0,10))
+hist(pnonMendel, breaks = seq(0, 1, by = 0.2), ylim = c(0,10))
 ```
 
-Though the proof is beyond the scope of this workshop, it turns out the ordering of $g_{Tip}$, $g_{Fis}$, and $g_{Sto}$ for the non-Mendelian case reflects a deeper concept. Broadly, *any* pooled $p$-value is sensitive to either a large number of weakly significant $p$-values or a small number of strongly significant $p$-values. There is a fundamental trade-off between these two cases for any pooled $p$-value, which we can visualize crudely using the mean and minimum values of each simulated null sample in `pNull`. The following plot shows the pooled $p$-value for each method by the mean of the sample, meant to represent the evidence spread broadly. Point sizes for each mean value are scaled by the minimum $p$-value, meant to represent concentrated evidence in one test.
+Though the proof is beyond the scope of this workshop, it turns out the ordering $g_{Tip} < g_{Fis} < g_{Sto}$ in the Mendelian case being flipped to $g_{Tip} > g_{Fis} > g_{Sto}$ in the non-Mendelian case reflects a deeper concept. Broadly, *any* pooled $p$-value is sensitive to either a large number of weakly significant $p$-values or a small number of strongly significant $p$-values. There is a fundamental trade-off between these two cases for any pooled $p$-value, which we can visualize crudely using the mean and minimum values of each simulated null sample in `pNull`. The following plot shows the pooled $p$-value for each method by the mean of the sample, meant to represent the evidence spread broadly. Point sizes for each mean value are scaled by the minimum $p$-value, meant to represent concentrated evidence in one test.
 
 ```{r}
 ## compute medians for each sample
@@ -287,7 +294,7 @@ legend(x = "topleft",
        pch = 16)
 ```
 
-Note how $g_{Sto}$ is increasing almost monotonically in the mean, with large and small points spread evenly throughout the line for each mean value. $g_{Fis}$, as suggested by its position giving a $p$-value between $g_{Sto}$ and $g_{Tip}$, follows this line somewhat, but is somewhat sensitive to the minimum. The large points, indicating samples with large minimum values, tend to have a larger $p$-value than the $g_{Sto}$ line while the small points, samples with small minimum values, tend to have a smaller $p$-value. $g_{Tip}$ barely follows the line at all, the only relationship we can see in the green points is between the size of the point and its $y$-value.
+Note how $g_{Sto}$ is increasing almost monotonically in the mean, with large and small points spread mixed within the line for each mean value. $g_{Fis}$, as suggested by its position giving a $p$-value between $g_{Sto}$ and $g_{Tip}$, follows this line somewhat, but is sensitive to the minimum. The large points, indicating samples with large minimum values, tend to have a larger $p$-value than the $g_{Sto}$ line while the small points, samples with small minimum values, tend to have a smaller $p$-value. $g_{Tip}$ barely follows the line at all, the only relationship we can see in the green points is between the size of the point and its $y$-value.
 
 All of this to say:
 
@@ -314,17 +321,17 @@ library(poolr)
 (ptNM <- tippett(pnonMendel, adjust = "none"))
 ```
 
-We might immediately notice that this is more accurate for the small $p$-value occurring in the Mendelian example and has some slightly different values for the non-Mendelian example. This is a direct result of the way `gquant` is defined, we can achieve the same result as `poolr` by using the `lower.tail` argument rather than subtracting values from 1. Computational statistics is not quite the same as mathematical statistics (making all of our lives harder).
+We might immediately notice that this is more accurate for the small $p$-values occurring in the Mendelian example and has some slightly different values for the non-Mendelian example. This is a direct result of the way `gquant` is defined, we can achieve the same result as `poolr` by using the `lower.tail` argument rather than subtracting values from 1. Computational statistics is not quite the same as mathematical statistics (making all of our lives harder).
 
 ```{r}
-## our function gave a zero for gsto and the mendelian data, can we
-## recreate poolr's 0.0019?
+## our function for gsto gave 0.01616983 for the mendelian data, can we
+## recreate poolr's 0.01652?
 pnorm(sum(qnorm(pMendel, lower.tail = FALSE))/sqrt(20), 
       lower.tail = FALSE)
 ```
-In any case, the ordering with these more accurate $p$-values mirrors the non-Mendelian case. When evidence is concentrated in one test $g_{Tip} < g_{Fis} < g_{Sto}$ while when evidence is spread $g_{Tip} > g_{Fis} > g_{Sto}$.
+In any case, the ordering with these more accurate $p$-values is identical to the ordering from our functions. When evidence is concentrated in one test $g_{Tip} < g_{Fis} < g_{Sto}$ while when evidence is spread $g_{Tip} > g_{Fis} > g_{Sto}$.
 
-With that very brief exploration out of the way, we can define some correlated data using our filtered panel from before. Let's take a random sample of markers on chromosome 1.
+With that brief exploration out of the way, we can define some correlated data using our filtered panel from before. Let's take a random sample of markers on chromosome 1.
 
 ```{r}
 set.seed(124093)
@@ -361,13 +368,15 @@ plot(density(depNonMend))
 ## these look basically the same as before, despite the correlations
 ## what about the p-values?
 (pMendelDep <- apply(mgiDep, 2, 
-                     function(col) cor.test(depMendel, col)$p.value))
+                     function(col) cor.test(depMendel, col,
+                                            method = "kendall")$p.value))
 
 ## based on the non-mendelian trait
 (pNonMenDep <- apply(mgiDep, 2, 
-                     function(col) cor.test(depNonMend, col)$p.value))
+                     function(col) cor.test(depNonMend, col,
+                                            method = "kendall")$p.value))
 ```
-Dependence between the tests pulls the $p$-values down universally. While in the previous case only a handful of tests would lead to rejection at the canonical $\alpha = 0.05$, almost every test is rejected in both cases here. If we did not account for this known correlation, our pooled $p$-values will be universally smaller as a result and we will reject $H_0$ far more often than we should. Do the adjustments make a difference?
+Dependence between the tests pulls the $p$-values down universally. While in the previous case only a handful of tests would lead to rejection at the canonical $\alpha = 0.05$, almost most tests lead to rejection in both cases here. If we do not account for this known correlation, our pooled $p$-values will be universally smaller as a result and we will reject $H_0$ far more often than we should. Do the adjustments make a difference?
 
 ```{r}
 ## trying all effective test adjustments on both data sets
@@ -391,7 +400,7 @@ rbind(Tippett = adjMenTip["p",], Fisher = adjMenFis["p",], Stouffer = adjMenSto[
 ## and "effective number of tests"
 rbind(Tippett = adjMenTip["m",], Fisher = adjMenFis["m",], Stouffer = adjMenSto["m",])
 ```
-These adjustments definitely help reduce our problem, every single $p$-value increased considerably, but they disagree considerably on the effective number of tests. It's worth noting that the effective number of tests here has nothing to do with our Mendelian generation of traits, it looks at the correlations alone. This makes its interpretation difficult, to say the least. Perhaps the non-Mendelian case will fare better.
+These adjustments definitely help reduce our problem, the pooled $p$-values for $g_{Sto}$ and $g_{Fis}$ increased, but they disagree on the effective number of tests. It's worth noting that this effective number of tests has nothing to do with our Mendelian generation of traits, it looks at the correlations alone. This makes its interpretation difficult, to say the least. Perhaps the non-Mendelian case will fare better.
 
 ```{r}
 suppressWarnings(adjNMFis <- sapply(adjustments,
@@ -420,7 +429,7 @@ Supposing that we correctly identify that $m = M - l + 1$ and letting $y^*$ repr
 
 $$\frac{M - l + 1}{M} \left ( \sum_{i=1}^{M-l} x_i + l y^* \right ).$$
 
-Now, if $x_i \sim \chi^2_{(2)}$ and $y^* \sim \chi^2_{(2)}$ all independently and identically (We're using $g_{Fis}$), this sum is not generally $\chi^2$ distributed. The same is true for the rescaled statistic of Stouffer's method. Why these theoretically invalid methods with unclear interpretations were included in `poolr` is unclear, but they probably shouldn't be used.
+Now, if $x_i \sim \chi^2_{(2)}$ and $y^* \sim \chi^2_{(2)}$ all independently and identically (we're using $g_{Fis}$), this sum is not generally $\chi^2$ distributed. The same is true for the rescaled statistic of Stouffer's method. Why these theoretically invalid methods with vague interpretations were included in `poolr` is unclear, but they probably shouldn't be used.
 
 ### A better way
 
@@ -446,7 +455,7 @@ rbind(Fisher = adjMenFis["p", ], Tippett = c(adjMenTip["p", ], NA),
       Stouffer = c(adjMenSto["p", ]))
 ```
 
-For the Mendelian case, we can see the highly inflated significance is reduced more by the empirical and generalized methods, which produce $p$-values similar to the independent case. This is a bit deceptive for the empirical version, as it is based on simulation and so can't report $p$-values less than $1/n_r$ where $n_r$ is the number of repetitions. For the generalized method, at least, that the $p$-value for Stouffer is closer to the independent case suggests this combination is accounting for dependence more successfully. As the generation method is identical for the independent and dependent case, we might expect close $p$-values.
+For the Mendelian case, this makes a huge difference. We can see the highly inflated significance is reduced more by the empirical and generalized methods, which produce $p$-values closer to the independent case. This is a bit deceptive for the empirical version, as it is based on simulation and so can't report $p$-values less than $1/n_r$ where $n_r$ is the number of simulation runs. For the generalized method, at least, that the $p$-value for Stouffer is closer to the independent case suggests this combination is accounting for dependence more successfully: as the generation method is identical for the independent and dependent case, we might expect close $p$-values.
 
 ```{r}
 ## compare the resulting p-values
@@ -464,4 +473,10 @@ rbind(Fisher = adjNMFis["p", ], Tippett = c(adjNMTip["p", ], NA),
       Stouffer = c(adjNMSto["p", ]))
 ```
 
-Of course, the drawback of the empirical method in particular is that is does not capture the tail behaviour of these methods well. The same $p$-value is repeated for all methods across both the Mendelian and non-Mendelian cases based purely on the number of simulated repetitions performed. Unfortunately, increasing the number of repetitions defeats the purpose of pooled $p$-values, as it increases the computational burden.
+The non-Mendelian case shows exactly how the empirical version breaks down. Not a single simulated example was less than the observed values for any of our pooled $p$-values, and so all report the same small $p$-value. We could solve this issue by running a larger simulation, but increasing the number of repetitions defeats the purpose of pooled $p$-values. These are meant to be quick diagnostics, and so should present no computational burden.
+
+## Take aways
+
+- when you're feeling lazy and have a bunch of $p$-values, try pooling them
+- pooled $p$-values have a fundamental trade-off between looking for a few highly significant values or many weakly significant values
+- not all adjustments for dependence are equal, make sure you use theoretically valid and interpretable ones
