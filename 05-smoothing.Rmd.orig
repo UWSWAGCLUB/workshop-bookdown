@@ -4,6 +4,7 @@
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 knitr::opts_chunk$set(cache = TRUE)
 knitr::opts_chunk$set(tidy.opts=list(width.cutoff=70),tidy=TRUE)
+knitr::opts_chunk$set(fig.path = "figure/smooth/")
 ```
 
 \newpage

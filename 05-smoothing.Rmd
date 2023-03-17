@@ -22,6 +22,26 @@ The variable *lstat* measures the percentage of individuals with lower socioecon
 
 ```r
 library(MASS)
+```
+
+```
+## 
+## Attaching package: 'MASS'
+```
+
+```
+## The following object is masked _by_ '.GlobalEnv':
+## 
+##     select
+```
+
+```
+## The following object is masked from 'package:dplyr':
+## 
+##     select
+```
+
+```r
 y = Boston$medv
 x = Boston$lstat
 y.lab = "Median Property Value"
@@ -30,7 +50,7 @@ plot(x, y, cex.lab = 1.1, col = "darkgrey", xlab = x.lab, ylab = y.lab,
     main = "", bty = "l")
 ```
 
-![](figure/unnamed-chunk-2-1.png)
+![plot of chunk unnamed-chunk-2](figure/smooth/unnamed-chunk-2-1.png)
 
 
 ```r
@@ -54,7 +74,7 @@ legend(max(xrange) - 15, max(extendrange(y)), legend = c("5 nearest neighbours",
     "B-spline df=4"), lty = c(1, 1), lwd = 2, col = c("steelblue", "darkgreen"))
 ```
 
-![](figure/unnamed-chunk-3-1.png)
+![plot of chunk unnamed-chunk-3](figure/smooth/unnamed-chunk-3-1.png)
 
 
 ## Kernel Smoothing Methods
@@ -109,7 +129,7 @@ legend(max(xrange) - 15, max(extendrange(y)), legend = c("span=0.05", "span=0.3"
     lty = c(1, 1), lwd = 2, col = c("steelblue", "darkgreen"))
 ```
 
-![](figure/unnamed-chunk-4-1.png)
+![plot of chunk unnamed-chunk-4](figure/smooth/unnamed-chunk-4-1.png)
 
 
 #### Bias and vairance
@@ -200,7 +220,7 @@ plot(x, y, cex.lab = 1.1, col = "darkgrey", xlab = x.lab, ylab = y.lab,
 lines(smooth2, lwd = 2, col = "darkorange")
 ```
 
-![](figure/unnamed-chunk-5-1.png)
+![plot of chunk unnamed-chunk-5](figure/smooth/unnamed-chunk-5-1.png)
 
 ### Extension and example: Nonparametric logistic regression
 

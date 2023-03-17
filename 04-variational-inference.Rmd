@@ -277,7 +277,7 @@ ax[1].set(xlabel="Terrain Ruggedness Index",
 plt.show()
 ```
 
-![](figure/unnamed-chunk-4-1.png)
+![plot of chunk unnamed-chunk-4](figure/vi/unnamed-chunk-4-1.png)
 
 A simple model to capture the relationship is 
 \[Y = \alpha + \beta_aX_a + \beta_rX_r + \beta_{ar} X_aX_r +\epsilon, \ \ \epsilon\sim\mathcal{N}(0,\sigma^2)\]
@@ -300,11 +300,6 @@ def freq_model(is_cont_africa, ruggedness, log_gdp=None):
 
 pyro.render_model(freq_model, model_args=(is_cont_africa, ruggedness, log_gdp), 
                   render_distributions=True, render_params=True, filename="freq_model.png");
-```
-
-```
-## /home/m372chen/swagclub/swag-env/lib/python3.10/site-packages/torch/cuda/__init__.py:497: UserWarning: Can't initialize NVML
-##   warnings.warn("Can't initialize NVML")
 ```
 ![](figure/freq_model.png){width=70%}
 We can also define a Bayesian version of it called `bayes_model` as follows. This model simply replaces `pyro.param` with `pyro.sample`, so that the parameters are viewed as random variables following some (prior) distributions. Similarly, we call `render_model()` to visualize it. Between the Bayesian model and the frequentist model, we will use the former for demonstration here.
@@ -412,7 +407,7 @@ plt.ylabel("ELBO loss")
 plt.show()
 ```
 
-![](figure/unnamed-chunk-8-3.png)
+![plot of chunk unnamed-chunk-8](figure/vi/unnamed-chunk-8-3.png)
 
 Below is the time taken to optimize the ELBO using the VI method.
 
@@ -421,7 +416,7 @@ print(vi_end-vi_start)
 ```
 
 ```
-## 5.156867742538452
+## 7.659164667129517
 ```
 
 Then we can print out the estimated variational parameters ($\boldsymbol{\omega}$), which are the mean and variance of each variational Normal distribution.
@@ -467,7 +462,7 @@ plt.legend()
 plt.show()
 ```
 
-![](figure/unnamed-chunk-11-5.png)
+![plot of chunk unnamed-chunk-11](figure/vi/unnamed-chunk-11-5.png)
 
 Finally, we can compare the VI to MCMC (NUTS, to be specific).
 
@@ -484,11 +479,11 @@ mcmc.summary()
 ```
 ## 
 ##                 mean       std    median      5.0%     95.0%     n_eff     r_hat
-##          a      9.19      0.14      9.19      8.95      9.42    537.96      1.00
-##         bA     -1.86      0.23     -1.86     -2.22     -1.48    497.48      1.00
-##        bAR      0.36      0.13      0.36      0.12      0.55    563.94      1.00
-##         bR     -0.19      0.08     -0.19     -0.31     -0.05    507.07      1.00
-##      sigma      0.95      0.05      0.95      0.86      1.03    648.89      1.00
+##          a      9.19      0.13      9.19      8.97      9.40    415.75      1.00
+##         bA     -1.85      0.21     -1.85     -2.21     -1.52    421.86      1.00
+##        bAR      0.35      0.13      0.35      0.15      0.56    419.50      1.00
+##         bR     -0.19      0.07     -0.19     -0.31     -0.07    422.04      1.00
+##      sigma      0.95      0.05      0.95      0.87      1.03    489.20      1.00
 ## 
 ## Number of divergences: 0
 ```
@@ -500,7 +495,7 @@ print(mc_end-mc_start)
 ```
 
 ```
-## 37.0686891078949
+## 55.938464641571045
 ```
 
 We can also plot the histograms of the MCMC samples of the two slopes. Compared to the histograms obtained using the VI, these don't look much different. 
@@ -518,7 +513,7 @@ plt.legend()
 plt.show()
 ```
 
-![](figure/unnamed-chunk-14-7.png)
+![plot of chunk unnamed-chunk-14](figure/vi/unnamed-chunk-14-7.png)
 
 ## Takeaways
 

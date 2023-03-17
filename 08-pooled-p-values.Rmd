@@ -172,7 +172,7 @@ mgiIndep <- mgiFiltered$data[, match(c(1:19, "X"), mgiFiltered$markers$chr)]
 image(cor(mgiIndep))
 ```
 
-![](figure/unnamed-chunk-3-1.png)
+![plot of chunk unnamed-chunk-3](figure/pooledpval/unnamed-chunk-3-1.png)
 
 To simulate a Mendelian trait, we'll simply add noise to the first marker. For non-Mendelian inheritance, let's take the average of all markers and add noise.
 
@@ -186,7 +186,7 @@ traitNonMend <- apply(mgiIndep[, 1:20], 1, mean) + rnorm(94, sd = 0.3)
 plot(density(traitNonMend))  # what non-mendelian traits look like
 ```
 
-<img src="figure/unnamed-chunk-4-1.png" title="" alt="plot of chunk unnamed-chunk-4" width="50%" /><img src="figure/unnamed-chunk-4-2.png" title="" alt="plot of chunk unnamed-chunk-4" width="50%" />
+<img src="figure/pooledpval/unnamed-chunk-4-1.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" width="50%" /><img src="figure/pooledpval/unnamed-chunk-4-2.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" width="50%" />
 
 Finally, we can compute $p$-values for each marker and the traits based on the correlation between them.
 
@@ -342,7 +342,7 @@ hist(pMendel, breaks = seq(0, 1, by = 0.2), ylim = c(0, 10))
 hist(pnonMendel, breaks = seq(0, 1, by = 0.2), ylim = c(0, 10))
 ```
 
-<img src="figure/unnamed-chunk-10-1.png" title="" alt="plot of chunk unnamed-chunk-10" width="50%" /><img src="figure/unnamed-chunk-10-2.png" title="" alt="plot of chunk unnamed-chunk-10" width="50%" />
+<img src="figure/pooledpval/unnamed-chunk-10-1.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" width="50%" /><img src="figure/pooledpval/unnamed-chunk-10-2.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" width="50%" />
 
 Though the proof is beyond the scope of this workshop, it turns out the ordering $g_{Tip} < g_{Fis} < g_{Sto}$ in the Mendelian case being flipped to $g_{Tip} > g_{Fis} > g_{Sto}$ in the non-Mendelian case reflects a deeper concept. Broadly, *any* pooled $p$-value is sensitive to either a large number of weakly significant $p$-values or a small number of strongly significant $p$-values. There is a fundamental trade-off between these two cases for any pooled $p$-value, which we can visualize crudely using the mean and minimum values of each simulated null sample in `pNull`. The following plot shows the pooled $p$-value for each method by the mean of the sample, meant to represent the evidence spread broadly. Point sizes for each mean value are scaled by the minimum $p$-value, meant to represent concentrated evidence in one test.
 
@@ -368,7 +368,7 @@ legend(x = "topleft", col = adjustcolor(c("firebrick", "steelblue", "seagreen"),
     pch = 16)
 ```
 
-![](figure/unnamed-chunk-11-1.png)
+![plot of chunk unnamed-chunk-11](figure/pooledpval/unnamed-chunk-11-1.png)
 
 Note how $g_{Sto}$ is increasing almost monotonically in the mean, with large and small points spread mixed within the line for each mean value. $g_{Fis}$, as suggested by its position giving a $p$-value between $g_{Sto}$ and $g_{Tip}$, follows this line somewhat, but is sensitive to the minimum. The large points, indicating samples with large minimum values, tend to have a larger $p$-value than the $g_{Sto}$ line while the small points, samples with small minimum values, tend to have a smaller $p$-value. $g_{Tip}$ barely follows the line at all, the only relationship we can see in the green points is between the size of the point and its $y$-value.
 
@@ -487,7 +487,7 @@ mgiDepCors <- cor(mgiDep)  # important for later
 image(mgiDepCors)
 ```
 
-![](figure/unnamed-chunk-14-1.png)
+![plot of chunk unnamed-chunk-14](figure/pooledpval/unnamed-chunk-14-1.png)
 
 
 ### The wrong way
@@ -550,7 +550,7 @@ plot(density(depNonMend))
 ## 1.402335e-08 4.300467e-08 1.911574e-07 1.440476e-09 1.113600e-08 2.161747e-05 8.946136e-06 3.646447e-05 1.550137e-04
 ```
 
-<img src="figure/unnamed-chunk-16-1.png" title="" alt="plot of chunk unnamed-chunk-16" width="50%" /><img src="figure/unnamed-chunk-16-2.png" title="" alt="plot of chunk unnamed-chunk-16" width="50%" />
+<img src="figure/pooledpval/unnamed-chunk-16-1.png" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" width="50%" /><img src="figure/pooledpval/unnamed-chunk-16-2.png" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" width="50%" />
 Dependence between the tests pulls the $p$-values down universally. While in the previous case only a handful of tests would lead to rejection at the canonical $\alpha = 0.05$, almost most tests lead to rejection in both cases here. If we do not account for this known correlation, our pooled $p$-values will be universally smaller as a result and we will reject $H_0$ far more often than we should. Do the adjustments make a difference?
 
 

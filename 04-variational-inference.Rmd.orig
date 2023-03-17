@@ -7,6 +7,7 @@ library(bookdown)
 opts_chunk$set(echo = TRUE, warning = FALSE)
 opts_chunk$set(cache = FALSE)
 opts_chunk$set(tidy.opts=list(width.cutoff=70),tidy=TRUE)
+opts_chunk$set(fig.path = "figure/vi/")
 ```
 
 \newpage
@@ -226,7 +227,7 @@ We can do the same with the VI. That is, we only need to provide the model formu
 
 ```{r, include=FALSE}
 library(reticulate)
-use_virtualenv("~/swagclub/swag-env")
+use_virtualenv("~/projects/swag-env")
 ```
 
 To install pyro, simply run `pip install pyro-ppl` in your terminal. First, we import the required packages and set up some system parameters.

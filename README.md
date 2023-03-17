@@ -16,7 +16,9 @@ This is a Github repository for the workshops given as part of the University of
 4. If your file takes over 30 secs to knit, or if your file requires packages that are not commonly used by most people (e.g. packages that are not `ggplot2`, 
 `dplyr`, `MASS`), go to step 5, otherwise, go to step 8.
 
-5. Rename your Rmd file from `my_chapter.rmd` to `my_chapter.rmd.orig` by `git mv my_chapter.rmd my_chapter.rmd.orig`.
+5. Rename your Rmd file from `my_chapter.rmd` to `my_chapter.rmd.orig` by `git mv my_chapter.rmd my_chapter.rmd.orig`. **A very important point** is to add this at the beginning of 
+your `.rmd.orig` file: `opts_chunk$set(fig.path = "figure/chapter_name/")`. This saves all the generated figures in one folder for your chapter. If you don't do this, the figures
+will be given random names and they might overwrite other existing figures from other chapters.
 
 6. Run `knitr::knit("my_chapter.Rmd.orig", output = "my_chapter.Rmd")`. This generates an Rmd file with figures and coded embedded but the code chunks are are not run.
 The generated plots are all saved in the figure folder. The resulted Rmd file takes zero time to knit now.
