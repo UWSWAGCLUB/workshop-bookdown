@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 4 Variational Inference | SWAG Workshops Repository</title>
   <meta name="description" content="Chapter 4 Variational Inference | SWAG Workshops Repository" />
-  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.30 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 4 Variational Inference | SWAG Workshops Repository" />
   <meta property="og:type" content="book" />
@@ -532,10 +532,7 @@ Note that <span class="math inline">\(\mathbb{E}[a ; b]\)</span> specifies the q
 <span id="cb41-22"><a href="variational-inference.html#cb41-22" aria-hidden="true" tabindex="-1"></a>          ylabel<span class="op">=</span><span class="st">&quot;log GDP (2000)&quot;</span>,</span>
 <span id="cb41-23"><a href="variational-inference.html#cb41-23" aria-hidden="true" tabindex="-1"></a>          title<span class="op">=</span><span class="st">&quot;African Nations&quot;</span>)</span>
 <span id="cb41-24"><a href="variational-inference.html#cb41-24" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
-<div class="figure">
-<img src="figure/unnamed-chunk-4-1.png" alt="" />
-<p class="caption">plot of chunk unnamed-chunk-4</p>
-</div>
+<p><img src="figure/unnamed-chunk-4-1.png" /></p>
 <p>A simple model to capture the relationship is
 <span class="math display">\[Y = \alpha + \beta_aX_a + \beta_rX_r + \beta_{ar} X_aX_r +\epsilon, \ \ \epsilon\sim\mathcal{N}(0,\sigma^2)\]</span>
 where <span class="math inline">\(Y\)</span> is the log GDP, <span class="math inline">\(X_a\)</span> is an indicator for whether the nation is in Africa, <span class="math inline">\(X_r\)</span> is the ruggedness index, and <span class="math inline">\(\epsilon\)</span> is the noise term.</p>
@@ -556,7 +553,7 @@ where <span class="math inline">\(Y\)</span> is the log GDP, <span class="math i
 <span id="cb42-14"><a href="variational-inference.html#cb42-14" aria-hidden="true" tabindex="-1"></a>                  render_distributions<span class="op">=</span><span class="va">True</span>, render_params<span class="op">=</span><span class="va">True</span>, filename<span class="op">=</span><span class="st">&quot;freq_model.png&quot;</span>)<span class="op">;</span></span></code></pre></div>
 <pre><code>## /home/m372chen/swagclub/swag-env/lib/python3.10/site-packages/torch/cuda/__init__.py:497: UserWarning: Can&#39;t initialize NVML
 ##   warnings.warn(&quot;Can&#39;t initialize NVML&quot;)</code></pre>
-<p><img src="freq_model.png" style="width:70.0%" />
+<p><img src="figure/freq_model.png" style="width:70.0%" />
 We can also define a Bayesian version of it called <code>bayes_model</code> as follows. This model simply replaces <code>pyro.param</code> with <code>pyro.sample</code>, so that the parameters are viewed as random variables following some (prior) distributions. Similarly, we call <code>render_model()</code> to visualize it. Between the Bayesian model and the frequentist model, we will use the former for demonstration here.</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb44-1"><a href="variational-inference.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> bayes_model(is_cont_africa, ruggedness, log_gdp<span class="op">=</span><span class="va">None</span>):</span>
 <span id="cb44-2"><a href="variational-inference.html#cb44-2" aria-hidden="true" tabindex="-1"></a>    a <span class="op">=</span> pyro.sample(<span class="st">&quot;a&quot;</span>, dist.Normal(<span class="fl">0.</span>, <span class="fl">10.</span>))</span>
@@ -571,7 +568,7 @@ We can also define a Bayesian version of it called <code>bayes_model</code> as f
 <span id="cb44-11"><a href="variational-inference.html#cb44-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> pyro.sample(<span class="st">&quot;obs&quot;</span>, dist.Normal(mean, sigma), obs<span class="op">=</span>log_gdp)</span>
 <span id="cb44-12"><a href="variational-inference.html#cb44-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-13"><a href="variational-inference.html#cb44-13" aria-hidden="true" tabindex="-1"></a>pyro.render_model(bayes_model, model_args<span class="op">=</span>(is_cont_africa, ruggedness, log_gdp), render_distributions<span class="op">=</span><span class="va">True</span>, filename<span class="op">=</span><span class="st">&quot;bayes_model.png&quot;</span>)<span class="op">;</span></span></code></pre></div>
-<p><img src="bayes_model.png" style="width:70.0%" /></p>
+<p><img src="figure/bayes_model.png" style="width:70.0%" /></p>
 <p>In the context of Pyro, the variational distribution is called a “guide”. To specify the variational family we want, we need to define a guide program as follows. The code is very similar to that of the model. The custom guide we define below uses mean-field variational inference, i.e., all parameters have independent variational distributions in the form of Gaussian.</p>
 <ul>
 <li><p><span class="math inline">\(q(\alpha\mid \mu_\alpha, \sigma^2_\alpha) = \mathcal{N}(\mu_\alpha, \sigma^2_\alpha)\)</span></p></li>
@@ -597,7 +594,7 @@ We can also define a Bayesian version of it called <code>bayes_model</code> as f
 <span id="cb45-15"><a href="variational-inference.html#cb45-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {<span class="st">&quot;a&quot;</span>: a, <span class="st">&quot;b_a&quot;</span>: b_a, <span class="st">&quot;b_r&quot;</span>: b_r, <span class="st">&quot;b_ar&quot;</span>: b_ar, <span class="st">&quot;sigma&quot;</span>: sigma}</span>
 <span id="cb45-16"><a href="variational-inference.html#cb45-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb45-17"><a href="variational-inference.html#cb45-17" aria-hidden="true" tabindex="-1"></a>pyro.render_model(custom_guide, model_args<span class="op">=</span>(is_cont_africa, ruggedness, log_gdp), render_params<span class="op">=</span><span class="va">True</span>, filename<span class="op">=</span><span class="st">&quot;custom_guide.png&quot;</span>)<span class="op">;</span></span></code></pre></div>
-<p><img src="custom_guide.png" style="width:70.0%" /></p>
+<p><img src="figure/custom_guide.png" style="width:70.0%" /></p>
 <p>To implement variational inference in Pyro, we use its stochastic variational inference functionality <code>pyro.infer.SVI()</code>, which takes in four arguments:</p>
 <ul>
 <li><p>Model: <code>bayes_model</code></p></li>
@@ -637,10 +634,7 @@ We can also define a Bayesian version of it called <code>bayes_model</code> as f
 <span id="cb48-5"><a href="variational-inference.html#cb48-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;SVI step&quot;</span>)</span>
 <span id="cb48-6"><a href="variational-inference.html#cb48-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&quot;ELBO loss&quot;</span>)</span>
 <span id="cb48-7"><a href="variational-inference.html#cb48-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
-<div class="figure">
-<img src="figure/unnamed-chunk-8-3.png" alt="" />
-<p class="caption">plot of chunk unnamed-chunk-8</p>
-</div>
+<p><img src="figure/unnamed-chunk-8-3.png" /></p>
 <p>Below is the time taken to optimize the ELBO using the VI method.</p>
 <div class="sourceCode" id="cb49"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb49-1"><a href="variational-inference.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(vi_end<span class="op">-</span>vi_start)</span></code></pre></div>
 <pre><code>## 5.156867742538452</code></pre>
@@ -675,10 +669,7 @@ We can also define a Bayesian version of it called <code>bayes_model</code> as f
 <span id="cb53-10"><a href="variational-inference.html#cb53-10" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;Slope of regression line&quot;</span>)</span>
 <span id="cb53-11"><a href="variational-inference.html#cb53-11" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
 <span id="cb53-12"><a href="variational-inference.html#cb53-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
-<div class="figure">
-<img src="figure/unnamed-chunk-11-5.png" alt="" />
-<p class="caption">plot of chunk unnamed-chunk-11</p>
-</div>
+<p><img src="figure/unnamed-chunk-11-5.png" /></p>
 <p>Finally, we can compare the VI to MCMC (NUTS, to be specific).</p>
 <div class="sourceCode" id="cb54"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb54-1"><a href="variational-inference.html#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyro.infer <span class="im">import</span> MCMC, NUTS</span>
 <span id="cb54-2"><a href="variational-inference.html#cb54-2" aria-hidden="true" tabindex="-1"></a>mcmc <span class="op">=</span> MCMC(NUTS(bayes_model), num_samples<span class="op">=</span><span class="dv">1000</span>, warmup_steps<span class="op">=</span><span class="dv">1000</span>, disable_progbar<span class="op">=</span><span class="va">True</span>)</span>
@@ -710,10 +701,7 @@ We can also define a Bayesian version of it called <code>bayes_model</code> as f
 <span id="cb58-8"><a href="variational-inference.html#cb58-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;Slope of regression line&quot;</span>)</span>
 <span id="cb58-9"><a href="variational-inference.html#cb58-9" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
 <span id="cb58-10"><a href="variational-inference.html#cb58-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
-<div class="figure">
-<img src="figure/unnamed-chunk-14-7.png" alt="" />
-<p class="caption">plot of chunk unnamed-chunk-14</p>
-</div>
+<p><img src="figure/unnamed-chunk-14-7.png" /></p>
 </div>
 <div id="takeaways" class="section level2 hasAnchor" number="4.4">
 <h2><span class="header-section-number">4.4</span> Takeaways<a href="variational-inference.html#takeaways" class="anchor-section" aria-label="Anchor link to header"></a></h2>

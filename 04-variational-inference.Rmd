@@ -277,7 +277,7 @@ ax[1].set(xlabel="Terrain Ruggedness Index",
 plt.show()
 ```
 
-![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png)
+![](figure/unnamed-chunk-4-1.png)
 
 A simple model to capture the relationship is 
 \[Y = \alpha + \beta_aX_a + \beta_rX_r + \beta_{ar} X_aX_r +\epsilon, \ \ \epsilon\sim\mathcal{N}(0,\sigma^2)\]
@@ -306,7 +306,7 @@ pyro.render_model(freq_model, model_args=(is_cont_africa, ruggedness, log_gdp),
 ## /home/m372chen/swagclub/swag-env/lib/python3.10/site-packages/torch/cuda/__init__.py:497: UserWarning: Can't initialize NVML
 ##   warnings.warn("Can't initialize NVML")
 ```
-![](freq_model.png){width=70%}
+![](figure/freq_model.png){width=70%}
 We can also define a Bayesian version of it called `bayes_model` as follows. This model simply replaces `pyro.param` with `pyro.sample`, so that the parameters are viewed as random variables following some (prior) distributions. Similarly, we call `render_model()` to visualize it. Between the Bayesian model and the frequentist model, we will use the former for demonstration here.
 
 ```python
@@ -324,7 +324,7 @@ def bayes_model(is_cont_africa, ruggedness, log_gdp=None):
 
 pyro.render_model(bayes_model, model_args=(is_cont_africa, ruggedness, log_gdp), render_distributions=True, filename="bayes_model.png");
 ```
-![](bayes_model.png){width=70%}
+![](figure/bayes_model.png){width=70%}
 
 In the context of Pyro, the variational distribution is called a "guide". To specify the variational family we want, we need to define a guide program as follows. The code is very similar to that of the model. The custom guide we define below uses mean-field variational inference, i.e., all parameters have independent variational distributions in the form of Gaussian. 
 
@@ -358,7 +358,7 @@ def custom_guide(is_cont_africa, ruggedness, log_gdp=None):
 pyro.render_model(custom_guide, model_args=(is_cont_africa, ruggedness, log_gdp), render_params=True, filename="custom_guide.png");
 ```
 
-![](custom_guide.png){width=70%}
+![](figure/custom_guide.png){width=70%}
 
 To implement variational inference in Pyro, we use its stochastic variational inference functionality `pyro.infer.SVI()`, which takes in four arguments:
 
@@ -412,7 +412,7 @@ plt.ylabel("ELBO loss")
 plt.show()
 ```
 
-![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-3.png)
+![](figure/unnamed-chunk-8-3.png)
 
 Below is the time taken to optimize the ELBO using the VI method.
 
@@ -467,7 +467,7 @@ plt.legend()
 plt.show()
 ```
 
-![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11-5.png)
+![](figure/unnamed-chunk-11-5.png)
 
 Finally, we can compare the VI to MCMC (NUTS, to be specific).
 
@@ -518,7 +518,7 @@ plt.legend()
 plt.show()
 ```
 
-![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-7.png)
+![](figure/unnamed-chunk-14-7.png)
 
 ## Takeaways
 

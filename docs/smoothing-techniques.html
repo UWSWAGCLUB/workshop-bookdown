@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 5 Smoothing Techniques | SWAG Workshops Repository</title>
   <meta name="description" content="Chapter 5 Smoothing Techniques | SWAG Workshops Repository" />
-  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.30 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 5 Smoothing Techniques | SWAG Workshops Repository" />
   <meta property="og:type" content="book" />
@@ -324,7 +324,7 @@ div.csl-indent {
 <span id="cb59-5"><a href="smoothing-techniques.html#cb59-5" aria-hidden="true" tabindex="-1"></a>x.lab <span class="ot">=</span> <span class="st">&quot;Lower Status (%)&quot;</span></span>
 <span id="cb59-6"><a href="smoothing-techniques.html#cb59-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">cex.lab =</span> <span class="fl">1.1</span>, <span class="at">col =</span> <span class="st">&quot;darkgrey&quot;</span>, <span class="at">xlab =</span> x.lab, <span class="at">ylab =</span> y.lab,</span>
 <span id="cb59-7"><a href="smoothing-techniques.html#cb59-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">bty =</span> <span class="st">&quot;l&quot;</span>)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p><img src="figure/unnamed-chunk-2-1.png" /></p>
 <div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="smoothing-techniques.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(splines)</span>
 <span id="cb60-2"><a href="smoothing-techniques.html#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FNN)</span>
 <span id="cb60-3"><a href="smoothing-techniques.html#cb60-3" aria-hidden="true" tabindex="-1"></a>xrange <span class="ot">&lt;-</span> <span class="fu">extendrange</span>(x)</span>
@@ -343,7 +343,7 @@ div.csl-indent {
 <span id="cb60-16"><a href="smoothing-techniques.html#cb60-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb60-17"><a href="smoothing-techniques.html#cb60-17" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="fu">max</span>(xrange) <span class="sc">-</span> <span class="dv">15</span>, <span class="fu">max</span>(<span class="fu">extendrange</span>(y)), <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;5 nearest neighbours&quot;</span>,</span>
 <span id="cb60-18"><a href="smoothing-techniques.html#cb60-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;B-spline df=4&quot;</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;steelblue&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>))</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p><img src="figure/unnamed-chunk-3-1.png" /></p>
 </div>
 </div>
 <div id="kernel-smoothing-methods" class="section level2 hasAnchor" number="5.2">
@@ -355,13 +355,13 @@ div.csl-indent {
 The estimated function at each target point <span class="math inline">\(x_0\)</span> is <span class="math inline">\(\hat{f}(x_0)=\hat{\alpha} (x_0)+\hat{\beta}(x_0) x_i\)</span>. We can only use it to fit at a single point. The smoothing parameter <span class="math inline">\(\lambda\)</span> in the kernel function, which determines the width of the local neighborhood, has to be determined. Large <span class="math inline">\(\lambda\)</span> implies lower variance (averages over more observations) but higher bias (we essentially assume the true function is constant within the window).
 <center>
 <div class="figure">
-<img src="smoothing_fig2.png" alt="" />
+<img src="figure/smoothing_fig2.png" alt="" />
 <p class="caption">Kernel functions (p194, Hastie et al. 2009)</p>
 </div>
 </center>
 <center>
 <div class="figure">
-<img src="smoothing_fig1.png" alt="" />
+<img src="figure/smoothing_fig1.png" alt="" />
 <p class="caption">Locally weighted linear regression (p195, Hastie et al. 2009)</p>
 </div>
 </center>
@@ -399,7 +399,7 @@ which is a OLS optimization
 <span id="cb61-9"><a href="smoothing-techniques.html#cb61-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb61-10"><a href="smoothing-techniques.html#cb61-10" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="fu">max</span>(xrange) <span class="sc">-</span> <span class="dv">15</span>, <span class="fu">max</span>(<span class="fu">extendrange</span>(y)), <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;span=0.05&quot;</span>, <span class="st">&quot;span=0.3&quot;</span>),</span>
 <span id="cb61-11"><a href="smoothing-techniques.html#cb61-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;steelblue&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>))</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p><img src="figure/unnamed-chunk-4-1.png" /></p>
 </div>
 <div id="bias-and-vairance" class="section level4 hasAnchor" number="5.2.1.3">
 <h4><span class="header-section-number">5.2.1.3</span> Bias and vairance<a href="smoothing-techniques.html#bias-and-vairance" class="anchor-section" aria-label="Anchor link to header"></a></h4>
@@ -480,7 +480,7 @@ The generalized cross validation (GCV) for such linear smoother is <span class="
 <span id="cb62-11"><a href="smoothing-techniques.html#cb62-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">cex.lab =</span> <span class="fl">1.1</span>, <span class="at">col =</span> <span class="st">&quot;darkgrey&quot;</span>, <span class="at">xlab =</span> x.lab, <span class="at">ylab =</span> y.lab,</span>
 <span id="cb62-12"><a href="smoothing-techniques.html#cb62-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="st">&quot;Smoothing Spline (CV)&quot;</span>, <span class="at">bty =</span> <span class="st">&quot;l&quot;</span>)</span>
 <span id="cb62-13"><a href="smoothing-techniques.html#cb62-13" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(smooth2, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;darkorange&quot;</span>)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p><img src="figure/unnamed-chunk-5-1.png" /></p>
 </div>
 <div id="extension-and-example-nonparametric-logistic-regression" class="section level3 hasAnchor" number="5.3.3">
 <h3><span class="header-section-number">5.3.3</span> Extension and example: Nonparametric logistic regression<a href="smoothing-techniques.html#extension-and-example-nonparametric-logistic-regression" class="anchor-section" aria-label="Anchor link to header"></a></h3>

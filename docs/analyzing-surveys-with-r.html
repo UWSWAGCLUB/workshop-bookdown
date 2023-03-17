@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 6 Analyzing Surveys with R | SWAG Workshops Repository</title>
   <meta name="description" content="Chapter 6 Analyzing Surveys with R | SWAG Workshops Repository" />
-  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.30 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 6 Analyzing Surveys with R | SWAG Workshops Repository" />
   <meta property="og:type" content="book" />
@@ -321,7 +321,7 @@ div.csl-indent {
 <div id="total-survey-error-tse" class="section level3 hasAnchor" number="6.2.1">
 <h3><span class="header-section-number">6.2.1</span> Total Survey Error (TSE)<a href="analyzing-surveys-with-r.html#total-survey-error-tse" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="figure">
-<img src="TSEframework.png" alt="" />
+<img src="figure/TSEframework.png" alt="" />
 <p class="caption">The Total Survey Error (TSE) Framework <span class="citation">(taken from Groves and Lyberg 2010)</span></p>
 </div>
 <p>TSE is divided into two parts:</p>
@@ -431,29 +431,28 @@ population correction factor (fpc).</p>
 <span id="cb63-4"><a href="analyzing-surveys-with-r.html#cb63-4" aria-hidden="true" tabindex="-1"></a><span class="co"># bring data into our environment</span></span>
 <span id="cb63-5"><a href="analyzing-surveys-with-r.html#cb63-5" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(nhis.large)</span>
 <span id="cb63-6"><a href="analyzing-surveys-with-r.html#cb63-6" aria-hidden="true" tabindex="-1"></a>nhis.large.clean <span class="ot">=</span> nhis.large <span class="sc">%&gt;%</span></span>
-<span id="cb63-7"><a href="analyzing-surveys-with-r.html#cb63-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(educ)) <span class="sc">%&gt;%</span></span>
-<span id="cb63-8"><a href="analyzing-surveys-with-r.html#cb63-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">hasdegree =</span> <span class="fu">as.numeric</span>(educ <span class="sc">&gt;</span> <span class="dv">2</span>))</span>
+<span id="cb63-7"><a href="analyzing-surveys-with-r.html#cb63-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(educ)) <span class="sc">%&gt;%</span></span>
+<span id="cb63-8"><a href="analyzing-surveys-with-r.html#cb63-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">hasdegree =</span> <span class="fu">as.numeric</span>(educ<span class="sc">&gt;</span><span class="dv">2</span>))</span>
 <span id="cb63-9"><a href="analyzing-surveys-with-r.html#cb63-9" aria-hidden="true" tabindex="-1"></a>N <span class="ot">=</span> <span class="fu">nrow</span>(nhis.large.clean)</span>
 <span id="cb63-10"><a href="analyzing-surveys-with-r.html#cb63-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb63-11"><a href="analyzing-surveys-with-r.html#cb63-11" aria-hidden="true" tabindex="-1"></a><span class="co"># draw a SRSwor of size n=300</span></span>
 <span id="cb63-12"><a href="analyzing-surveys-with-r.html#cb63-12" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">310732</span>)</span>
-<span id="cb63-13"><a href="analyzing-surveys-with-r.html#cb63-13" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">300</span></span>
-<span id="cb63-14"><a href="analyzing-surveys-with-r.html#cb63-14" aria-hidden="true" tabindex="-1"></a>f <span class="ot">=</span> n<span class="sc">/</span>N</span>
-<span id="cb63-15"><a href="analyzing-surveys-with-r.html#cb63-15" aria-hidden="true" tabindex="-1"></a>S <span class="ot">=</span> <span class="fu">sample</span>(N, <span class="at">size =</span> n, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb63-16"><a href="analyzing-surveys-with-r.html#cb63-16" aria-hidden="true" tabindex="-1"></a>nhis.sample <span class="ot">=</span> nhis.large.clean[S, ]</span>
-<span id="cb63-17"><a href="analyzing-surveys-with-r.html#cb63-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb63-18"><a href="analyzing-surveys-with-r.html#cb63-18" aria-hidden="true" tabindex="-1"></a><span class="co"># population mean</span></span>
-<span id="cb63-19"><a href="analyzing-surveys-with-r.html#cb63-19" aria-hidden="true" tabindex="-1"></a>mu_U <span class="ot">=</span> <span class="fu">mean</span>(nhis.large.clean<span class="sc">$</span>hasdegree)</span>
-<span id="cb63-20"><a href="analyzing-surveys-with-r.html#cb63-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb63-21"><a href="analyzing-surveys-with-r.html#cb63-21" aria-hidden="true" tabindex="-1"></a><span class="co"># 95% CI for the mean using survey methods</span></span>
-<span id="cb63-22"><a href="analyzing-surveys-with-r.html#cb63-22" aria-hidden="true" tabindex="-1"></a>mu_hat <span class="ot">=</span> <span class="fu">mean</span>(nhis.sample<span class="sc">$</span>hasdegree)</span>
-<span id="cb63-23"><a href="analyzing-surveys-with-r.html#cb63-23" aria-hidden="true" tabindex="-1"></a>SE_mu <span class="ot">=</span> <span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">-</span> f) <span class="sc">*</span> <span class="fu">sd</span>(nhis.sample<span class="sc">$</span>hasdegree)<span class="sc">/</span><span class="fu">sqrt</span>(n)</span>
-<span id="cb63-24"><a href="analyzing-surveys-with-r.html#cb63-24" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(mu_hat <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> SE_mu, mu_hat <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> SE_mu)</span></code></pre></div>
+<span id="cb63-13"><a href="analyzing-surveys-with-r.html#cb63-13" aria-hidden="true" tabindex="-1"></a>n<span class="ot">=</span><span class="dv">300</span>; f <span class="ot">=</span> n<span class="sc">/</span>N</span>
+<span id="cb63-14"><a href="analyzing-surveys-with-r.html#cb63-14" aria-hidden="true" tabindex="-1"></a>S <span class="ot">=</span> <span class="fu">sample</span>(N,<span class="at">size=</span>n,<span class="at">replace=</span><span class="cn">FALSE</span>)</span>
+<span id="cb63-15"><a href="analyzing-surveys-with-r.html#cb63-15" aria-hidden="true" tabindex="-1"></a>nhis.sample <span class="ot">=</span> nhis.large.clean[S,]</span>
+<span id="cb63-16"><a href="analyzing-surveys-with-r.html#cb63-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-17"><a href="analyzing-surveys-with-r.html#cb63-17" aria-hidden="true" tabindex="-1"></a><span class="co"># population mean</span></span>
+<span id="cb63-18"><a href="analyzing-surveys-with-r.html#cb63-18" aria-hidden="true" tabindex="-1"></a>mu_U <span class="ot">=</span> <span class="fu">mean</span>(nhis.large.clean<span class="sc">$</span>hasdegree)</span>
+<span id="cb63-19"><a href="analyzing-surveys-with-r.html#cb63-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-20"><a href="analyzing-surveys-with-r.html#cb63-20" aria-hidden="true" tabindex="-1"></a><span class="co"># 95% CI for the mean using survey methods</span></span>
+<span id="cb63-21"><a href="analyzing-surveys-with-r.html#cb63-21" aria-hidden="true" tabindex="-1"></a>mu_hat <span class="ot">=</span> <span class="fu">mean</span>(nhis.sample<span class="sc">$</span>hasdegree)</span>
+<span id="cb63-22"><a href="analyzing-surveys-with-r.html#cb63-22" aria-hidden="true" tabindex="-1"></a>SE_mu <span class="ot">=</span> <span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">-</span> f)<span class="sc">*</span><span class="fu">sd</span>(nhis.sample<span class="sc">$</span>hasdegree)<span class="sc">/</span><span class="fu">sqrt</span>(n)</span>
+<span id="cb63-23"><a href="analyzing-surveys-with-r.html#cb63-23" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(mu_hat <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>SE_mu, mu_hat <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>SE_mu)</span></code></pre></div>
 <pre><code>## [1] 0.1703366 0.2629967</code></pre>
 <div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="analyzing-surveys-with-r.html#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 95% CI using 231 methods</span></span>
 <span id="cb65-2"><a href="analyzing-surveys-with-r.html#cb65-2" aria-hidden="true" tabindex="-1"></a>mu_hat <span class="ot">=</span> <span class="fu">mean</span>(nhis.sample<span class="sc">$</span>hasdegree)</span>
 <span id="cb65-3"><a href="analyzing-surveys-with-r.html#cb65-3" aria-hidden="true" tabindex="-1"></a>SE_mu <span class="ot">=</span> <span class="fu">sd</span>(nhis.sample<span class="sc">$</span>hasdegree)<span class="sc">/</span><span class="fu">sqrt</span>(n)</span>
-<span id="cb65-4"><a href="analyzing-surveys-with-r.html#cb65-4" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(mu_hat <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> SE_mu, mu_hat <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> SE_mu)  <span class="co"># pretty much identical! --&gt; why?</span></span></code></pre></div>
+<span id="cb65-4"><a href="analyzing-surveys-with-r.html#cb65-4" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(mu_hat <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>SE_mu, mu_hat <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>SE_mu) <span class="co"># pretty much identical! --&gt; why?</span></span></code></pre></div>
 <pre><code>## [1] 0.1699696 0.2633638</code></pre>
 <p>For more complicated designs, it will be useful to learn how to use the survey package in R:</p>
 <div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="analyzing-surveys-with-r.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># survey package</span></span>
@@ -489,48 +488,48 @@ population correction factor (fpc).</p>
 <span id="cb71-2"><a href="analyzing-surveys-with-r.html#cb71-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">310732</span>)</span>
 <span id="cb71-3"><a href="analyzing-surveys-with-r.html#cb71-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-4"><a href="analyzing-surveys-with-r.html#cb71-4" aria-hidden="true" tabindex="-1"></a><span class="co"># generate plots in 2 by 2 array</span></span>
-<span id="cb71-5"><a href="analyzing-surveys-with-r.html#cb71-5" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb71-5"><a href="analyzing-surveys-with-r.html#cb71-5" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
 <span id="cb71-6"><a href="analyzing-surveys-with-r.html#cb71-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-7"><a href="analyzing-surveys-with-r.html#cb71-7" aria-hidden="true" tabindex="-1"></a><span class="co"># n = 5</span></span>
 <span id="cb71-8"><a href="analyzing-surveys-with-r.html#cb71-8" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">5</span></span>
-<span id="cb71-9"><a href="analyzing-surveys-with-r.html#cb71-9" aria-hidden="true" tabindex="-1"></a>estimates <span class="ot">=</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">1000</span>)</span>
+<span id="cb71-9"><a href="analyzing-surveys-with-r.html#cb71-9" aria-hidden="true" tabindex="-1"></a>estimates <span class="ot">=</span> <span class="fu">rep</span>(<span class="cn">NA</span>,<span class="dv">1000</span>)</span>
 <span id="cb71-10"><a href="analyzing-surveys-with-r.html#cb71-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) {</span>
-<span id="cb71-11"><a href="analyzing-surveys-with-r.html#cb71-11" aria-hidden="true" tabindex="-1"></a>    S <span class="ot">=</span> <span class="fu">sample</span>(N, <span class="at">size =</span> n, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb71-12"><a href="analyzing-surveys-with-r.html#cb71-12" aria-hidden="true" tabindex="-1"></a>    estimates[i] <span class="ot">=</span> <span class="fu">mean</span>(nhis.large.clean[S, ]<span class="sc">$</span>hasdegree)</span>
+<span id="cb71-11"><a href="analyzing-surveys-with-r.html#cb71-11" aria-hidden="true" tabindex="-1"></a>  S <span class="ot">=</span> <span class="fu">sample</span>(N,<span class="at">size=</span>n,<span class="at">replace=</span><span class="cn">FALSE</span>)</span>
+<span id="cb71-12"><a href="analyzing-surveys-with-r.html#cb71-12" aria-hidden="true" tabindex="-1"></a>  estimates[i] <span class="ot">=</span> <span class="fu">mean</span>(nhis.large.clean[S,]<span class="sc">$</span>hasdegree)</span>
 <span id="cb71-13"><a href="analyzing-surveys-with-r.html#cb71-13" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb71-14"><a href="analyzing-surveys-with-r.html#cb71-14" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(estimates, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">main =</span> <span class="st">&quot;SRSwor, n=5, N-n=19154&quot;</span>)</span>
+<span id="cb71-14"><a href="analyzing-surveys-with-r.html#cb71-14" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(estimates,<span class="at">freq=</span><span class="cn">FALSE</span>,<span class="at">main=</span><span class="st">&quot;SRSwor, n=5, N-n=19154&quot;</span>)</span>
 <span id="cb71-15"><a href="analyzing-surveys-with-r.html#cb71-15" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(estimates))</span>
 <span id="cb71-16"><a href="analyzing-surveys-with-r.html#cb71-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-17"><a href="analyzing-surveys-with-r.html#cb71-17" aria-hidden="true" tabindex="-1"></a><span class="co"># n = 200</span></span>
 <span id="cb71-18"><a href="analyzing-surveys-with-r.html#cb71-18" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">200</span></span>
-<span id="cb71-19"><a href="analyzing-surveys-with-r.html#cb71-19" aria-hidden="true" tabindex="-1"></a>estimates <span class="ot">=</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">1000</span>)</span>
+<span id="cb71-19"><a href="analyzing-surveys-with-r.html#cb71-19" aria-hidden="true" tabindex="-1"></a>estimates <span class="ot">=</span> <span class="fu">rep</span>(<span class="cn">NA</span>,<span class="dv">1000</span>)</span>
 <span id="cb71-20"><a href="analyzing-surveys-with-r.html#cb71-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) {</span>
-<span id="cb71-21"><a href="analyzing-surveys-with-r.html#cb71-21" aria-hidden="true" tabindex="-1"></a>    S <span class="ot">=</span> <span class="fu">sample</span>(N, <span class="at">size =</span> n, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb71-22"><a href="analyzing-surveys-with-r.html#cb71-22" aria-hidden="true" tabindex="-1"></a>    estimates[i] <span class="ot">=</span> <span class="fu">mean</span>(nhis.large.clean[S, ]<span class="sc">$</span>hasdegree)</span>
+<span id="cb71-21"><a href="analyzing-surveys-with-r.html#cb71-21" aria-hidden="true" tabindex="-1"></a>  S <span class="ot">=</span> <span class="fu">sample</span>(N,<span class="at">size=</span>n,<span class="at">replace=</span><span class="cn">FALSE</span>)</span>
+<span id="cb71-22"><a href="analyzing-surveys-with-r.html#cb71-22" aria-hidden="true" tabindex="-1"></a>  estimates[i] <span class="ot">=</span> <span class="fu">mean</span>(nhis.large.clean[S,]<span class="sc">$</span>hasdegree)</span>
 <span id="cb71-23"><a href="analyzing-surveys-with-r.html#cb71-23" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb71-24"><a href="analyzing-surveys-with-r.html#cb71-24" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(estimates, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">main =</span> <span class="st">&quot;SRSwor, n=200, N-n=18959&quot;</span>)</span>
+<span id="cb71-24"><a href="analyzing-surveys-with-r.html#cb71-24" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(estimates,<span class="at">freq=</span><span class="cn">FALSE</span>,<span class="at">main=</span><span class="st">&quot;SRSwor, n=200, N-n=18959&quot;</span>)</span>
 <span id="cb71-25"><a href="analyzing-surveys-with-r.html#cb71-25" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(estimates))</span>
 <span id="cb71-26"><a href="analyzing-surveys-with-r.html#cb71-26" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-27"><a href="analyzing-surveys-with-r.html#cb71-27" aria-hidden="true" tabindex="-1"></a><span class="co"># n = 500</span></span>
 <span id="cb71-28"><a href="analyzing-surveys-with-r.html#cb71-28" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">500</span></span>
-<span id="cb71-29"><a href="analyzing-surveys-with-r.html#cb71-29" aria-hidden="true" tabindex="-1"></a>estimates <span class="ot">=</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">1000</span>)</span>
+<span id="cb71-29"><a href="analyzing-surveys-with-r.html#cb71-29" aria-hidden="true" tabindex="-1"></a>estimates <span class="ot">=</span> <span class="fu">rep</span>(<span class="cn">NA</span>,<span class="dv">1000</span>)</span>
 <span id="cb71-30"><a href="analyzing-surveys-with-r.html#cb71-30" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) {</span>
-<span id="cb71-31"><a href="analyzing-surveys-with-r.html#cb71-31" aria-hidden="true" tabindex="-1"></a>    S <span class="ot">=</span> <span class="fu">sample</span>(N, <span class="at">size =</span> n, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb71-32"><a href="analyzing-surveys-with-r.html#cb71-32" aria-hidden="true" tabindex="-1"></a>    estimates[i] <span class="ot">=</span> <span class="fu">mean</span>(nhis.large.clean[S, ]<span class="sc">$</span>hasdegree)</span>
+<span id="cb71-31"><a href="analyzing-surveys-with-r.html#cb71-31" aria-hidden="true" tabindex="-1"></a>  S <span class="ot">=</span> <span class="fu">sample</span>(N,<span class="at">size=</span>n,<span class="at">replace=</span><span class="cn">FALSE</span>)</span>
+<span id="cb71-32"><a href="analyzing-surveys-with-r.html#cb71-32" aria-hidden="true" tabindex="-1"></a>  estimates[i] <span class="ot">=</span> <span class="fu">mean</span>(nhis.large.clean[S,]<span class="sc">$</span>hasdegree)</span>
 <span id="cb71-33"><a href="analyzing-surveys-with-r.html#cb71-33" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb71-34"><a href="analyzing-surveys-with-r.html#cb71-34" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(estimates, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">main =</span> <span class="st">&quot;SRSwor, n=500, N-n=18659&quot;</span>)</span>
+<span id="cb71-34"><a href="analyzing-surveys-with-r.html#cb71-34" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(estimates,<span class="at">freq=</span><span class="cn">FALSE</span>,<span class="at">main=</span><span class="st">&quot;SRSwor, n=500, N-n=18659&quot;</span>)</span>
 <span id="cb71-35"><a href="analyzing-surveys-with-r.html#cb71-35" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(estimates))</span>
 <span id="cb71-36"><a href="analyzing-surveys-with-r.html#cb71-36" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-37"><a href="analyzing-surveys-with-r.html#cb71-37" aria-hidden="true" tabindex="-1"></a><span class="co"># n = 19000</span></span>
 <span id="cb71-38"><a href="analyzing-surveys-with-r.html#cb71-38" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">19000</span></span>
-<span id="cb71-39"><a href="analyzing-surveys-with-r.html#cb71-39" aria-hidden="true" tabindex="-1"></a>estimates <span class="ot">=</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">1000</span>)</span>
+<span id="cb71-39"><a href="analyzing-surveys-with-r.html#cb71-39" aria-hidden="true" tabindex="-1"></a>estimates <span class="ot">=</span> <span class="fu">rep</span>(<span class="cn">NA</span>,<span class="dv">1000</span>)</span>
 <span id="cb71-40"><a href="analyzing-surveys-with-r.html#cb71-40" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) {</span>
-<span id="cb71-41"><a href="analyzing-surveys-with-r.html#cb71-41" aria-hidden="true" tabindex="-1"></a>    S <span class="ot">=</span> <span class="fu">sample</span>(N, <span class="at">size =</span> n, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb71-42"><a href="analyzing-surveys-with-r.html#cb71-42" aria-hidden="true" tabindex="-1"></a>    estimates[i] <span class="ot">=</span> <span class="fu">mean</span>(nhis.large.clean[S, ]<span class="sc">$</span>hasdegree)</span>
+<span id="cb71-41"><a href="analyzing-surveys-with-r.html#cb71-41" aria-hidden="true" tabindex="-1"></a>  S <span class="ot">=</span> <span class="fu">sample</span>(N,<span class="at">size=</span>n,<span class="at">replace=</span><span class="cn">FALSE</span>)</span>
+<span id="cb71-42"><a href="analyzing-surveys-with-r.html#cb71-42" aria-hidden="true" tabindex="-1"></a>  estimates[i] <span class="ot">=</span> <span class="fu">mean</span>(nhis.large.clean[S,]<span class="sc">$</span>hasdegree)</span>
 <span id="cb71-43"><a href="analyzing-surveys-with-r.html#cb71-43" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb71-44"><a href="analyzing-surveys-with-r.html#cb71-44" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(estimates, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">main =</span> <span class="st">&quot;SRSwor, n=19100, N-n=59&quot;</span>)</span>
+<span id="cb71-44"><a href="analyzing-surveys-with-r.html#cb71-44" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(estimates,<span class="at">freq=</span><span class="cn">FALSE</span>,<span class="at">main=</span><span class="st">&quot;SRSwor, n=19100, N-n=59&quot;</span>)</span>
 <span id="cb71-45"><a href="analyzing-surveys-with-r.html#cb71-45" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(estimates))</span></code></pre></div>
-<p><img src="figs/unnamed-chunk-19.png" width="672" /></p>
+<p><img src="figure/unnamed-chunk-2.png" /></p>
 </div>
 <div id="stratified-simple-random-sampling-without-replacement-ssrswor" class="section level3 hasAnchor" number="6.3.5">
 <h3><span class="header-section-number">6.3.5</span> Stratified Simple Random Sampling Without Replacement (SSRSwor)<a href="analyzing-surveys-with-r.html#stratified-simple-random-sampling-without-replacement-ssrswor" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -547,15 +546,17 @@ is the SRSwor estimator within each stratum.</p>
 <span id="cb72-2"><a href="analyzing-surveys-with-r.html#cb72-2" aria-hidden="true" tabindex="-1"></a>N_h <span class="ot">=</span> <span class="fu">table</span>(nhis.large.clean<span class="sc">$</span>race)</span>
 <span id="cb72-3"><a href="analyzing-surveys-with-r.html#cb72-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb72-4"><a href="analyzing-surveys-with-r.html#cb72-4" aria-hidden="true" tabindex="-1"></a><span class="co"># want to obtain estimates by subgroup: oversample the smaller groups</span></span>
-<span id="cb72-5"><a href="analyzing-surveys-with-r.html#cb72-5" aria-hidden="true" tabindex="-1"></a>n_h <span class="ot">=</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">100</span>, <span class="st">`</span><span class="at">2</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">100</span>, <span class="st">`</span><span class="at">3</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">100</span>)</span>
+<span id="cb72-5"><a href="analyzing-surveys-with-r.html#cb72-5" aria-hidden="true" tabindex="-1"></a>n_h <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;1&quot;</span><span class="ot">=</span><span class="dv">100</span>,<span class="st">&quot;2&quot;</span><span class="ot">=</span><span class="dv">100</span>,<span class="st">&quot;3&quot;</span><span class="ot">=</span><span class="dv">100</span>)</span>
 <span id="cb72-6"><a href="analyzing-surveys-with-r.html#cb72-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb72-7"><a href="analyzing-surveys-with-r.html#cb72-7" aria-hidden="true" tabindex="-1"></a><span class="co"># sampling fractions by stratum</span></span>
-<span id="cb72-8"><a href="analyzing-surveys-with-r.html#cb72-8" aria-hidden="true" tabindex="-1"></a>f <span class="ot">=</span> n_h<span class="sc">/</span>N_h</span>
+<span id="cb72-8"><a href="analyzing-surveys-with-r.html#cb72-8" aria-hidden="true" tabindex="-1"></a>f <span class="ot">=</span> n_h <span class="sc">/</span> N_h</span>
 <span id="cb72-9"><a href="analyzing-surveys-with-r.html#cb72-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb72-10"><a href="analyzing-surveys-with-r.html#cb72-10" aria-hidden="true" tabindex="-1"></a><span class="co"># draw a SSRSwor</span></span>
 <span id="cb72-11"><a href="analyzing-surveys-with-r.html#cb72-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">87876</span>)</span>
-<span id="cb72-12"><a href="analyzing-surveys-with-r.html#cb72-12" aria-hidden="true" tabindex="-1"></a>S <span class="ot">=</span> survey<span class="sc">::</span><span class="fu">stratsample</span>(<span class="at">strata =</span> nhis.large.clean<span class="sc">$</span>race, <span class="at">counts =</span> n_h)</span>
-<span id="cb72-13"><a href="analyzing-surveys-with-r.html#cb72-13" aria-hidden="true" tabindex="-1"></a>nhis.sample <span class="ot">=</span> nhis.large.clean[S, ]</span></code></pre></div>
+<span id="cb72-12"><a href="analyzing-surveys-with-r.html#cb72-12" aria-hidden="true" tabindex="-1"></a>S <span class="ot">=</span> survey<span class="sc">::</span><span class="fu">stratsample</span>(</span>
+<span id="cb72-13"><a href="analyzing-surveys-with-r.html#cb72-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">strata =</span> nhis.large.clean<span class="sc">$</span>race,</span>
+<span id="cb72-14"><a href="analyzing-surveys-with-r.html#cb72-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">counts =</span> n_h)</span>
+<span id="cb72-15"><a href="analyzing-surveys-with-r.html#cb72-15" aria-hidden="true" tabindex="-1"></a>nhis.sample <span class="ot">=</span> nhis.large.clean[S,]</span></code></pre></div>
 <p>Now we estimate:</p>
 <div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="analyzing-surveys-with-r.html#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="co"># append sampling probabilities to the data</span></span>
 <span id="cb73-2"><a href="analyzing-surveys-with-r.html#cb73-2" aria-hidden="true" tabindex="-1"></a>nhis.sample <span class="ot">=</span> nhis.sample <span class="sc">%&gt;%</span></span>
@@ -643,15 +644,13 @@ This would tend to slightly underestimate the variance, because we do not take i
 <p>Compare SRS with post-stratified SRS:
 We see a small adjustment in the overall estimate and standard error:</p>
 <div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="analyzing-surveys-with-r.html#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate of overall mean</span></span>
-<span id="cb82-2"><a href="analyzing-surveys-with-r.html#cb82-2" aria-hidden="true" tabindex="-1"></a>muhat <span class="ot">=</span> <span class="fu">svymean</span>(<span class="sc">~</span>hasdegree, <span class="at">design =</span> SRSdesign)</span>
-<span id="cb82-3"><a href="analyzing-surveys-with-r.html#cb82-3" aria-hidden="true" tabindex="-1"></a>muhat</span></code></pre></div>
+<span id="cb82-2"><a href="analyzing-surveys-with-r.html#cb82-2" aria-hidden="true" tabindex="-1"></a>muhat <span class="ot">=</span> <span class="fu">svymean</span>(<span class="sc">~</span>hasdegree,<span class="at">design=</span>SRSdesign); muhat</span></code></pre></div>
 <pre><code>##              mean     SE
 ## hasdegree 0.21667 0.0236</code></pre>
 <div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="analyzing-surveys-with-r.html#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(muhat)</span></code></pre></div>
 <pre><code>##               2.5 %    97.5 %
 ## hasdegree 0.1703375 0.2629959</code></pre>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="analyzing-surveys-with-r.html#cb86-1" aria-hidden="true" tabindex="-1"></a>muhat <span class="ot">=</span> <span class="fu">svymean</span>(<span class="sc">~</span>hasdegree, <span class="at">design =</span> PSdesign)</span>
-<span id="cb86-2"><a href="analyzing-surveys-with-r.html#cb86-2" aria-hidden="true" tabindex="-1"></a>muhat</span></code></pre></div>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="analyzing-surveys-with-r.html#cb86-1" aria-hidden="true" tabindex="-1"></a>muhat <span class="ot">=</span> <span class="fu">svymean</span>(<span class="sc">~</span>hasdegree,<span class="at">design=</span>PSdesign); muhat</span></code></pre></div>
 <pre><code>##              mean     SE
 ## hasdegree 0.21941 0.0238</code></pre>
 <div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="analyzing-surveys-with-r.html#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(muhat)</span></code></pre></div>
@@ -661,12 +660,14 @@ We see a small adjustment in the overall estimate and standard error:</p>
 post-stratification is really only a tool to get “better” <em>overall</em> estimates.
 Post-stratification still doesn’t let us get better estimates within-stratum.</p>
 <div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="analyzing-surveys-with-r.html#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate by race</span></span>
-<span id="cb90-2"><a href="analyzing-surveys-with-r.html#cb90-2" aria-hidden="true" tabindex="-1"></a><span class="fu">svyby</span>(<span class="sc">~</span>hasdegree, <span class="at">by =</span> <span class="sc">~</span>race, <span class="at">FUN =</span> svymean, <span class="at">design =</span> SSRSdesign)</span></code></pre></div>
+<span id="cb90-2"><a href="analyzing-surveys-with-r.html#cb90-2" aria-hidden="true" tabindex="-1"></a><span class="fu">svyby</span>(<span class="sc">~</span>hasdegree,<span class="at">by=</span><span class="sc">~</span>race,<span class="at">FUN=</span>svymean,</span>
+<span id="cb90-3"><a href="analyzing-surveys-with-r.html#cb90-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">design=</span>SSRSdesign)</span></code></pre></div>
 <pre><code>##   race hasdegree         se
 ## 1    1      0.15 0.03577108
 ## 2    2      0.10 0.02961191
 ## 3    3      0.30 0.04321784</code></pre>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="analyzing-surveys-with-r.html#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">svyby</span>(<span class="sc">~</span>hasdegree, <span class="at">by =</span> <span class="sc">~</span>race, <span class="at">FUN =</span> svymean, <span class="at">design =</span> PSdesign)</span></code></pre></div>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="analyzing-surveys-with-r.html#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">svyby</span>(<span class="sc">~</span>hasdegree,<span class="at">by=</span><span class="sc">~</span>race,<span class="at">FUN=</span>svymean,</span>
+<span id="cb92-2"><a href="analyzing-surveys-with-r.html#cb92-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">design=</span>PSdesign)</span></code></pre></div>
 <pre><code>##   race hasdegree         se
 ## 1    1 0.2280702 0.02761555
 ## 2    2 0.1071429 0.04107490
@@ -680,21 +681,24 @@ counts. For example, we need to know how many white men aged 55+ there are in th
 <p>We can use other calibration techniques (which post-stratification can be considered
 a general case of) like <em>raking</em> that rely only one <em>one-way</em> tabulations.</p>
 <div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="analyzing-surveys-with-r.html#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define population totals for each raking variable</span></span>
-<span id="cb94-2"><a href="analyzing-surveys-with-r.html#cb94-2" aria-hidden="true" tabindex="-1"></a>pop.sex <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">sex =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">Freq =</span> <span class="fu">as.numeric</span>(<span class="fu">table</span>(nhis.large.clean<span class="sc">$</span>sex)))</span>
-<span id="cb94-3"><a href="analyzing-surveys-with-r.html#cb94-3" aria-hidden="true" tabindex="-1"></a>pop.age.grp <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">age.grp =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>), <span class="at">Freq =</span> <span class="fu">as.numeric</span>(<span class="fu">table</span>(nhis.large.clean<span class="sc">$</span>age.grp)))</span>
-<span id="cb94-4"><a href="analyzing-surveys-with-r.html#cb94-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb94-5"><a href="analyzing-surveys-with-r.html#cb94-5" aria-hidden="true" tabindex="-1"></a>rakedesign <span class="ot">=</span> survey<span class="sc">::</span><span class="fu">rake</span>(<span class="at">design =</span> SSRSdesign, <span class="at">sample.margins =</span> <span class="fu">list</span>(<span class="sc">~</span>sex,</span>
-<span id="cb94-6"><a href="analyzing-surveys-with-r.html#cb94-6" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span>age.grp), <span class="at">population.margins =</span> <span class="fu">list</span>(pop.sex, pop.age.grp))</span>
-<span id="cb94-7"><a href="analyzing-surveys-with-r.html#cb94-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb94-8"><a href="analyzing-surveys-with-r.html#cb94-8" aria-hidden="true" tabindex="-1"></a>muhat <span class="ot">=</span> <span class="fu">svymean</span>(<span class="sc">~</span>hasdegree, <span class="at">design =</span> SSRSdesign)</span>
-<span id="cb94-9"><a href="analyzing-surveys-with-r.html#cb94-9" aria-hidden="true" tabindex="-1"></a>muhat</span></code></pre></div>
+<span id="cb94-2"><a href="analyzing-surveys-with-r.html#cb94-2" aria-hidden="true" tabindex="-1"></a>pop.sex <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">sex=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), </span>
+<span id="cb94-3"><a href="analyzing-surveys-with-r.html#cb94-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">Freq=</span><span class="fu">as.numeric</span>(<span class="fu">table</span>(nhis.large.clean<span class="sc">$</span>sex)))</span>
+<span id="cb94-4"><a href="analyzing-surveys-with-r.html#cb94-4" aria-hidden="true" tabindex="-1"></a>pop.age.grp <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">age.grp=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>), </span>
+<span id="cb94-5"><a href="analyzing-surveys-with-r.html#cb94-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">Freq=</span><span class="fu">as.numeric</span>(<span class="fu">table</span>(nhis.large.clean<span class="sc">$</span>age.grp)))</span>
+<span id="cb94-6"><a href="analyzing-surveys-with-r.html#cb94-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb94-7"><a href="analyzing-surveys-with-r.html#cb94-7" aria-hidden="true" tabindex="-1"></a>rakedesign <span class="ot">=</span> survey<span class="sc">::</span><span class="fu">rake</span>(</span>
+<span id="cb94-8"><a href="analyzing-surveys-with-r.html#cb94-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">design=</span>SSRSdesign,</span>
+<span id="cb94-9"><a href="analyzing-surveys-with-r.html#cb94-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample.margins=</span><span class="fu">list</span>(<span class="sc">~</span>sex,<span class="sc">~</span>age.grp),</span>
+<span id="cb94-10"><a href="analyzing-surveys-with-r.html#cb94-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">population.margins=</span><span class="fu">list</span>(pop.sex,pop.age.grp)</span>
+<span id="cb94-11"><a href="analyzing-surveys-with-r.html#cb94-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb94-12"><a href="analyzing-surveys-with-r.html#cb94-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb94-13"><a href="analyzing-surveys-with-r.html#cb94-13" aria-hidden="true" tabindex="-1"></a>muhat <span class="ot">=</span> <span class="fu">svymean</span>(<span class="sc">~</span>hasdegree,<span class="at">design=</span>SSRSdesign); muhat</span></code></pre></div>
 <pre><code>##              mean     SE
 ## hasdegree 0.14919 0.0293</code></pre>
 <div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="analyzing-surveys-with-r.html#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(muhat)</span></code></pre></div>
 <pre><code>##                2.5 %    97.5 %
 ## hasdegree 0.09170761 0.2066743</code></pre>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="analyzing-surveys-with-r.html#cb98-1" aria-hidden="true" tabindex="-1"></a>muhat <span class="ot">=</span> <span class="fu">svymean</span>(<span class="sc">~</span>hasdegree, <span class="at">design =</span> rakedesign)</span>
-<span id="cb98-2"><a href="analyzing-surveys-with-r.html#cb98-2" aria-hidden="true" tabindex="-1"></a>muhat</span></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="analyzing-surveys-with-r.html#cb98-1" aria-hidden="true" tabindex="-1"></a>muhat <span class="ot">=</span> <span class="fu">svymean</span>(<span class="sc">~</span>hasdegree,<span class="at">design=</span>rakedesign); muhat</span></code></pre></div>
 <pre><code>##              mean     SE
 ## hasdegree 0.15249 0.0298</code></pre>
 <div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="analyzing-surveys-with-r.html#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(muhat)</span></code></pre></div>
@@ -710,22 +714,24 @@ a general case of) like <em>raking</em> that rely only one <em>one-way</em> tabu
 <p>Let’s see how the bootstrap version of post-stratification:</p>
 <div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="analyzing-surveys-with-r.html#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="co"># start with bootsrapped SRS</span></span>
 <span id="cb102-2"><a href="analyzing-surveys-with-r.html#cb102-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1902</span>)</span>
-<span id="cb102-3"><a href="analyzing-surveys-with-r.html#cb102-3" aria-hidden="true" tabindex="-1"></a>bootstrapSRS <span class="ot">=</span> survey<span class="sc">::</span><span class="fu">as.svrepdesign</span>(<span class="at">design =</span> SRSdesign, <span class="at">type =</span> <span class="st">&quot;bootstrap&quot;</span>,</span>
-<span id="cb102-4"><a href="analyzing-surveys-with-r.html#cb102-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">replicates =</span> <span class="dv">5000</span>)</span>
-<span id="cb102-5"><a href="analyzing-surveys-with-r.html#cb102-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb102-6"><a href="analyzing-surveys-with-r.html#cb102-6" aria-hidden="true" tabindex="-1"></a><span class="co"># apply post-stratification to every replicate weight</span></span>
-<span id="cb102-7"><a href="analyzing-surveys-with-r.html#cb102-7" aria-hidden="true" tabindex="-1"></a>bootstrapPS <span class="ot">=</span> survey<span class="sc">::</span><span class="fu">postStratify</span>(<span class="at">design =</span> bootstrapSRS, <span class="at">strata =</span> <span class="sc">~</span>race,</span>
-<span id="cb102-8"><a href="analyzing-surveys-with-r.html#cb102-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">population =</span> popcounts)</span>
-<span id="cb102-9"><a href="analyzing-surveys-with-r.html#cb102-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb102-10"><a href="analyzing-surveys-with-r.html#cb102-10" aria-hidden="true" tabindex="-1"></a>muhat <span class="ot">=</span> <span class="fu">svymean</span>(<span class="sc">~</span>hasdegree, <span class="at">design =</span> PSdesign)</span>
-<span id="cb102-11"><a href="analyzing-surveys-with-r.html#cb102-11" aria-hidden="true" tabindex="-1"></a>muhat</span></code></pre></div>
+<span id="cb102-3"><a href="analyzing-surveys-with-r.html#cb102-3" aria-hidden="true" tabindex="-1"></a>bootstrapSRS <span class="ot">=</span> survey<span class="sc">::</span><span class="fu">as.svrepdesign</span>(</span>
+<span id="cb102-4"><a href="analyzing-surveys-with-r.html#cb102-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">design=</span>SRSdesign,</span>
+<span id="cb102-5"><a href="analyzing-surveys-with-r.html#cb102-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">type=</span><span class="st">&quot;bootstrap&quot;</span>,</span>
+<span id="cb102-6"><a href="analyzing-surveys-with-r.html#cb102-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">replicates=</span><span class="dv">5000</span>)</span>
+<span id="cb102-7"><a href="analyzing-surveys-with-r.html#cb102-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb102-8"><a href="analyzing-surveys-with-r.html#cb102-8" aria-hidden="true" tabindex="-1"></a><span class="co"># apply post-stratification to every replicate weight</span></span>
+<span id="cb102-9"><a href="analyzing-surveys-with-r.html#cb102-9" aria-hidden="true" tabindex="-1"></a>bootstrapPS <span class="ot">=</span> survey<span class="sc">::</span><span class="fu">postStratify</span>(</span>
+<span id="cb102-10"><a href="analyzing-surveys-with-r.html#cb102-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">design=</span>bootstrapSRS, </span>
+<span id="cb102-11"><a href="analyzing-surveys-with-r.html#cb102-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">strata=</span><span class="sc">~</span>race,     </span>
+<span id="cb102-12"><a href="analyzing-surveys-with-r.html#cb102-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">population=</span>popcounts)   </span>
+<span id="cb102-13"><a href="analyzing-surveys-with-r.html#cb102-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb102-14"><a href="analyzing-surveys-with-r.html#cb102-14" aria-hidden="true" tabindex="-1"></a>muhat <span class="ot">=</span> <span class="fu">svymean</span>(<span class="sc">~</span>hasdegree,<span class="at">design=</span>PSdesign); muhat</span></code></pre></div>
 <pre><code>##              mean     SE
 ## hasdegree 0.21941 0.0238</code></pre>
 <div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="analyzing-surveys-with-r.html#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(muhat)</span></code></pre></div>
 <pre><code>##               2.5 %    97.5 %
 ## hasdegree 0.1728354 0.2659927</code></pre>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="analyzing-surveys-with-r.html#cb106-1" aria-hidden="true" tabindex="-1"></a>muhat <span class="ot">=</span> <span class="fu">svymean</span>(<span class="sc">~</span>hasdegree, <span class="at">design =</span> bootstrapPS)</span>
-<span id="cb106-2"><a href="analyzing-surveys-with-r.html#cb106-2" aria-hidden="true" tabindex="-1"></a>muhat</span></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="analyzing-surveys-with-r.html#cb106-1" aria-hidden="true" tabindex="-1"></a>muhat <span class="ot">=</span> <span class="fu">svymean</span>(<span class="sc">~</span>hasdegree,<span class="at">design=</span>bootstrapPS); muhat</span></code></pre></div>
 <pre><code>##              mean     SE
 ## hasdegree 0.21941 0.0242</code></pre>
 <div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="analyzing-surveys-with-r.html#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(muhat)</span></code></pre></div>
@@ -734,29 +740,31 @@ a general case of) like <em>raking</em> that rely only one <em>one-way</em> tabu
 <p>How about the raking estimate:</p>
 <div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="analyzing-surveys-with-r.html#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="co"># start with bootstrap replicated SSRS</span></span>
 <span id="cb110-2"><a href="analyzing-surveys-with-r.html#cb110-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">76573</span>)</span>
-<span id="cb110-3"><a href="analyzing-surveys-with-r.html#cb110-3" aria-hidden="true" tabindex="-1"></a>bootstrapSSRS <span class="ot">=</span> survey<span class="sc">::</span><span class="fu">as.svrepdesign</span>(<span class="at">design =</span> SSRSdesign, <span class="at">type =</span> <span class="st">&quot;bootstrap&quot;</span>,</span>
-<span id="cb110-4"><a href="analyzing-surveys-with-r.html#cb110-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">replicates =</span> <span class="dv">5000</span>)</span>
-<span id="cb110-5"><a href="analyzing-surveys-with-r.html#cb110-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb110-6"><a href="analyzing-surveys-with-r.html#cb110-6" aria-hidden="true" tabindex="-1"></a><span class="co"># rake each bootstrap replicate</span></span>
-<span id="cb110-7"><a href="analyzing-surveys-with-r.html#cb110-7" aria-hidden="true" tabindex="-1"></a>bootrakedesign <span class="ot">=</span> survey<span class="sc">::</span><span class="fu">rake</span>(<span class="at">design =</span> bootstrapSSRS, <span class="at">sample.margins =</span> <span class="fu">list</span>(<span class="sc">~</span>sex,</span>
-<span id="cb110-8"><a href="analyzing-surveys-with-r.html#cb110-8" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span>age.grp), <span class="at">population.margins =</span> <span class="fu">list</span>(pop.sex, pop.age.grp))</span>
-<span id="cb110-9"><a href="analyzing-surveys-with-r.html#cb110-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb110-10"><a href="analyzing-surveys-with-r.html#cb110-10" aria-hidden="true" tabindex="-1"></a>muhat <span class="ot">=</span> <span class="fu">svymean</span>(<span class="sc">~</span>hasdegree, <span class="at">design =</span> SSRSdesign)</span>
-<span id="cb110-11"><a href="analyzing-surveys-with-r.html#cb110-11" aria-hidden="true" tabindex="-1"></a>muhat</span></code></pre></div>
+<span id="cb110-3"><a href="analyzing-surveys-with-r.html#cb110-3" aria-hidden="true" tabindex="-1"></a>bootstrapSSRS <span class="ot">=</span> survey<span class="sc">::</span><span class="fu">as.svrepdesign</span>(</span>
+<span id="cb110-4"><a href="analyzing-surveys-with-r.html#cb110-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">design=</span>SSRSdesign,</span>
+<span id="cb110-5"><a href="analyzing-surveys-with-r.html#cb110-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">type=</span><span class="st">&quot;bootstrap&quot;</span>,</span>
+<span id="cb110-6"><a href="analyzing-surveys-with-r.html#cb110-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">replicates=</span><span class="dv">5000</span>)</span>
+<span id="cb110-7"><a href="analyzing-surveys-with-r.html#cb110-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb110-8"><a href="analyzing-surveys-with-r.html#cb110-8" aria-hidden="true" tabindex="-1"></a><span class="co"># rake each bootstrap replicate</span></span>
+<span id="cb110-9"><a href="analyzing-surveys-with-r.html#cb110-9" aria-hidden="true" tabindex="-1"></a>bootrakedesign <span class="ot">=</span> survey<span class="sc">::</span><span class="fu">rake</span>(</span>
+<span id="cb110-10"><a href="analyzing-surveys-with-r.html#cb110-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">design=</span>bootstrapSSRS,</span>
+<span id="cb110-11"><a href="analyzing-surveys-with-r.html#cb110-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample.margins=</span><span class="fu">list</span>(<span class="sc">~</span>sex,<span class="sc">~</span>age.grp),</span>
+<span id="cb110-12"><a href="analyzing-surveys-with-r.html#cb110-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">population.margins=</span><span class="fu">list</span>(pop.sex,pop.age.grp)</span>
+<span id="cb110-13"><a href="analyzing-surveys-with-r.html#cb110-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb110-14"><a href="analyzing-surveys-with-r.html#cb110-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb110-15"><a href="analyzing-surveys-with-r.html#cb110-15" aria-hidden="true" tabindex="-1"></a>muhat <span class="ot">=</span> <span class="fu">svymean</span>(<span class="sc">~</span>hasdegree,<span class="at">design=</span>SSRSdesign); muhat</span></code></pre></div>
 <pre><code>##              mean     SE
 ## hasdegree 0.14919 0.0293</code></pre>
 <div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="analyzing-surveys-with-r.html#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(muhat)</span></code></pre></div>
 <pre><code>##                2.5 %    97.5 %
 ## hasdegree 0.09170761 0.2066743</code></pre>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="analyzing-surveys-with-r.html#cb114-1" aria-hidden="true" tabindex="-1"></a>muhat <span class="ot">=</span> <span class="fu">svymean</span>(<span class="sc">~</span>hasdegree, <span class="at">design =</span> rakedesign)</span>
-<span id="cb114-2"><a href="analyzing-surveys-with-r.html#cb114-2" aria-hidden="true" tabindex="-1"></a>muhat</span></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="analyzing-surveys-with-r.html#cb114-1" aria-hidden="true" tabindex="-1"></a>muhat <span class="ot">=</span> <span class="fu">svymean</span>(<span class="sc">~</span>hasdegree,<span class="at">design=</span>rakedesign); muhat</span></code></pre></div>
 <pre><code>##              mean     SE
 ## hasdegree 0.15249 0.0298</code></pre>
 <div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="analyzing-surveys-with-r.html#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(muhat)</span></code></pre></div>
 <pre><code>##                2.5 %    97.5 %
 ## hasdegree 0.09410781 0.2108778</code></pre>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="analyzing-surveys-with-r.html#cb118-1" aria-hidden="true" tabindex="-1"></a>muhat <span class="ot">=</span> <span class="fu">svymean</span>(<span class="sc">~</span>hasdegree, <span class="at">design =</span> bootrakedesign)</span>
-<span id="cb118-2"><a href="analyzing-surveys-with-r.html#cb118-2" aria-hidden="true" tabindex="-1"></a>muhat</span></code></pre></div>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="analyzing-surveys-with-r.html#cb118-1" aria-hidden="true" tabindex="-1"></a>muhat <span class="ot">=</span> <span class="fu">svymean</span>(<span class="sc">~</span>hasdegree,<span class="at">design=</span>bootrakedesign); muhat</span></code></pre></div>
 <pre><code>##              mean     SE
 ## hasdegree 0.15249 0.0299</code></pre>
 <div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="analyzing-surveys-with-r.html#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(muhat)</span></code></pre></div>
@@ -765,10 +773,10 @@ a general case of) like <em>raking</em> that rely only one <em>one-way</em> tabu
 <p>We can ask the svy commands to produce all replicates of the estimate.
 Doing this we can get confidence intervals based on the actual distribution
 of the estimates.</p>
-<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="analyzing-surveys-with-r.html#cb122-1" aria-hidden="true" tabindex="-1"></a>allmus <span class="ot">=</span> <span class="fu">svymean</span>(<span class="sc">~</span>hasdegree, <span class="at">design =</span> bootrakedesign, <span class="at">return.replicates =</span> <span class="cn">TRUE</span>)</span>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="analyzing-surveys-with-r.html#cb122-1" aria-hidden="true" tabindex="-1"></a>allmus <span class="ot">=</span> <span class="fu">svymean</span>(<span class="sc">~</span>hasdegree,<span class="at">design=</span>bootrakedesign,<span class="at">return.replicates=</span><span class="cn">TRUE</span>)</span>
 <span id="cb122-2"><a href="analyzing-surveys-with-r.html#cb122-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(allmus<span class="sc">$</span>replicates)</span></code></pre></div>
-<p><img src="figs/unnamed-chunk-27.png" width="672" /></p>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="analyzing-surveys-with-r.html#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(allmus<span class="sc">$</span>replicates, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span></code></pre></div>
+<p><img src="figure/unnamed-chunk-10.png" /></p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="analyzing-surveys-with-r.html#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(allmus<span class="sc">$</span>replicates,<span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.025</span>,<span class="fl">0.975</span>))</span></code></pre></div>
 <pre><code>##       2.5%      97.5% 
 ## 0.09744063 0.21383397</code></pre>
 </div>

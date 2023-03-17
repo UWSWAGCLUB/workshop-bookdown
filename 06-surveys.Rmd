@@ -1,39 +1,8 @@
 # Analyzing Surveys with R
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(cache=TRUE,
-                      message=FALSE, warning=FALSE,
-                      fig.path='figs/',
-                      cache.path = '_cache/',
-                      fig.process = function(x) {
-                      x2 = sub('-\\d+([.][a-z]+)$', '\\1', x)
-                      if (file.rename(x, x2)) x2 else x
-                      })
-#setwd("C:\\Users\\Admin\\Dropbox\\__Professional__\\Conferences, Workshops, etc\\1. SWAG Workshop (Jan 26 2023)")
-```
 
-```{r header, include=FALSE}
-# packages #####################################################################
-  # always-use packages
-  pkglist = c("tidyverse")
-  # packages specific to this report
-  pkglist = c(pkglist,"survey","PracTools")
-################################################################################
-if (!require("pacman")) {
-  install.packages("pacman")
-}
-pacman::p_load(char=pkglist)
-rm(pkglist)
 
-# handy not-in operator
-`%notin%` <- Negate(`%in%`)
 
-# avoids clash of select functions between dplyr and MASS
-select <- dplyr::select
-
-# function to return most common string->handy in dplyr summarise
-most.common = function(vec) return(names(which.max(table(vec))))
-```
 
 \newpage
 \setstretch{1.05}
@@ -54,7 +23,7 @@ There is also [this webpage](https://r-survey.r-forge.r-project.org/survey/examp
 
 ### Total Survey Error (TSE)
 
-![The Total Survey Error (TSE) Framework [taken from @groves2010total]](TSEframework.png)
+![The Total Survey Error (TSE) Framework [taken from @groves2010total]](figure/TSEframework.png)
 
 TSE is divided into two parts:
 
@@ -161,7 +130,8 @@ When $n \to \infty$ and $N-n \to \infty$, we have that $\hat \mu$ is approximate
 
 Let's implement this in R using our own formulas:
 
-```{r SRSwor}
+
+```r
 # package associated with Valliant, Devant & Kreuter, includes data
 pacman::p_load("PracTools")
 
@@ -185,16 +155,27 @@ mu_U = mean(nhis.large.clean$hasdegree)
 mu_hat = mean(nhis.sample$hasdegree)
 SE_mu = sqrt(1 - f)*sd(nhis.sample$hasdegree)/sqrt(n)
 c(mu_hat - 1.96*SE_mu, mu_hat + 1.96*SE_mu)
+```
 
+```
+## [1] 0.1703366 0.2629967
+```
+
+```r
 # 95% CI using 231 methods
 mu_hat = mean(nhis.sample$hasdegree)
 SE_mu = sd(nhis.sample$hasdegree)/sqrt(n)
 c(mu_hat - 1.96*SE_mu, mu_hat + 1.96*SE_mu) # pretty much identical! --> why?
 ```
 
+```
+## [1] 0.1699696 0.2633638
+```
+
 For more complicated designs, it will be useful to learn how to use the survey package in R:
 
-```{r}
+
+```r
 # survey package
 pacman::p_load("survey")
 
@@ -217,14 +198,27 @@ SRSdesign = survey::svydesign(
 # estimate the mean, 95% confidence interval
 muhat = svymean(~hasdegree,design=SRSdesign)
 confint(muhat)
+```
 
+```
+##               2.5 %    97.5 %
+## hasdegree 0.1703375 0.2629959
+```
+
+```r
 # you could use a t distn if you want to, but it has no theoretical backing!
 confint(muhat,df=199)
 ```
 
+```
+##              2.5 %    97.5 %
+## hasdegree 0.170054 0.2632793
+```
+
 Let's visualise the distribution of our estimator for different choices of $n$.
 
-```{r}
+
+```r
 # set seed
 set.seed(310732)
 
@@ -272,6 +266,8 @@ hist(estimates,freq=FALSE,main="SRSwor, n=19100, N-n=59")
 lines(density(estimates))
 ```
 
+![](figure/unnamed-chunk-2.png)
+
 
 ### Stratified Simple Random Sampling Without Replacement (SSRSwor)
 
@@ -289,7 +285,8 @@ Furthermore, $\text{Var}(\hat \mu) = \sum\limits_{h=1}^H \left(\frac{N_h}{N}\rig
 
 In R, let's simulate a stratified simple random sample:
 
-```{r SSRSwor}
+
+```r
 # we want to stratify by race
 N_h = table(nhis.large.clean$race)
 
@@ -309,7 +306,8 @@ nhis.sample = nhis.large.clean[S,]
 
 Now we estimate:
 
-```{r}
+
+```r
 # append sampling probabilities to the data
 nhis.sample = nhis.sample %>%
   mutate(pr_incl = f[race])
@@ -328,15 +326,46 @@ SSRSdesign = survey::svydesign(
 
 # estimate the mean, 95% confidence interval
 muhat = svymean(~hasdegree,design=SSRSdesign); muhat
-confint(muhat)
+```
 
+```
+##              mean     SE
+## hasdegree 0.14919 0.0293
+```
+
+```r
+confint(muhat)
+```
+
+```
+##                2.5 %    97.5 %
+## hasdegree 0.09170761 0.2066743
+```
+
+```r
 # mean by race
 svyby(~hasdegree,by=~race,FUN=svymean,
       design=SSRSdesign)
+```
 
+```
+##   race hasdegree         se
+## 1    1      0.15 0.03577108
+## 2    2      0.10 0.02961191
+## 3    3      0.30 0.04321784
+```
+
+```r
 # compare with unstratified design
 svyby(~hasdegree,by=~race,FUN=svymean,
       design=SRSdesign)
+```
+
+```
+##   race hasdegree         se
+## 1    1 0.2280702 0.02761555
+## 2    2 0.1071429 0.04107490
+## 3    3 0.4375000 0.12325037
 ```
 
 
@@ -385,7 +414,8 @@ This would tend to slightly underestimate the variance, because we do not take i
 
 Let's take our SRS sample and post-stratify it based on race:
 
-```{r}
+
+```r
 # collect population counts in format needed for postStratify
 popcounts = data.frame(race=c(1,2,3), 
                        Freq=as.numeric(table(nhis.large.clean$race)))
@@ -398,24 +428,72 @@ PSdesign = survey::postStratify(
 Compare SRS with post-stratified SRS: 
 We see a small adjustment in the overall estimate and standard error:
 
-```{r}
+
+```r
 # estimate of overall mean
 muhat = svymean(~hasdegree,design=SRSdesign); muhat
+```
+
+```
+##              mean     SE
+## hasdegree 0.21667 0.0236
+```
+
+```r
 confint(muhat)
+```
+
+```
+##               2.5 %    97.5 %
+## hasdegree 0.1703375 0.2629959
+```
+
+```r
 muhat = svymean(~hasdegree,design=PSdesign); muhat
+```
+
+```
+##              mean     SE
+## hasdegree 0.21941 0.0238
+```
+
+```r
 confint(muhat)
+```
+
+```
+##               2.5 %    97.5 %
+## hasdegree 0.1728354 0.2659927
 ```
 
 Compare SSRS with post-stratified SRS estimates by race: We see that
 post-stratification is really only a tool to get "better" *overall* estimates.
 Post-stratification still doesn't let us get better estimates within-stratum.
 
-```{r}
+
+```r
 # estimate by race
 svyby(~hasdegree,by=~race,FUN=svymean,
       design=SSRSdesign)
+```
+
+```
+##   race hasdegree         se
+## 1    1      0.15 0.03577108
+## 2    2      0.10 0.02961191
+## 3    3      0.30 0.04321784
+```
+
+```r
 svyby(~hasdegree,by=~race,FUN=svymean,
       design=PSdesign)
+```
+
+```
+##   race hasdegree         se
+## 1    1 0.2280702 0.02761555
+## 2    2 0.1071429 0.04107490
+## 3    3 0.4375000 0.12325037
 ```
 
 ### Calibration: Dealing with multiple auxilliary variables
@@ -427,7 +505,8 @@ counts. For example, we need to know how many white men aged 55+ there are in th
 We can use other calibration techniques (which post-stratification can be considered
 a general case of) like *raking* that rely only one *one-way* tabulations.
 
-```{r}
+
+```r
 # define population totals for each raking variable
 pop.sex = data.frame(sex=c(1,2), 
                      Freq=as.numeric(table(nhis.large.clean$sex)))
@@ -441,9 +520,38 @@ rakedesign = survey::rake(
   )
 
 muhat = svymean(~hasdegree,design=SSRSdesign); muhat
+```
+
+```
+##              mean     SE
+## hasdegree 0.14919 0.0293
+```
+
+```r
 confint(muhat)
+```
+
+```
+##                2.5 %    97.5 %
+## hasdegree 0.09170761 0.2066743
+```
+
+```r
 muhat = svymean(~hasdegree,design=rakedesign); muhat
+```
+
+```
+##              mean     SE
+## hasdegree 0.15249 0.0298
+```
+
+```r
 confint(muhat)
+```
+
+```
+##                2.5 %    97.5 %
+## hasdegree 0.09410781 0.2108778
 ```
 
 ### What makes a good calibration variable?
@@ -454,7 +562,8 @@ E.g. see [@lundy2022relative].
 
 Let's see how the bootstrap version of post-stratification:
 
-```{r}
+
+```r
 # start with bootsrapped SRS
 set.seed(1902)
 bootstrapSRS = survey::as.svrepdesign(
@@ -469,15 +578,44 @@ bootstrapPS = survey::postStratify(
   population=popcounts)   
 
 muhat = svymean(~hasdegree,design=PSdesign); muhat
-confint(muhat)
+```
 
-muhat = svymean(~hasdegree,design=bootstrapPS); muhat
+```
+##              mean     SE
+## hasdegree 0.21941 0.0238
+```
+
+```r
 confint(muhat)
+```
+
+```
+##               2.5 %    97.5 %
+## hasdegree 0.1728354 0.2659927
+```
+
+```r
+muhat = svymean(~hasdegree,design=bootstrapPS); muhat
+```
+
+```
+##              mean     SE
+## hasdegree 0.21941 0.0242
+```
+
+```r
+confint(muhat)
+```
+
+```
+##               2.5 %    97.5 %
+## hasdegree 0.1719077 0.2669204
 ```
 
 How about the raking estimate:
 
-```{r}
+
+```r
 # start with bootstrap replicated SSRS
 set.seed(76573)
 bootstrapSSRS = survey::as.svrepdesign(
@@ -493,21 +631,77 @@ bootrakedesign = survey::rake(
   )
 
 muhat = svymean(~hasdegree,design=SSRSdesign); muhat
+```
+
+```
+##              mean     SE
+## hasdegree 0.14919 0.0293
+```
+
+```r
 confint(muhat)
+```
+
+```
+##                2.5 %    97.5 %
+## hasdegree 0.09170761 0.2066743
+```
+
+```r
 muhat = svymean(~hasdegree,design=rakedesign); muhat
+```
+
+```
+##              mean     SE
+## hasdegree 0.15249 0.0298
+```
+
+```r
 confint(muhat)
+```
+
+```
+##                2.5 %    97.5 %
+## hasdegree 0.09410781 0.2108778
+```
+
+```r
 muhat = svymean(~hasdegree,design=bootrakedesign); muhat
+```
+
+```
+##              mean     SE
+## hasdegree 0.15249 0.0299
+```
+
+```r
 confint(muhat)
+```
+
+```
+##                2.5 %    97.5 %
+## hasdegree 0.09383431 0.2111513
 ```
 
 We can ask the svy commands to produce all replicates of the estimate.
 Doing this we can get confidence intervals based on the actual distribution
 of the estimates.
 
-```{r}
+
+```r
 allmus = svymean(~hasdegree,design=bootrakedesign,return.replicates=TRUE)
 hist(allmus$replicates)
+```
+
+![](figure/unnamed-chunk-10.png)
+
+```r
 quantile(allmus$replicates,probs=c(0.025,0.975))
+```
+
+```
+##       2.5%      97.5% 
+## 0.09744063 0.21383397
 ```
 
 
