@@ -532,10 +532,7 @@ Note that <span class="math inline">\(\mathbb{E}[a ; b]\)</span> specifies the q
 <span id="cb41-22"><a href="variational-inference.html#cb41-22" aria-hidden="true" tabindex="-1"></a>          ylabel<span class="op">=</span><span class="st">&quot;log GDP (2000)&quot;</span>,</span>
 <span id="cb41-23"><a href="variational-inference.html#cb41-23" aria-hidden="true" tabindex="-1"></a>          title<span class="op">=</span><span class="st">&quot;African Nations&quot;</span>)</span>
 <span id="cb41-24"><a href="variational-inference.html#cb41-24" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
-<div class="figure">
-<img src="figure/vi/unnamed-chunk-4-1.png" alt="" />
-<p class="caption">plot of chunk unnamed-chunk-4</p>
-</div>
+<p><img src="figure/vi/unnamed-chunk-4-1.png" /></p>
 <p>A simple model to capture the relationship is
 <span class="math display">\[Y = \alpha + \beta_aX_a + \beta_rX_r + \beta_{ar} X_aX_r +\epsilon, \ \ \epsilon\sim\mathcal{N}(0,\sigma^2)\]</span>
 where <span class="math inline">\(Y\)</span> is the log GDP, <span class="math inline">\(X_a\)</span> is an indicator for whether the nation is in Africa, <span class="math inline">\(X_r\)</span> is the ruggedness index, and <span class="math inline">\(\epsilon\)</span> is the noise term.</p>
@@ -635,10 +632,7 @@ We can also define a Bayesian version of it called <code>bayes_model</code> as f
 <span id="cb47-5"><a href="variational-inference.html#cb47-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;SVI step&quot;</span>)</span>
 <span id="cb47-6"><a href="variational-inference.html#cb47-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&quot;ELBO loss&quot;</span>)</span>
 <span id="cb47-7"><a href="variational-inference.html#cb47-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
-<div class="figure">
-<img src="figure/vi/unnamed-chunk-8-3.png" alt="" />
-<p class="caption">plot of chunk unnamed-chunk-8</p>
-</div>
+<p><img src="figure/vi/unnamed-chunk-8-3.png" /></p>
 <p>Below is the time taken to optimize the ELBO using the VI method.</p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb48-1"><a href="variational-inference.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(vi_end<span class="op">-</span>vi_start)</span></code></pre></div>
 <pre><code>## 7.659164667129517</code></pre>
@@ -673,10 +667,7 @@ We can also define a Bayesian version of it called <code>bayes_model</code> as f
 <span id="cb52-10"><a href="variational-inference.html#cb52-10" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;Slope of regression line&quot;</span>)</span>
 <span id="cb52-11"><a href="variational-inference.html#cb52-11" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
 <span id="cb52-12"><a href="variational-inference.html#cb52-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
-<div class="figure">
-<img src="figure/vi/unnamed-chunk-11-5.png" alt="" />
-<p class="caption">plot of chunk unnamed-chunk-11</p>
-</div>
+<p><img src="figure/vi/unnamed-chunk-11-5.png" /></p>
 <p>Finally, we can compare the VI to MCMC (NUTS, to be specific).</p>
 <div class="sourceCode" id="cb53"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb53-1"><a href="variational-inference.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyro.infer <span class="im">import</span> MCMC, NUTS</span>
 <span id="cb53-2"><a href="variational-inference.html#cb53-2" aria-hidden="true" tabindex="-1"></a>mcmc <span class="op">=</span> MCMC(NUTS(bayes_model), num_samples<span class="op">=</span><span class="dv">1000</span>, warmup_steps<span class="op">=</span><span class="dv">1000</span>, disable_progbar<span class="op">=</span><span class="va">True</span>)</span>
@@ -708,10 +699,7 @@ We can also define a Bayesian version of it called <code>bayes_model</code> as f
 <span id="cb57-8"><a href="variational-inference.html#cb57-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;Slope of regression line&quot;</span>)</span>
 <span id="cb57-9"><a href="variational-inference.html#cb57-9" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
 <span id="cb57-10"><a href="variational-inference.html#cb57-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
-<div class="figure">
-<img src="figure/vi/unnamed-chunk-14-7.png" alt="" />
-<p class="caption">plot of chunk unnamed-chunk-14</p>
-</div>
+<p><img src="figure/vi/unnamed-chunk-14-7.png" /></p>
 </div>
 <div id="takeaways" class="section level2 hasAnchor" number="4.4">
 <h2><span class="header-section-number">4.4</span> Takeaways<a href="variational-inference.html#takeaways" class="anchor-section" aria-label="Anchor link to header"></a></h2>

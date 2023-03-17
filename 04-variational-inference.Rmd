@@ -277,7 +277,7 @@ ax[1].set(xlabel="Terrain Ruggedness Index",
 plt.show()
 ```
 
-![plot of chunk unnamed-chunk-4](figure/vi/unnamed-chunk-4-1.png)
+![](figure/vi/unnamed-chunk-4-1.png)
 
 A simple model to capture the relationship is 
 \[Y = \alpha + \beta_aX_a + \beta_rX_r + \beta_{ar} X_aX_r +\epsilon, \ \ \epsilon\sim\mathcal{N}(0,\sigma^2)\]
@@ -407,7 +407,7 @@ plt.ylabel("ELBO loss")
 plt.show()
 ```
 
-![plot of chunk unnamed-chunk-8](figure/vi/unnamed-chunk-8-3.png)
+![](figure/vi/unnamed-chunk-8-3.png)
 
 Below is the time taken to optimize the ELBO using the VI method.
 
@@ -462,7 +462,7 @@ plt.legend()
 plt.show()
 ```
 
-![plot of chunk unnamed-chunk-11](figure/vi/unnamed-chunk-11-5.png)
+![](figure/vi/unnamed-chunk-11-5.png)
 
 Finally, we can compare the VI to MCMC (NUTS, to be specific).
 
@@ -513,7 +513,7 @@ plt.legend()
 plt.show()
 ```
 
-![plot of chunk unnamed-chunk-14](figure/vi/unnamed-chunk-14-7.png)
+![](figure/vi/unnamed-chunk-14-7.png)
 
 ## Takeaways
 

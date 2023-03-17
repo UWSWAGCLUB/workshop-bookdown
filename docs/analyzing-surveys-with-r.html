@@ -529,10 +529,7 @@ population correction factor (fpc).</p>
 <span id="cb74-43"><a href="analyzing-surveys-with-r.html#cb74-43" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb74-44"><a href="analyzing-surveys-with-r.html#cb74-44" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(estimates,<span class="at">freq=</span><span class="cn">FALSE</span>,<span class="at">main=</span><span class="st">&quot;SRSwor, n=19100, N-n=59&quot;</span>)</span>
 <span id="cb74-45"><a href="analyzing-surveys-with-r.html#cb74-45" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(estimates))</span></code></pre></div>
-<div class="figure">
-<img src="figure/survey/unnamed-chunk-2.png" alt="" />
-<p class="caption">plot of chunk unnamed-chunk-2</p>
-</div>
+<p><img src="figure/survey/unnamed-chunk-2.png" /></p>
 </div>
 <div id="stratified-simple-random-sampling-without-replacement-ssrswor" class="section level3 hasAnchor" number="6.3.5">
 <h3><span class="header-section-number">6.3.5</span> Stratified Simple Random Sampling Without Replacement (SSRSwor)<a href="analyzing-surveys-with-r.html#stratified-simple-random-sampling-without-replacement-ssrswor" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -778,10 +775,7 @@ Doing this we can get confidence intervals based on the actual distribution
 of the estimates.</p>
 <div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="analyzing-surveys-with-r.html#cb125-1" aria-hidden="true" tabindex="-1"></a>allmus <span class="ot">=</span> <span class="fu">svymean</span>(<span class="sc">~</span>hasdegree,<span class="at">design=</span>bootrakedesign,<span class="at">return.replicates=</span><span class="cn">TRUE</span>)</span>
 <span id="cb125-2"><a href="analyzing-surveys-with-r.html#cb125-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(allmus<span class="sc">$</span>replicates)</span></code></pre></div>
-<div class="figure">
-<img src="figure/survey/unnamed-chunk-10.png" alt="" />
-<p class="caption">plot of chunk unnamed-chunk-10</p>
-</div>
+<p><img src="figure/survey/unnamed-chunk-10.png" /></p>
 <div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="analyzing-surveys-with-r.html#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(allmus<span class="sc">$</span>replicates,<span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.025</span>,<span class="fl">0.975</span>))</span></code></pre></div>
 <pre><code>##       2.5%      97.5% 
 ## 0.09744063 0.21383397</code></pre>

@@ -449,10 +449,7 @@ div.csl-indent {
 <span id="cb132-3"><a href="pooled-p-values.html#cb132-3" aria-hidden="true" tabindex="-1"></a>mgiIndep <span class="ot">&lt;-</span> mgiFiltered<span class="sc">$</span>data[, <span class="fu">match</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">19</span>, <span class="st">&quot;X&quot;</span>), mgiFiltered<span class="sc">$</span>markers<span class="sc">$</span>chr)]</span>
 <span id="cb132-4"><a href="pooled-p-values.html#cb132-4" aria-hidden="true" tabindex="-1"></a><span class="do">## inspect dependence structure</span></span>
 <span id="cb132-5"><a href="pooled-p-values.html#cb132-5" aria-hidden="true" tabindex="-1"></a><span class="fu">image</span>(<span class="fu">cor</span>(mgiIndep))</span></code></pre></div>
-<div class="figure">
-<img src="figure/pooledpval/unnamed-chunk-3-1.png" alt="" />
-<p class="caption">plot of chunk unnamed-chunk-3</p>
-</div>
+<p><img src="figure/pooledpval/unnamed-chunk-3-1.png" /></p>
 <p>To simulate a Mendelian trait, we’ll simply add noise to the first marker. For non-Mendelian inheritance, let’s take the average of all markers and add noise.</p>
 <div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="pooled-p-values.html#cb133-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2314</span>)</span>
 <span id="cb133-2"><a href="pooled-p-values.html#cb133-2" aria-hidden="true" tabindex="-1"></a>traitMendel <span class="ot">&lt;-</span> mgiIndep[, <span class="dv">1</span>] <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">94</span>, <span class="at">sd =</span> <span class="fl">0.3</span>)</span>
@@ -583,10 +580,7 @@ will both behave exactly like a univariate <span class="math inline">\(p\)</span
 <span id="cb148-16"><a href="pooled-p-values.html#cb148-16" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="at">x =</span> <span class="st">&quot;topleft&quot;</span>, <span class="at">col =</span> <span class="fu">adjustcolor</span>(<span class="fu">c</span>(<span class="st">&quot;firebrick&quot;</span>, <span class="st">&quot;steelblue&quot;</span>, <span class="st">&quot;seagreen&quot;</span>),</span>
 <span id="cb148-17"><a href="pooled-p-values.html#cb148-17" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.3</span>), <span class="at">legend =</span> <span class="fu">c</span>(<span class="fu">expression</span>(g[Fis]), <span class="fu">expression</span>(g[Sto]), <span class="fu">expression</span>(g[Tip])),</span>
 <span id="cb148-18"><a href="pooled-p-values.html#cb148-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">pch =</span> <span class="dv">16</span>)</span></code></pre></div>
-<div class="figure">
-<img src="figure/pooledpval/unnamed-chunk-11-1.png" alt="" />
-<p class="caption">plot of chunk unnamed-chunk-11</p>
-</div>
+<p><img src="figure/pooledpval/unnamed-chunk-11-1.png" /></p>
 <p>Note how <span class="math inline">\(g_{Sto}\)</span> is increasing almost monotonically in the mean, with large and small points spread mixed within the line for each mean value. <span class="math inline">\(g_{Fis}\)</span>, as suggested by its position giving a <span class="math inline">\(p\)</span>-value between <span class="math inline">\(g_{Sto}\)</span> and <span class="math inline">\(g_{Tip}\)</span>, follows this line somewhat, but is sensitive to the minimum. The large points, indicating samples with large minimum values, tend to have a larger <span class="math inline">\(p\)</span>-value than the <span class="math inline">\(g_{Sto}\)</span> line while the small points, samples with small minimum values, tend to have a smaller <span class="math inline">\(p\)</span>-value. <span class="math inline">\(g_{Tip}\)</span> barely follows the line at all, the only relationship we can see in the green points is between the size of the point and its <span class="math inline">\(y\)</span>-value.</p>
 <p>All of this to say:</p>
 <ul>
@@ -652,10 +646,7 @@ will both behave exactly like a univariate <span class="math inline">\(p\)</span
 <span id="cb163-5"><a href="pooled-p-values.html#cb163-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb163-6"><a href="pooled-p-values.html#cb163-6" aria-hidden="true" tabindex="-1"></a><span class="do">## image correlations between these</span></span>
 <span id="cb163-7"><a href="pooled-p-values.html#cb163-7" aria-hidden="true" tabindex="-1"></a><span class="fu">image</span>(mgiDepCors)</span></code></pre></div>
-<div class="figure">
-<img src="figure/pooledpval/unnamed-chunk-14-1.png" alt="" />
-<p class="caption">plot of chunk unnamed-chunk-14</p>
-</div>
+<p><img src="figure/pooledpval/unnamed-chunk-14-1.png" /></p>
 <div id="the-wrong-way" class="section level3 hasAnchor" number="8.3.1">
 <h3><span class="header-section-number">8.3.1</span> The wrong way<a href="pooled-p-values.html#the-wrong-way" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>If we check the first few lines of code for any of the <code>poolr</code> pooling functions, take <code>fisher</code>, we’ll see several options for adjustment:</p>

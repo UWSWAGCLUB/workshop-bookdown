@@ -266,7 +266,7 @@ hist(estimates,freq=FALSE,main="SRSwor, n=19100, N-n=59")
 lines(density(estimates))
 ```
 
-![plot of chunk unnamed-chunk-2](figure/survey/unnamed-chunk-2.png)
+![](figure/survey/unnamed-chunk-2.png)
 
 
 ### Stratified Simple Random Sampling Without Replacement (SSRSwor)
@@ -693,7 +693,7 @@ allmus = svymean(~hasdegree,design=bootrakedesign,return.replicates=TRUE)
 hist(allmus$replicates)
 ```
 
-![plot of chunk unnamed-chunk-10](figure/survey/unnamed-chunk-10.png)
+![](figure/survey/unnamed-chunk-10.png)
 
 ```r
 quantile(allmus$replicates,probs=c(0.025,0.975))
