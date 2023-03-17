@@ -172,7 +172,7 @@ mgiIndep <- mgiFiltered$data[, match(c(1:19, "X"), mgiFiltered$markers$chr)]
 image(cor(mgiIndep))
 ```
 
-![](figure/pooledpval/unnamed-chunk-3-1.png)
+![plot of chunk unnamed-chunk-3](figure/pooledpval/unnamed-chunk-3-1.png)
 
 To simulate a Mendelian trait, we'll simply add noise to the first marker. For non-Mendelian inheritance, let's take the average of all markers and add noise.
 
@@ -368,7 +368,7 @@ legend(x = "topleft", col = adjustcolor(c("firebrick", "steelblue", "seagreen"),
     pch = 16)
 ```
 
-![](figure/pooledpval/unnamed-chunk-11-1.png)
+![plot of chunk unnamed-chunk-11](figure/pooledpval/unnamed-chunk-11-1.png)
 
 Note how $g_{Sto}$ is increasing almost monotonically in the mean, with large and small points spread mixed within the line for each mean value. $g_{Fis}$, as suggested by its position giving a $p$-value between $g_{Sto}$ and $g_{Tip}$, follows this line somewhat, but is sensitive to the minimum. The large points, indicating samples with large minimum values, tend to have a larger $p$-value than the $g_{Sto}$ line while the small points, samples with small minimum values, tend to have a smaller $p$-value. $g_{Tip}$ barely follows the line at all, the only relationship we can see in the green points is between the size of the point and its $y$-value.
 
@@ -487,7 +487,7 @@ mgiDepCors <- cor(mgiDep)  # important for later
 image(mgiDepCors)
 ```
 
-![](figure/pooledpval/unnamed-chunk-14-1.png)
+![plot of chunk unnamed-chunk-14](figure/pooledpval/unnamed-chunk-14-1.png)
 
 
 ### The wrong way
