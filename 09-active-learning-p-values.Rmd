@@ -22,7 +22,7 @@ require(bookdown)
 
 ## Introduction
 
-Welcome to this workshop on active learning strategies with *p*-values. Hopefully, this workshop helps improve your ability to
+Welcome to this workshop on active learning strategies with *p*-values. This workshop was delivered as part of the [Centre for Teaching Excellence's CUT program](https://uwaterloo.ca/centre-for-teaching-excellence/support-graduate-students/certificate-university-teaching). Hopefully, this workshop helps improve your ability to
 
   1. **Describe** best practices for teaching statistics
   2. **Explain** the importance of developing statistical thinking skills via active learning
