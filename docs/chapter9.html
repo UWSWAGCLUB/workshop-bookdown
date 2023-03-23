@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 9 Active Learning Strategies with p-Values | SWAG Workshops Repository</title>
+  <meta name="description" content="Chapter 9 Active Learning Strategies with p-Values | SWAG Workshops Repository" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 9 Active Learning Strategies with p-Values | SWAG Workshops Repository" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 9 Active Learning Strategies with p-Values | SWAG Workshops Repository" />
+  
+  
+  
+
+<meta name="author" content="UW Statistical Workshops and Applications Group" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="pooled-p-values.html"/>
+<link rel="next" href="references.html"/>
+<script src="libs/header-attrs-2.17/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">SWAG Workshops Repository</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction<span></span></a></li>
+<li class="chapter" data-level="2" data-path="chapter2.html"><a href="chapter2.html"><i class="fa fa-check"></i><b>2</b> Sampling-Resampling Methods<span></span></a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="chapter2.html"><a href="chapter2.html#introduction-1"><i class="fa fa-check"></i><b>2.1</b> Introduction<span></span></a></li>
+<li class="chapter" data-level="2.2" data-path="chapter2.html"><a href="chapter2.html#rejection-sampling"><i class="fa fa-check"></i><b>2.2</b> Rejection Sampling<span></span></a></li>
+<li class="chapter" data-level="2.3" data-path="chapter2.html"><a href="chapter2.html#sampling-resampling-methods"><i class="fa fa-check"></i><b>2.3</b> Sampling-Resampling Methods<span></span></a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="chapter2.html"><a href="chapter2.html#overview-of-the-sampling-importance-resampling-algorithm"><i class="fa fa-check"></i><b>2.3.1</b> Overview of the Sampling-Importance-Resampling Algorithm<span></span></a></li>
+<li class="chapter" data-level="2.3.2" data-path="chapter2.html"><a href="chapter2.html#computational-considerations"><i class="fa fa-check"></i><b>2.3.2</b> Computational Considerations<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="chapter2.html"><a href="chapter2.html#implementation-of-sampling-resampling-methods"><i class="fa fa-check"></i><b>2.4</b> Implementation of Sampling-Resampling Methods<span></span></a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="chapter2.html"><a href="chapter2.html#illustrative-example-with-binary-data"><i class="fa fa-check"></i><b>2.4.1</b> Illustrative Example with Binary Data<span></span></a></li>
+<li class="chapter" data-level="2.4.2" data-path="chapter2.html"><a href="chapter2.html#practical-considerations-for-choosing-proposal-distributions"><i class="fa fa-check"></i><b>2.4.2</b> Practical Considerations for Choosing Proposal Distributions<span></span></a></li>
+<li class="chapter" data-level="2.4.3" data-path="chapter2.html"><a href="chapter2.html#comparing-proposal-distributions"><i class="fa fa-check"></i><b>2.4.3</b> Comparing Proposal Distributions<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="chapter2.html"><a href="chapter2.html#sampling-resampling-in-multiple-dimensions"><i class="fa fa-check"></i><b>2.5</b> Sampling-Resampling in Multiple Dimensions<span></span></a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="chapter2.html"><a href="chapter2.html#exercise-with-illustrative-example"><i class="fa fa-check"></i><b>2.5.1</b> Exercise with Illustrative Example<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html"><i class="fa fa-check"></i><b>3</b> Bernstein-von Mises Theorem<span></span></a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#introduction-2"><i class="fa fa-check"></i><b>3.1</b> Introduction<span></span></a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#bayesian-inference"><i class="fa fa-check"></i><b>3.1.1</b> Bayesian Inference<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#theorem"><i class="fa fa-check"></i><b>3.2</b> Theorem<span></span></a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#importance"><i class="fa fa-check"></i><b>3.2.1</b> Importance<span></span></a></li>
+<li class="chapter" data-level="3.2.2" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#required-assumptions"><i class="fa fa-check"></i><b>3.2.2</b> Required Assumptions<span></span></a></li>
+<li class="chapter" data-level="3.2.3" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#example-1---normal-normal-model"><i class="fa fa-check"></i><b>3.2.3</b> Example 1 - Normal-normal model<span></span></a></li>
+<li class="chapter" data-level="3.2.4" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#example-2---bernoulli-beta-model"><i class="fa fa-check"></i><b>3.2.4</b> Example 2 - Bernoulli-Beta Model<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#limitations"><i class="fa fa-check"></i><b>3.3</b> Limitations<span></span></a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#other-thoughts-on-consistency"><i class="fa fa-check"></i><b>3.3.1</b> Other thoughts on consistency<span></span></a></li>
+<li class="chapter" data-level="3.3.2" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#example-3---prior-has-zero-density-at-theta_0"><i class="fa fa-check"></i><b>3.3.2</b> Example 3 - Prior has zero density at <span class="math inline">\(\theta_0\)</span><span></span></a></li>
+<li class="chapter" data-level="3.3.3" data-path="bernstein-von-mises-theorem.html"><a href="bernstein-von-mises-theorem.html#example-4---true-parameter-value-is-on-the-boundary"><i class="fa fa-check"></i><b>3.3.3</b> Example 4 - True parameter value is on the boundary<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="variational-inference.html"><a href="variational-inference.html"><i class="fa fa-check"></i><b>4</b> Variational Inference<span></span></a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="variational-inference.html"><a href="variational-inference.html#introduction-3"><i class="fa fa-check"></i><b>4.1</b> Introduction<span></span></a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="variational-inference.html"><a href="variational-inference.html#frequentist-setting"><i class="fa fa-check"></i><b>4.1.1</b> Frequentist Setting<span></span></a></li>
+<li class="chapter" data-level="4.1.2" data-path="variational-inference.html"><a href="variational-inference.html#bayesian-setting"><i class="fa fa-check"></i><b>4.1.2</b> Bayesian Setting<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="variational-inference.html"><a href="variational-inference.html#example-mixture-of-gaussians"><i class="fa fa-check"></i><b>4.2</b> Example: Mixture of Gaussians<span></span></a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="variational-inference.html"><a href="variational-inference.html#coordinate-ascent-mean-field-variational-inference"><i class="fa fa-check"></i><b>4.2.1</b> Coordinate Ascent Mean-Field Variational Inference<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="variational-inference.html"><a href="variational-inference.html#example-stochastic-variational-inference-using-pyro-in-python"><i class="fa fa-check"></i><b>4.3</b> Example: Stochastic Variational Inference using Pyro in Python<span></span></a></li>
+<li class="chapter" data-level="4.4" data-path="variational-inference.html"><a href="variational-inference.html#takeaways"><i class="fa fa-check"></i><b>4.4</b> Takeaways<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="smoothing-techniques.html"><a href="smoothing-techniques.html"><i class="fa fa-check"></i><b>5</b> Smoothing Techniques<span></span></a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="smoothing-techniques.html"><a href="smoothing-techniques.html#introduction-4"><i class="fa fa-check"></i><b>5.1</b> Introduction<span></span></a></li>
+<li class="chapter" data-level="5.2" data-path="smoothing-techniques.html"><a href="smoothing-techniques.html#kernel-smoothing-methods"><i class="fa fa-check"></i><b>5.2</b> Kernel Smoothing Methods<span></span></a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="smoothing-techniques.html"><a href="smoothing-techniques.html#local-linear-regression"><i class="fa fa-check"></i><b>5.2.1</b> Local linear regression<span></span></a></li>
+<li class="chapter" data-level="5.2.2" data-path="smoothing-techniques.html"><a href="smoothing-techniques.html#tuning-parameter-bandwidth-selection"><i class="fa fa-check"></i><b>5.2.2</b> Tuning Parameter (bandwidth) Selection<span></span></a></li>
+<li class="chapter" data-level="5.2.3" data-path="smoothing-techniques.html"><a href="smoothing-techniques.html#extension-and-example-local-logistic-regression"><i class="fa fa-check"></i><b>5.2.3</b> Extension and example: Local logistic regression<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="smoothing-techniques.html"><a href="smoothing-techniques.html#smoothing-spline"><i class="fa fa-check"></i><b>5.3</b> Smoothing Spline<span></span></a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="smoothing-techniques.html"><a href="smoothing-techniques.html#computation-1"><i class="fa fa-check"></i><b>5.3.1</b> Computation<span></span></a></li>
+<li class="chapter" data-level="5.3.2" data-path="smoothing-techniques.html"><a href="smoothing-techniques.html#tuning-parameter-selection"><i class="fa fa-check"></i><b>5.3.2</b> Tuning Parameter Selection<span></span></a></li>
+<li class="chapter" data-level="5.3.3" data-path="smoothing-techniques.html"><a href="smoothing-techniques.html#extension-and-example-nonparametric-logistic-regression"><i class="fa fa-check"></i><b>5.3.3</b> Extension and example: Nonparametric logistic regression<span></span></a></li>
+<li class="chapter" data-level="5.3.4" data-path="smoothing-techniques.html"><a href="smoothing-techniques.html#take-home-note"><i class="fa fa-check"></i><b>5.3.4</b> Take-home note<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="analyzing-surveys-with-r.html"><a href="analyzing-surveys-with-r.html"><i class="fa fa-check"></i><b>6</b> Analyzing Surveys with R<span></span></a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="analyzing-surveys-with-r.html"><a href="analyzing-surveys-with-r.html#acknowlegdements"><i class="fa fa-check"></i><b>6.1</b> Acknowlegdements<span></span></a></li>
+<li class="chapter" data-level="6.2" data-path="analyzing-surveys-with-r.html"><a href="analyzing-surveys-with-r.html#introduction-to-thinking-about-surveys"><i class="fa fa-check"></i><b>6.2</b> Introduction to Thinking About Surveys<span></span></a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="analyzing-surveys-with-r.html"><a href="analyzing-surveys-with-r.html#total-survey-error-tse"><i class="fa fa-check"></i><b>6.2.1</b> Total Survey Error (TSE)<span></span></a></li>
+<li class="chapter" data-level="6.2.2" data-path="analyzing-surveys-with-r.html"><a href="analyzing-surveys-with-r.html#probability-vs.-non-probability-surveys"><i class="fa fa-check"></i><b>6.2.2</b> Probability vs. Non-Probability Surveys<span></span></a></li>
+<li class="chapter" data-level="6.2.3" data-path="analyzing-surveys-with-r.html"><a href="analyzing-surveys-with-r.html#design-based-vs.-model-based-inference"><i class="fa fa-check"></i><b>6.2.3</b> Design-based vs. Model-based Inference<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="analyzing-surveys-with-r.html"><a href="analyzing-surveys-with-r.html#probability-survey-without-non-response-design-based"><i class="fa fa-check"></i><b>6.3</b> Probability Survey without Non-response (design-based)<span></span></a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="analyzing-surveys-with-r.html"><a href="analyzing-surveys-with-r.html#some-notation"><i class="fa fa-check"></i><b>6.3.1</b> Some notation<span></span></a></li>
+<li class="chapter" data-level="6.3.2" data-path="analyzing-surveys-with-r.html"><a href="analyzing-surveys-with-r.html#horvitz-thompson-estimator"><i class="fa fa-check"></i><b>6.3.2</b> Horvitz-Thompson Estimator<span></span></a></li>
+<li class="chapter" data-level="6.3.3" data-path="analyzing-surveys-with-r.html"><a href="analyzing-surveys-with-r.html#variance-estimation"><i class="fa fa-check"></i><b>6.3.3</b> Variance Estimation<span></span></a></li>
+<li class="chapter" data-level="6.3.4" data-path="analyzing-surveys-with-r.html"><a href="analyzing-surveys-with-r.html#simple-random-sampling-without-replacement-srswor"><i class="fa fa-check"></i><b>6.3.4</b> Simple Random Sampling Without Replacement (SRSwor)<span></span></a></li>
+<li class="chapter" data-level="6.3.5" data-path="analyzing-surveys-with-r.html"><a href="analyzing-surveys-with-r.html#stratified-simple-random-sampling-without-replacement-ssrswor"><i class="fa fa-check"></i><b>6.3.5</b> Stratified Simple Random Sampling Without Replacement (SSRSwor)<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="analyzing-surveys-with-r.html"><a href="analyzing-surveys-with-r.html#post-adjustment-model-assisted"><i class="fa fa-check"></i><b>6.4</b> Post-adjustment (model-assisted)<span></span></a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="analyzing-surveys-with-r.html"><a href="analyzing-surveys-with-r.html#post-stratification"><i class="fa fa-check"></i><b>6.4.1</b> Post-stratification<span></span></a></li>
+<li class="chapter" data-level="6.4.2" data-path="analyzing-surveys-with-r.html"><a href="analyzing-surveys-with-r.html#calibration-dealing-with-multiple-auxilliary-variables"><i class="fa fa-check"></i><b>6.4.2</b> Calibration: Dealing with multiple auxilliary variables<span></span></a></li>
+<li class="chapter" data-level="6.4.3" data-path="analyzing-surveys-with-r.html"><a href="analyzing-surveys-with-r.html#what-makes-a-good-calibration-variable"><i class="fa fa-check"></i><b>6.4.3</b> What makes a good calibration variable?<span></span></a></li>
+<li class="chapter" data-level="6.4.4" data-path="analyzing-surveys-with-r.html"><a href="analyzing-surveys-with-r.html#variance-estimation-resampling"><i class="fa fa-check"></i><b>6.4.4</b> Variance Estimation: Resampling<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="analyzing-surveys-with-r.html"><a href="analyzing-surveys-with-r.html#non-probability-surveys-model-based"><i class="fa fa-check"></i><b>6.5</b> Non-probability Surveys (model-based)<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="introduction-to-causal-inference.html"><a href="introduction-to-causal-inference.html"><i class="fa fa-check"></i><b>7</b> Introduction to Causal Inference<span></span></a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="introduction-to-causal-inference.html"><a href="introduction-to-causal-inference.html#basic-concepts"><i class="fa fa-check"></i><b>7.1</b> Basic Concepts<span></span></a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="introduction-to-causal-inference.html"><a href="introduction-to-causal-inference.html#notation"><i class="fa fa-check"></i><b>7.1.1</b> Notation<span></span></a></li>
+<li class="chapter" data-level="7.1.2" data-path="introduction-to-causal-inference.html"><a href="introduction-to-causal-inference.html#causal-effect"><i class="fa fa-check"></i><b>7.1.2</b> Causal Effect<span></span></a></li>
+<li class="chapter" data-level="7.1.3" data-path="introduction-to-causal-inference.html"><a href="introduction-to-causal-inference.html#assumptions"><i class="fa fa-check"></i><b>7.1.3</b> Assumptions<span></span></a></li>
+<li class="chapter" data-level="7.1.4" data-path="introduction-to-causal-inference.html"><a href="introduction-to-causal-inference.html#propensity-score"><i class="fa fa-check"></i><b>7.1.4</b> Propensity Score<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="introduction-to-causal-inference.html"><a href="introduction-to-causal-inference.html#commonly-used-methods"><i class="fa fa-check"></i><b>7.2</b> Commonly Used Methods<span></span></a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="introduction-to-causal-inference.html"><a href="introduction-to-causal-inference.html#matching"><i class="fa fa-check"></i><b>7.2.1</b> Matching<span></span></a></li>
+<li class="chapter" data-level="7.2.2" data-path="introduction-to-causal-inference.html"><a href="introduction-to-causal-inference.html#stratification"><i class="fa fa-check"></i><b>7.2.2</b> Stratification<span></span></a></li>
+<li class="chapter" data-level="7.2.3" data-path="introduction-to-causal-inference.html"><a href="introduction-to-causal-inference.html#inverse-probability-weighting"><i class="fa fa-check"></i><b>7.2.3</b> Inverse Probability Weighting<span></span></a></li>
+<li class="chapter" data-level="7.2.4" data-path="introduction-to-causal-inference.html"><a href="introduction-to-causal-inference.html#doubly-robust-estimation"><i class="fa fa-check"></i><b>7.2.4</b> Doubly Robust Estimation<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="pooled-p-values.html"><a href="pooled-p-values.html"><i class="fa fa-check"></i><b>8</b> Pooled p-values<span></span></a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="pooled-p-values.html"><a href="pooled-p-values.html#a-motivating-example"><i class="fa fa-check"></i><b>8.1</b> A motivating example<span></span></a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="pooled-p-values.html"><a href="pooled-p-values.html#some-real-data"><i class="fa fa-check"></i><b>8.1.1</b> Some “real” data<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="pooled-p-values.html"><a href="pooled-p-values.html#pooling-p-values"><i class="fa fa-check"></i><b>8.2</b> Pooling <span class="math inline">\(p\)</span>-values<span></span></a></li>
+<li class="chapter" data-level="8.3" data-path="pooled-p-values.html"><a href="pooled-p-values.html#adjusting-for-dependence"><i class="fa fa-check"></i><b>8.3</b> Adjusting for dependence<span></span></a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="pooled-p-values.html"><a href="pooled-p-values.html#the-wrong-way"><i class="fa fa-check"></i><b>8.3.1</b> The wrong way<span></span></a></li>
+<li class="chapter" data-level="8.3.2" data-path="pooled-p-values.html"><a href="pooled-p-values.html#a-better-way"><i class="fa fa-check"></i><b>8.3.2</b> A better way<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="pooled-p-values.html"><a href="pooled-p-values.html#take-aways"><i class="fa fa-check"></i><b>8.4</b> Take aways<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="chapter9.html"><a href="chapter9.html"><i class="fa fa-check"></i><b>9</b> Active Learning Strategies with <em>p</em>-Values<span></span></a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="chapter9.html"><a href="chapter9.html#introduction-5"><i class="fa fa-check"></i><b>9.1</b> Introduction<span></span></a></li>
+<li class="chapter" data-level="9.2" data-path="chapter9.html"><a href="chapter9.html#interactive-activity"><i class="fa fa-check"></i><b>9.2</b> Interactive Activity<span></span></a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="chapter9.html"><a href="chapter9.html#background"><i class="fa fa-check"></i><b>9.2.1</b> Background<span></span></a></li>
+<li class="chapter" data-level="9.2.2" data-path="chapter9.html"><a href="chapter9.html#instructions"><i class="fa fa-check"></i><b>9.2.2</b> Instructions<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="chapter9.html"><a href="chapter9.html#annotated-bibliography"><i class="fa fa-check"></i><b>9.3</b> Annotated Bibliography<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>10</b> References<span></span></a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">SWAG Workshops Repository</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="chapter9" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">Chapter 9</span> Active Learning Strategies with <em>p</em>-Values<a href="chapter9.html#chapter9" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><em>Luke Hagar</em></p>
+<div id="introduction-5" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> Introduction<a href="chapter9.html#introduction-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Welcome to this workshop on active learning strategies with <em>p</em>-values. Hopefully, this workshop helps improve your ability to</p>
+<ol style="list-style-type: decimal">
+<li><strong>Describe</strong> best practices for teaching statistics</li>
+<li><strong>Explain</strong> the importance of developing statistical thinking skills via active learning</li>
+<li><strong>Identify</strong> advantages of using guided simulation activites to improve understanding of <em>p</em>-values.</li>
+</ol>
+<p>The presentation component of this workshop is accompanied by an interactive activity. This interactive activity is described below.</p>
+</div>
+<div id="interactive-activity" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> Interactive Activity<a href="chapter9.html#interactive-activity" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="background" class="section level3 hasAnchor" number="9.2.1">
+<h3><span class="header-section-number">9.2.1</span> Background<a href="chapter9.html#background" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We use an interactive application to explore some features of the <em>p</em>-value using simulation: <a href="https://lmhagar.shinyapps.io/CUT_App/" class="uri">https://lmhagar.shinyapps.io/CUT_App/</a> We use a mock experiment to assess the impact of active learning in the classroom. We are facilitating two versions of the same course, one with traditional lectures and the other with flipped lectures. We compare the effectiveness of the two lecture formats using the students’ final exam marks. To do this, we test the hypothesis that the average exam marks in the two versions of the course are the same.</p>
+</div>
+<div id="instructions" class="section level3 hasAnchor" number="9.2.2">
+<h3><span class="header-section-number">9.2.2</span> Instructions<a href="chapter9.html#instructions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The simulation settings can be controlled using the <em>Simulation Inputs</em> tab. We simulate an exam mark for each student in the experiment, such that the average mark in the traditional lecture is 70. The simulation has two inputs:</p>
+<ul>
+<li><em>Average mark in flipped lecture</em>: marks in the flipped lecture are simulated such that the average mark is determined by this slider. It can take whole numbers between 64 and 76.</li>
+<li><em>Number of students per class</em>: this input controls how many marks we simulate for <em>each</em> class. It can be increased from 5 to 125 in increments of 20.</li>
+</ul>
+<p>The active learning experiment with these settings is repeated 1000 times each time the <em>Generate</em> button is pressed. For each repetition, we obtain a <em>p</em>-value. We use the histogram of these 1000 <em>p</em>-values to explore features of the p-value. Each p-value tells us how compatible the simulated data are with the hypothesis of the two average marks being the same. The red line on the histogram shows a 5% cutoff. This cutoff is typically used in practice (i.e., the hypothesis of the two average marks being equal is rejected if the p-value is less than 5%). The plot title conveys the proportion of the 1000 simulations in which the <em>p</em>-value was less than 5%. The simulation can be rerun adjusting the slider inputs (if necessary) and pressing the <em>Generate</em> button.</p>
+<p><strong>Activity 1</strong>: We start with the default settings (average mark in flipped lecture = 70, number of students per class = 5).</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Please complete this part <strong>before</strong> pressing <em>Generate</em>. For this setting, the hypothesis is true. After pressing <em>Generate</em>, you will be presented with a histogram of <em>p</em>-values. What do you think this histogram will look like?</p></li>
+<li><p>Repeat the simulation a few times with these settings. What patterns do you see in the histogram? Is this what you expected to see? Approximately what proportion of the <em>p</em>-values are less than the 5% cutoff?</p></li>
+</ol>
+<p><em>Please pause here.</em></p>
+<ol start="3" style="list-style-type: lower-alpha">
+<li><p>Please move the Number of students per class slider to a larger sample size. <strong>Before</strong> you press <em>Generate</em>, how do you think the histogram of <em>p</em>-values will change from those for the initial setting?</p></li>
+<li><p>Repeat the simulation a few times with these settings. What changes to the histogram do you notice? Is this what you expected to see? Approximately what proportion of the <em>p</em>-values are less than the 5% cutoff?</p></li>
+</ol>
+<p><em>Please pause here.</em></p>
+<ol start="5" style="list-style-type: lower-alpha">
+<li><p>What proportion of <em>p</em>-values do you think would be less than a 10% cutoff for this scenario?</p></li>
+<li><p>For this simulation setting, would rejecting the hypothesis be the correct decision? Why might 5% be a popular cutoff value then?</p></li>
+</ol>
+<p><em>Please pause here.</em></p>
+<p><strong>Activity 2</strong>: Please return the Number of students per class slider to 5 students per class. Think of a difference <em>d</em> between the two average marks that would be of practical importance <strong>to you</strong>. For this simulation, <em>d</em> should be one of 1, 2, 3, 4, 5, or 6. For instance, if the difference between the two averages is less than <em>d</em>, we can consider the averages for the two classes to be practically the same. Otherwise, there is a notable difference in the average marks. Move your average mark in flipped lecture to 70 + <em>d</em>.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Please complete this part <strong>before</strong> pressing <em>Generate</em>. For this setting, what do you think the histogram of <em>p</em>-values will look like?</p></li>
+<li><p>Repeat the simulation a few times with these settings. What patterns do you see in the histogram? Is this what you expected to see? Approximately what proportion of the <em>p</em>-values are less than the 5% cutoff?</p></li>
+</ol>
+<p><em>Please pause here.</em></p>
+<ol start="3" style="list-style-type: lower-alpha">
+<li><p>Please move the <em>Number of students</em> per class slider to 25. <strong>Before</strong> you press <em>Generate</em>, how do you think the histogram of <em>p</em>-values will change from those from part a)?</p></li>
+<li><p>Repeat the simulation a few times with these settings. You could also try this with larger sample sizes. What changes to the histogram do you notice? Is this what you expected to see? Approximately what proportion of the <em>p</em>-values are less than the 5% cutoff?</p></li>
+<li><p>For this simulation setting, what is the correct decision with regard to rejecting or not rejecting the hypothesis? Are you likely to make the correct decision if you have a small sample size of students?</p></li>
+</ol>
+<p><em>Activity complete!</em></p>
+</div>
+</div>
+<div id="annotated-bibliography" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> Annotated Bibliography<a href="chapter9.html#annotated-bibliography" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The following references were integral to the preparation of this workshop.</p>
+<p>1: Abbasian, R. O., &amp; Czuchry, M. (2021). Investigation of Inverted and Active Pedagogies in Introductory Statistics. <em>PRIMUS</em>, <em>31</em>(9), 975-994.</p>
+<p>This article summarizes results from an observational study comparing student achievement in an introductory statistics course delivered in inverted and traditional lecture formats. Students in traditional courses improved slightly more as the course progressed compared to those in inverted classes, particularly when considering the subpopulation of students who were eligible for Pell grants. This paper’s recommendations for inverting statistics classes were referred to in the workshop, and this source also emphasizes why it is important to consider the impact of academic interventions on disadvantaged populations.</p>
+<p>2: Case, C., Battles, M., &amp; Jacobbe, T. (2019). Toward an understanding of <em>p</em>-values: Simulation-based inference in a traditional statistics course. <em>Investigations in Mathematics Learning</em>, <em>11</em>(3), 195-206.</p>
+<p>This paper examines the impact of two simulation activities on undergraduate students’ understanding of <em>p</em>-values. Qualitative analysis of student assessments before and after these activities suggests that simulation activities may help improve conceptual understanding of <em>p</em>-values. However, students still held a wide range of misconceptions about <em>p</em>-values after the activities. This source supports the notion that simulation and guided discovery learning can be useful when teaching <em>p</em>-values, which was further incorporated in the interactive application made for this workshop.</p>
+<p>3: Coetzee, W. (2021). Determining the needs of introductory statistics university students: A qualitative survey study. <em>Perspectives in Education</em>, <em>39</em>(3), 197-213.</p>
+<p>This article presents findings from an anonymous survey administered to South African university students, in which students were asked to respond to the prompts “I would enjoy statistics more if…” and “I would perform better in statistics if….” The students’ responses were compared to the recommended best practices in the literature (see the GAISE report in references 5 and 13). This paper is leveraged in the workshop to show alignment between students’ self-perceived needs and best practices, which include emphasizing how students can apply statistics in their field and incorporating active learning strategies.</p>
+<p>4: Daniel, F., &amp; Braasch, J. L. (2013). Application exercises improve transfer of statistical knowledge in real-world situations. <em>Teaching of Psychology</em>, <em>40</em>(3), 200-207.</p>
+<p>This paper summarizes results from an observational study involving two groups of undergraduate students enrolled psychology statistics courses in Indiana. One of the two groups completed several real-world application exercises; the results of this study indicated that students who participated in these exercises were better able to use statistical knowledge when answering far-transfer questions. In the workshop, this article provided empirical evidence that incorporating real-world application exercises into introductory statistics courses improves more than just student performance on course assessments.</p>
+<p>5: GAISE College Group. Aliaga, M., Cobb, G., Cuff, C., Garfield, J., Gould, R., Lock, R., Moore, T., Rossman, A., Stephenson, B., Utts, J., Velleman, P., and Witmer, J. (2005), “<em>Guidelines for assessment and instruction in statistics education: College report</em>.” Alexandria, VA: American Statistical Association.</p>
+<p>This report was created from the Guidelines for Assessment and Instruction in Statistics Education (GAISE) Project, which gave rise to six recommendations for undergraduate statistics courses to promote statistical literacy. These recommendations were referenced throughout the other sources in this annotated bibliography. The updated guidelines from 2018 (see reference 13) were stated in the workshop, but this source was used to add credibility to the updated guidelines given that the updates are very minor. Several of these guidelines were also incorporated into the workshop’s interactive application made for this workshop.</p>
+<p>6: Gordon, S. P., &amp; Gordon, F. S. (2020). Visualizing and Understanding Hypothesis Testing Using Dynamic Software. <em>Primus</em>, <em>30</em>(2), 172-190.</p>
+<p>This article describes several dynamic applications that were created in Microsoft Excel to promote conceptual understanding of hypothesis testing over rote memorization of formulas and procedures. The use of this dynamic software aligns with the recommendations from the GAISE report. These applications are freely available and do not require users to have extensive coding experience; slider inputs are used to update the interactive graphical interface. The guidance for developing dynamic software detailed in this paper was incorporated into the interactive application created for this workshop.</p>
+<p>7: Kalaian, S. A., &amp; Kasim, R. M. (2014). A meta-analytic review of studies of the effectiveness of small-group learning methods on statistics achievement. <em>Journal of Statistics Education</em>, <em>22</em>(1).</p>
+<p>This meta-analytic study examines the effectiveness of small-group learning methods with respect to lecture-based instruction in undergraduate statistics courses. Cooperative and collaborative small-group learning activities were found to be positively associated with student performance; however, the meta-analysis suggested that this association is becoming weaker over time. Only nine studies satisfied the inclusion criteria for this meta-analysis, and this small sample size should be considered when interpreting the conclusions. This study was referenced in the workshop to suggest that the incorporation of active learning methods consistent with the GAISE report has improved student engagement and performance in statistics courses.</p>
+<p>8: Reaburn, R. (2014). Introductory statistics course tertiary students’ understanding of <em>p</em>-values. <em>Statistics Education Research Journal</em>, <em>13</em>(1), 53-65.</p>
+<p>This article presents findings from a four-semester study conducted to obtain knowledge about students’ beliefs and difficulties in understanding <em>p</em>-values. Each semester, new instructional methods were incorporated into the course, and students later answered two questions about <em>p</em>-values. A combination of interventions based on computer simulation, statistical communication, and scientific reasoning were found to be associated with an improved ability to define and use <em>p</em>-values in null hypothesis significance testing procedures. In the workshop, this source was leveraged to support the value of using computer simulation to introduce <em>p</em>-values and to inform the development of the workshop’s interactive application.</p>
+<p>9: Rossman, A. J., &amp; Chance, B. L. (2014). Using simulation‐based inference for learning introductory statistics. Wiley Interdisciplinary Reviews: <em>Computational Statistics</em>, <em>6</em>(4), 211-221.</p>
+<p>This paper resolves to address the criticism that topics in introductory statistics classes are often compartmentalized and that key ideas of inference receive rushed treatment at the end of these courses. The authors propose resequencing introductory statistics courses based on data structure; they are proponents of moving inferential concepts to the beginning of such courses, which allows for complete and repeated exposure to these concepts. They also advocate for using simulation to introduce inferential methods. The workshop referred to this source because the proposed resequencing of statistics courses could allow for more active learning opportunities.</p>
+<p>10: Shinaberger, L. (2017). Components of a flipped classroom influencing student success in an undergraduate business statistics course. <em>Journal of Statistics Education</em>, <em>25</em>(3), 122-130.</p>
+<p>This article details a study that converted an undergraduate business statistics course from a traditional lecture to a flipped classroom course. Incremental changes to the course were made over 10 semesters. Of these changes, replacing face-to-face lectures with active learning exercises and using quizzes to verify student engagement with the lecture videos were most associated with improved student exam performance. In the workshop, the results and recommendations from this source were compared with those from another study about flipped statistics classrooms (see reference 1) to give a more balanced perspective.</p>
+<p>11: Steel, E. A., Liermann, M., &amp; Guttorp, P. (2019). Beyond calculations: A course in statistical thinking. <em>The American Statistician</em>, <em>73</em>(sup1), 392-401.</p>
+<p>This paper overviews a course in statistical thinking that was developed at the University of Washington for senior undergraduate statistics majors. This course is motivated by the GAISE report and the notion that a large proportion of statistical errors result from incorrect interpretations despite correct numerical calculations. The course aims to promote a “gut-level” understanding of statistical topics by providing students opportunities to engage with simulation, scientific communication, and common statistical misconceptions. Most other sources in this annotated bibliography pertain to introductory statistics courses, so the workshop used this article to demonstrate that active learning strategies are also helpful for more advanced students.</p>
+<p>12: Tintle, N., Chance, B., Cobb, G., Roy, S., Swanson, T., &amp; VanderStoep, J. (2015). Combating anti-statistical thinking using simulation-based methods throughout the undergraduate curriculum. <em>The American Statistician</em>, <em>69</em>(4), 362-370.</p>
+<p>This article acknowledges that many students are overconfident in or skeptical of inferential statistics upon completing their undergraduate statistics courses. This work recommends teaching more simulation-based methods in both introductory and senior undergraduate statistics courses. Simulation is conducive to active learning and promotes statistical thinking in introductory courses; moreover, computational methods must be more widely adopted in advanced statistics courses to reflect the changing job market. In the workshop, this paper complemented the information from reference 9, which advocates for greater incorporation of simulation into introductory statistics courses.</p>
+<p>13: Wood, B. L., Mocko, M., Everson, M., Horton, N. J., &amp; Velleman, P. (2018). Updated guidelines, updated curriculum: the GAISE college report and introductory statistics for the modern student. <em>Chance</em>, <em>31</em>(2), 53-59.</p>
+<p>This source updates the recommendations from the original GAISE report (see reference 5) to reflect the increased availability of technology and prevalence of alternative learning environments. The updated guidelines incorporate minor wording changes, and two of the original recommendations were reordered to prioritize what to teach in introductory statistics courses over how to teach those courses. These updated guidelines were introduced at the beginning of –- and revisited throughout –- the workshop and to ensure the workshop’s content was grounded in the literature.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="pooled-p-values.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/uwswagclub/workshop-bookdown/edit/master/09-active-learning-p-values.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/uwswagclub/workshop-bookdown/blob/master/09-active-learning-p-values.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

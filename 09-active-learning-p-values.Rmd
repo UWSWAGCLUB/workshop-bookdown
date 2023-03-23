@@ -1,0 +1,142 @@
+# Active Learning Strategies with *p*-Values {#chapter9}
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+knitr::opts_chunk$set(cache = TRUE)
+```
+
+```{r, include = FALSE}
+require(knitr)
+require(tidyverse)
+opts_chunk$set(tidy.opts=list(width.cutoff=70),tidy=TRUE)
+require(ggplot2)
+require(cowplot)
+require(ggpubr)
+require(bookdown)
+```
+
+\newpage
+\setstretch{1.05}
+
+*Luke Hagar*
+
+## Introduction
+
+Welcome to this workshop on active learning strategies with *p*-values. Hopefully, this workshop helps improve your ability to
+
+  1. **Describe** best practices for teaching statistics
+  2. **Explain** the importance of developing statistical thinking skills via active learning
+  3. **Identify** advantages of using guided simulation activites to improve understanding of *p*-values.
+  
+The presentation component of this workshop is accompanied by an interactive activity. This interactive activity is described below.
+
+## Interactive Activity
+
+### Background
+
+We use an interactive application to explore some features of the *p*-value using simulation: https://lmhagar.shinyapps.io/CUT_App/ We use a mock experiment to assess the impact of active learning in the classroom. We are facilitating two versions of the same course, one with traditional lectures and the other with flipped lectures. We compare the effectiveness of the two lecture formats using the students’ final exam marks. To do this, we test the hypothesis that the average exam marks in the two versions of the course are the same.
+
+### Instructions
+
+The simulation settings can be controlled using the *Simulation Inputs* tab. We simulate an exam mark for each student in the experiment, such that the average mark in the traditional lecture is 70. The simulation has two inputs:
+
+  * *Average mark in flipped lecture*: marks in the flipped lecture are simulated such that the average mark is determined by this slider. It can take whole numbers between 64 and 76.
+  * *Number of students per class*: this input controls how many marks we simulate for *each* class. It can be increased from 5 to 125 in increments of 20.
+
+The active learning experiment with these settings is repeated 1000 times each time the *Generate* button is pressed. For each repetition, we obtain a *p*-value. We use the histogram of these 1000 *p*-values to explore features of the p-value. Each p-value tells us how compatible the simulated data are with the hypothesis of the two average marks being the same. The red line on the histogram shows a 5\% cutoff. This cutoff is typically used in practice (i.e., the hypothesis of the two average marks being equal is rejected if the p-value is less than 5\%). The plot title conveys the proportion of the 1000 simulations in which the *p*-value was less than 5\%. The simulation can be rerun adjusting the slider inputs (if necessary) and pressing the *Generate* button.
+
+**Activity 1**: We start with the default settings (average mark in flipped lecture = 70, number of students per class = 5).
+
+a)	Please complete this part **before** pressing *Generate*. For this setting, the hypothesis is true. After pressing *Generate*, you will be presented with a histogram of *p*-values. What do you think this histogram will look like?
+
+b)	Repeat the simulation a few times with these settings. What patterns do you see in the histogram? Is this what you expected to see? Approximately what proportion of the *p*-values are less than the 5\% cutoff?
+
+*Please pause here.*
+
+c)	Please move the Number of students per class slider to a larger sample size. **Before** you press *Generate*, how do you think the histogram of *p*-values will change from those for the initial setting?
+
+d)	Repeat the simulation a few times with these settings. What changes to the histogram do you notice? Is this what you expected to see? Approximately what proportion of the *p*-values are less than the 5\% cutoff?
+
+*Please pause here.*
+
+e)	What proportion of *p*-values do you think would be less than a 10\% cutoff for this scenario?
+
+f)	For this simulation setting, would rejecting the hypothesis be the correct decision? Why might 5\% be a popular cutoff value then?
+
+*Please pause here.*
+
+**Activity 2**: Please return the Number of students per class slider to 5 students per class. Think of a difference *d* between the two average marks that would be of practical importance **to you**. For this simulation, *d* should be one of 1, 2, 3, 4, 5, or 6. For instance, if the difference between the two averages is less than *d*, we can consider the averages for the two classes to be practically the same. Otherwise, there is a notable difference in the average marks. Move your average mark in flipped lecture to 70 + *d*. 
+
+a)	Please complete this part **before** pressing *Generate*. For this setting, what do you think the histogram of *p*-values will look like?
+
+b)	Repeat the simulation a few times with these settings. What patterns do you see in the histogram? Is this what you expected to see? Approximately what proportion of the *p*-values are less than the 5\% cutoff?
+
+*Please pause here.*
+
+c)	Please move the *Number of students* per class slider to 25. **Before** you press *Generate*, how do you think the histogram of *p*-values will change from those from part a)?
+
+d)	Repeat the simulation a few times with these settings. You could also try this with larger sample sizes. What changes to the histogram do you notice? Is this what you expected to see? Approximately what proportion of the *p*-values are less than the 5\% cutoff?
+
+e)	For this simulation setting, what is the correct decision with regard to rejecting or not rejecting the hypothesis? Are you likely to make the correct decision if you have a small sample size of students?
+
+*Activity complete!*
+
+## Annotated Bibliography
+
+The following references were integral to the preparation of this workshop.
+
+1: Abbasian, R. O., & Czuchry, M. (2021). Investigation of Inverted and Active Pedagogies in 	Introductory Statistics. *PRIMUS*, *31*(9), 975-994.
+
+This article summarizes results from an observational study comparing student achievement in an introductory statistics course delivered in inverted and traditional lecture formats. Students in traditional courses improved slightly more as the course progressed compared to those in inverted classes, particularly when considering the subpopulation of students who were eligible for Pell grants. This paper’s recommendations for inverting statistics classes were referred to in the workshop, and this source also emphasizes why it is important to consider the impact of academic interventions on disadvantaged populations. 
+
+
+2: Case, C., Battles, M., & Jacobbe, T. (2019). Toward an understanding of *p*-values: 	Simulation-based inference in a traditional statistics course. *Investigations in Mathematics Learning*, *11*(3), 195-206.
+
+This paper examines the impact of two simulation activities on undergraduate students’ understanding of *p*-values. Qualitative analysis of student assessments before and after these activities suggests that simulation activities may help improve conceptual understanding of *p*-values. However, students still held a wide range of misconceptions about *p*-values after the activities. This source supports the notion that simulation and guided discovery learning can be useful when teaching *p*-values, which was further incorporated in the interactive application made for this workshop.
+
+3: Coetzee, W. (2021). Determining the needs of introductory statistics university students: A qualitative survey study. *Perspectives in Education*, *39*(3), 197-213.
+
+This article presents findings from an anonymous survey administered to South African university students, in which students were asked to respond to the prompts “I would enjoy statistics more if…” and “I would perform better in statistics if…”. The students’ responses were compared to the recommended best practices in the literature (see the GAISE report in references 5 and 13). This paper is leveraged in the workshop to show alignment between students’ self-perceived needs and best practices, which include emphasizing how students can apply statistics in their field and incorporating active learning strategies. 
+
+4: Daniel, F., & Braasch, J. L. (2013). Application exercises improve transfer of statistical knowledge in real-world situations. *Teaching of Psychology*, *40*(3), 200-207.
+
+This paper summarizes results from an observational study involving two groups of undergraduate students enrolled psychology statistics courses in Indiana. One of the two groups completed several real-world application exercises; the results of this study indicated that students who participated in these exercises were better able to use statistical knowledge when answering far-transfer questions. In the workshop, this article provided empirical evidence that incorporating real-world application exercises into introductory statistics courses improves more than just student performance on course assessments. 
+
+5: GAISE College Group. Aliaga, M., Cobb, G., Cuff, C., Garfield, J., Gould, R., Lock, R., 	Moore, T., Rossman, A., Stephenson, B., Utts, J., Velleman, P., and Witmer, J. (2005), 	“*Guidelines for assessment and instruction in statistics education: College report*”. 	Alexandria, VA: American Statistical Association.
+
+This report was created from the Guidelines for Assessment and Instruction in Statistics Education (GAISE) Project, which gave rise to six recommendations for undergraduate statistics courses to promote statistical literacy. These recommendations were referenced throughout the other sources in this annotated bibliography. The updated guidelines from 2018 (see reference 13) were stated in the workshop, but this source was used to add credibility to the updated guidelines given that the updates are very minor. Several of these guidelines were also incorporated into the workshop’s interactive application made for this workshop.
+
+6: Gordon, S. P., & Gordon, F. S. (2020). Visualizing and Understanding Hypothesis Testing 	Using Dynamic Software. *Primus*, *30*(2), 172-190.
+
+This article describes several dynamic applications that were created in Microsoft Excel to promote conceptual understanding of hypothesis testing over rote memorization of formulas and procedures. The use of this dynamic software aligns with the recommendations from the GAISE report. These applications are freely available and do not require users to have extensive coding experience; slider inputs are used to update the interactive graphical interface. The guidance for developing dynamic software detailed in this paper was incorporated into the interactive application created for this workshop.
+
+7: Kalaian, S. A., & Kasim, R. M. (2014). A meta-analytic review of studies of the effectiveness 	of small-group learning methods on statistics achievement. *Journal of Statistics Education*, *22*(1).
+
+This meta-analytic study examines the effectiveness of small-group learning methods with respect to lecture-based instruction in undergraduate statistics courses. Cooperative and collaborative small-group learning activities were found to be positively associated with student performance; however, the meta-analysis suggested that this association is becoming weaker over time. Only nine studies satisfied the inclusion criteria for this meta-analysis, and this small sample size should be considered when interpreting the conclusions. This study was referenced in the workshop to suggest that the incorporation of active learning methods consistent with the GAISE report has improved student engagement and performance in statistics courses. 
+
+8: Reaburn, R. (2014). Introductory statistics course tertiary students’ understanding of *p*-values. *Statistics Education Research Journal*, *13*(1), 53-65.
+
+This article presents findings from a four-semester study conducted to obtain knowledge about students’ beliefs and difficulties in understanding *p*-values. Each semester, new instructional methods were incorporated into the course, and students later answered two questions about *p*-values. A combination of interventions based on computer simulation, statistical communication, and scientific reasoning were found to be associated with an improved ability to define and use *p*-values in null hypothesis significance testing procedures. In the workshop, this source was leveraged to support the value of using computer simulation to introduce *p*-values and to inform the development of the workshop’s interactive application. 
+
+9: Rossman, A. J., & Chance, B. L. (2014). Using simulation‐based inference for learning introductory statistics. Wiley Interdisciplinary Reviews: *Computational Statistics*, *6*(4), 211-221.
+
+This paper resolves to address the criticism that topics in introductory statistics classes are often compartmentalized and that key ideas of inference receive rushed treatment at the end of these courses. The authors propose resequencing introductory statistics courses based on data structure; they are proponents of moving inferential concepts to the beginning of such courses, which allows for complete and repeated exposure to these concepts. They also advocate for using simulation to introduce inferential methods. The workshop referred to this source because the proposed resequencing of statistics courses could allow for more active learning opportunities.
+
+10: Shinaberger, L. (2017). Components of a flipped classroom influencing student success in an undergraduate business statistics course. *Journal of Statistics Education*, *25*(3), 122-130.
+
+This article details a study that converted an undergraduate business statistics course from a traditional lecture to a flipped classroom course. Incremental changes to the course were made over 10 semesters. Of these changes, replacing face-to-face lectures with active learning exercises and using quizzes to verify student engagement with the lecture videos were most associated with improved student exam performance. In the workshop, the results and recommendations from this source were compared with those from another study about flipped statistics classrooms (see reference 1) to give a more balanced perspective.
+
+11: Steel, E. A., Liermann, M., & Guttorp, P. (2019). Beyond calculations: A course in statistical 	thinking. *The American Statistician*, *73*(sup1), 392-401.
+
+This paper overviews a course in statistical thinking that was developed at the University of Washington for senior undergraduate statistics majors. This course is motivated by the GAISE report and the notion that a large proportion of statistical errors result from incorrect interpretations despite correct numerical calculations. The course aims to promote a “gut-level” understanding of statistical topics by providing students opportunities to engage with simulation, scientific communication, and common statistical misconceptions. Most other sources in this annotated bibliography pertain to introductory statistics courses, so the workshop used this article to demonstrate that active learning strategies are also helpful for more advanced students. 
+
+12: Tintle, N., Chance, B., Cobb, G., Roy, S., Swanson, T., & VanderStoep, J. (2015). Combating anti-statistical thinking using simulation-based methods throughout the 	undergraduate curriculum. *The American Statistician*, *69*(4), 362-370.
+
+This article acknowledges that many students are overconfident in or skeptical of inferential statistics upon completing their undergraduate statistics courses. This work recommends teaching more simulation-based methods in both introductory and senior undergraduate statistics courses. Simulation is conducive to active learning and promotes statistical thinking in introductory courses; moreover, computational methods must be more widely adopted in advanced statistics courses to reflect the changing job market. In the workshop, this paper complemented the information from reference 9, which advocates for greater incorporation of simulation into introductory statistics courses. 
+
+13: Wood, B. L., Mocko, M., Everson, M., Horton, N. J., & Velleman, P. (2018). Updated 	guidelines, updated curriculum: the GAISE college report and introductory statistics for the modern student. *Chance*, *31*(2), 53-59.
+
+This source updates the recommendations from the original GAISE report (see reference 5) to reflect the increased availability of technology and prevalence of alternative learning environments. The updated guidelines incorporate minor wording changes, and two of the original recommendations were reordered to prioritize what to teach in introductory statistics courses over how to teach those courses. These updated guidelines were introduced at the beginning of –- and revisited throughout –- the workshop and to ensure the workshop’s content was grounded in the literature.
+
+
+

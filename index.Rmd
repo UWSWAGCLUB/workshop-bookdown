@@ -23,4 +23,6 @@ Below is the list of past workshops:
 
 - Introduction to causal inference (Feb 16, 2023)
 
-- Pooling p-values (Mar 16, 2023)
+- Pooling *p*-values (Mar 16, 2023)
+
+- Active learning strategies with *p*-values (Apr 6, 2023)

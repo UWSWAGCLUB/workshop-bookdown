@@ -1,12 +1,4 @@
-fig:rej1
-fig:rej2
-fig:unif1
-fig:unif2
-fig:unif3
-fig:norm1
-fig:norm2
-fig:norm3
-fig:multi2
+thm:unnamed-chunk-3
 eq:pyz-int
 eq:approx-int
 eq:calc-elbo
@@ -102,4 +94,10 @@ adjusting-for-dependence
 the-wrong-way
 a-better-way
 take-aways
+chapter9
+introduction-5
+interactive-activity
+background
+instructions
+annotated-bibliography
 references
