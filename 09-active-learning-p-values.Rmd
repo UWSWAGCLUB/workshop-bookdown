@@ -43,7 +43,7 @@ The simulation settings can be controlled using the *Simulation Inputs* tab. We 
   * *Average mark in flipped lecture*: marks in the flipped lecture are simulated such that the average mark is determined by this slider. It can take whole numbers between 64 and 76.
   * *Number of students per class*: this input controls how many marks we simulate for *each* class. It can be increased from 5 to 125 in increments of 20.
 
-The active learning experiment with these settings is repeated 1000 times each time the *Generate* button is pressed. For each repetition, we obtain a *p*-value. We use the histogram of these 1000 *p*-values to explore features of the p-value. Each p-value tells us how compatible the simulated data are with the hypothesis of the two average marks being the same. The red line on the histogram shows a 5\% cutoff. This cutoff is typically used in practice (i.e., the hypothesis of the two average marks being equal is rejected if the p-value is less than 5\%). The plot title conveys the proportion of the 1000 simulations in which the *p*-value was less than 5\%. The simulation can be rerun adjusting the slider inputs (if necessary) and pressing the *Generate* button.
+The active learning experiment with these settings is repeated 1000 times each time the *Generate* button is pressed. For each repetition, we obtain a *p*-value. We use the histogram of these 1000 *p*-values to explore features of the *p*-value. Each *p*-value tells us how compatible the simulated data are with the hypothesis of the two average marks being the same. The red line on the histogram shows a 5\% cutoff. This cutoff is typically used in practice (i.e., the hypothesis of the two average marks being equal is rejected if the *p*-value is less than 5\%). The plot title conveys the proportion of the 1000 simulations in which the *p*-value was less than 5\%. The simulation can be rerun adjusting the slider inputs (if necessary) and pressing the *Generate* button.
 
 **Activity 1**: We start with the default settings (average mark in flipped lecture = 70, number of students per class = 5).
 
@@ -138,5 +138,5 @@ This article acknowledges that many students are overconfident in or skeptical o
 
 This source updates the recommendations from the original GAISE report (see reference 5) to reflect the increased availability of technology and prevalence of alternative learning environments. The updated guidelines incorporate minor wording changes, and two of the original recommendations were reordered to prioritize what to teach in introductory statistics courses over how to teach those courses. These updated guidelines were introduced at the beginning of –- and revisited throughout –- the workshop and to ensure the workshop’s content was grounded in the literature.
 
-
+A backup application is also provided in the event of technical difficulties with the main app: https://luke-hagar.shinyapps.io/CUT_App/
 
