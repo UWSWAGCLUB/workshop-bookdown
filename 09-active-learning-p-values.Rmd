@@ -138,5 +138,3 @@ This article acknowledges that many students are overconfident in or skeptical o
 
 This source updates the recommendations from the original GAISE report (see reference 5) to reflect the increased availability of technology and prevalence of alternative learning environments. The updated guidelines incorporate minor wording changes, and two of the original recommendations were reordered to prioritize what to teach in introductory statistics courses over how to teach those courses. These updated guidelines were introduced at the beginning of –- and revisited throughout –- the workshop and to ensure the workshop’s content was grounded in the literature.
 
-A backup application is also provided in the event of technical difficulties with the main app: https://luke-hagar.shinyapps.io/CUT_App/
-
